@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mist &amp; Mug — Mussoorie</title>
+<meta name="description" content="Mist & Mug — a fictional educational café concept, 2,005 M above Mussoorie.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,380;9..144,460;9..144,560;9..144,650;9..144,720&family=Inter:wght@400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#142E25; --wood:#6E422B; --coffee:#2A1812; --gold:#F0B35A;
+  --paper:#F3E8D3; --rain:#78928D; --brick:#A6533F;
+  --paper-2:#EADDC2; --cream:#FBF4E6; --ink:#241a12;
+  --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif; --hand:'Caveat',cursive;
+  --fog-opacity:.3; --rain-opacity:0; --line:rgba(36,26,18,.16); --line-lt:rgba(243,232,211,.22);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;position:relative}
+h1,h2,h3,.disp{font-family:var(--serif);font-weight:560;letter-spacing:-.01em;margin:0}
+p{margin:0}
+img,svg{display:block;max-width:100%}
+button{font-family:var(--sans);cursor:pointer}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+.eyebrow{font-family:var(--sans);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brick);font-weight:600}
+.hand{font-family:var(--hand);color:var(--brick)}
+:focus-visible{outline:2.5px solid var(--gold);outline-offset:3px;border-radius:2px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:3px;border:1px solid var(--forest);background:var(--forest);color:var(--cream);font-size:14.5px;letter-spacing:.03em;font-weight:500;min-height:46px;transition:transform .2s ease,background .2s ease}
+.btn:hover{background:#0e2018;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--forest);border-color:var(--forest)}
+.btn.ghost:hover{background:var(--forest);color:var(--cream)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--coffee);font-weight:600}
+.btn.gold:hover{background:#e2a24a}
+.btn.small{padding:9px 16px;min-height:38px;font-size:13px}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
+.chip{padding:9px 15px;border:1px solid var(--forest);border-radius:20px;background:transparent;color:var(--forest);font-size:13px;min-height:40px}
+.chip.active{background:var(--forest);color:var(--cream)}
+
+/* ---------- GRAIN ---------- */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- DOOR TRANSITION ---------- */
+#door-overlay{position:fixed;inset:0;z-index:300;display:none;pointer-events:none}
+#door-overlay.playing{display:block}
+.door-half{position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(180deg,#4a2e1d,var(--coffee));box-shadow:inset 0 0 80px rgba(0,0,0,.5)}
+.door-half.left{left:0;transform-origin:left center;border-right:2px solid #1a0f09}
+.door-half.right{right:0;transform-origin:right center;border-left:2px solid #1a0f09}
+#door-overlay.playing .door-half.left{animation:swingL .55s cubic-bezier(.4,0,.2,1) forwards}
+#door-overlay.playing .door-half.right{animation:swingR .55s cubic-bezier(.4,0,.2,1) forwards}
+#door-overlay.playing{background:radial-gradient(circle at 50% 50%,rgba(240,179,90,.25),transparent 60%)}
+@keyframes swingL{0%{transform:rotateY(0)}100%{transform:rotateY(-96deg)}}
+@keyframes swingR{0%{transform:rotateY(0)}100%{transform:rotateY(96deg)}}
+.door-handle{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--gold)}
+.door-half.left .door-handle{right:16px}
+.door-half.right .door-handle{left:16px}
+
+/* ---------- NAV (painted signage) ---------- */
+#nav{position:sticky;top:0;z-index:60;background:linear-gradient(180deg,#2c1c12,var(--coffee));border-bottom:3px solid var(--gold);box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.nav-row{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{font-family:var(--serif);font-weight:650;font-size:19px;letter-spacing:.01em;display:flex;flex-direction:column;line-height:1;gap:2px;color:var(--cream)}
+.brand small{font-family:var(--sans);font-size:9.5px;letter-spacing:.16em;color:var(--gold);font-weight:600}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--paper);text-decoration:none;padding:6px 0;border-bottom:1px solid transparent}
+.nav-links a:hover{border-color:var(--gold);color:var(--gold)}
+.coins-pill{display:flex;align-items:center;gap:7px;border:1px solid var(--gold);color:var(--gold);padding:6px 12px;border-radius:20px;font-size:12.5px;font-weight:700;background:rgba(240,179,90,.08)}
+.nav-burger{display:none;background:none;border:1px solid var(--gold);color:var(--gold);border-radius:2px;width:44px;height:44px;align-items:center;justify-content:center}
+@media(max-width:900px){.nav-links{display:none}.nav-burger{display:flex}}
+#mobile-menu{display:none;flex-direction:column;background:var(--coffee)}
+#mobile-menu.open{display:flex}
+#mobile-menu a{padding:16px 28px;border-bottom:1px solid rgba(243,232,211,.12);font-size:14px;text-decoration:none;color:var(--paper);text-transform:uppercase;letter-spacing:.05em}
+
+/* ---------- HERO: café window in the fog ---------- */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+  background:linear-gradient(180deg,#0a1512 0%,#122822 45%,#0d1c17 100%)}
+.hero-photo{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:75% 50%;opacity:.62;filter:saturate(.9) brightness(.85)}
+.hero-photo-fallback{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,#16241f,#0d1c17);display:none}
+#hero::before{content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,rgba(10,21,18,.94) 0%,rgba(10,21,18,.72) 32%,rgba(10,21,18,.25) 62%,rgba(10,21,18,.55) 100%),
+  linear-gradient(to top,rgba(10,21,18,.9) 0%,rgba(10,21,18,.2) 45%,rgba(10,21,18,.5) 100%)}
+.hero-rain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.35}
+.hero-rain span{position:absolute;top:-10%;width:1px;height:70px;background:linear-gradient(rgba(200,220,220,.55),transparent);animation:rainfall 1.1s linear infinite}
+@keyframes rainfall{to{transform:translateY(120vh)}}
+.mtn{position:absolute;bottom:0;left:0;width:100%;height:56%;z-index:1;opacity:.5}
+.fog-layer{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;z-index:2}
+.fog-band{position:absolute;left:-20%;width:140%;height:180px;background:linear-gradient(90deg,transparent,rgba(210,220,215,.5),transparent);opacity:var(--fog-opacity);animation:drift 34s linear infinite}
+.fog-band.b2{bottom:22%;animation-duration:46s;animation-direction:reverse;opacity:calc(var(--fog-opacity)*.7)}
+@keyframes drift{from{transform:translateX(-10%)}to{transform:translateX(10%)}}
+.cafe-window{position:absolute;right:6%;bottom:0;z-index:3;width:280px;height:64%;
+  background:radial-gradient(circle at 50% 40%,rgba(240,179,90,.55),rgba(240,179,90,.12) 55%,transparent 75%);
+  filter:blur(2px)}
+@media(max-width:900px){.cafe-window{display:none}}
+.hero-steam{position:absolute;right:calc(6% + 30px);bottom:8%;z-index:3;display:flex;gap:5px;opacity:.5}
+.hero-steam span{width:3px;height:22px;background:rgba(243,232,211,.55);border-radius:2px;animation:hsteam 3.2s ease-in-out infinite}
+.hero-steam span:nth-child(2){animation-delay:.6s}
+.hero-steam span:nth-child(3){animation-delay:1.2s}
+@keyframes hsteam{0%{transform:translateY(0) scaleY(1);opacity:0}30%{opacity:.6}100%{transform:translateY(-40px) scaleY(1.4);opacity:0}}
+.hero-glass{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(circle at 15% 30%,rgba(200,215,212,.10),transparent 6%),
+    radial-gradient(circle at 62% 55%,rgba(200,215,212,.08),transparent 5%),
+    radial-gradient(circle at 40% 80%,rgba(200,215,212,.10),transparent 6%),
+    radial-gradient(circle at 85% 20%,rgba(200,215,212,.09),transparent 5%),
+    radial-gradient(circle at 30% 55%,rgba(200,215,212,.07),transparent 5%)}
+@media(prefers-reduced-motion:no-preference){.mtn{will-change:transform}}
+.hero-inner{position:relative;z-index:4;width:100%}
+.hero-kicker{font-size:12.5px;letter-spacing:.18em;color:rgba(243,232,211,.7);text-transform:uppercase;margin-bottom:18px}
+.hero-title{font-size:clamp(48px,9vw,108px);line-height:.94;color:var(--cream);letter-spacing:-.01em}
+.hero-come-in{font-family:var(--serif);font-style:italic;font-weight:560;color:var(--gold);font-size:clamp(26px,4.4vw,46px);margin-top:26px;line-height:1.15}
+.hero-tag{font-family:var(--sans);color:var(--paper);opacity:.75;font-size:15px;margin-top:14px}
+.hero-ctas{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap}
+.hero-note{margin-top:26px;font-family:var(--hand);font-size:21px;color:var(--gold);opacity:.9}
+
+/* ---------- SECTION generic ---------- */
+section{padding:88px 0}
+.sec-head{margin-bottom:40px;max-width:640px;position:relative}
+.sec-head h2{font-size:clamp(30px,4vw,44px)}
+.sec-head p{margin-top:12px;opacity:.75;font-size:15.5px}
+.margin-hand{font-family:var(--hand);font-size:19px;color:var(--brick);display:inline-block;margin-top:8px;transform:rotate(-2deg)}
+
+/* ---------- CATEGORY ART (representational) ---------- */
+.food-art{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.food-art svg{width:62%;height:62%}
+.fa-1{background:linear-gradient(160deg,#8a5a3a,#3a2416)}
+.fa-2{background:linear-gradient(160deg,#5c6b52,#26332a)}
+.fa-3{background:linear-gradient(160deg,#c98d52,#6b3f22)}
+.fa-4{background:linear-gradient(160deg,#7a3a30,#341813)}
+.fa-5{background:linear-gradient(160deg,#a6533f,#4a231b)}
+.food-art .cap{position:absolute;left:10px;bottom:10px;font-size:10px;letter-spacing:.08em;color:rgba(243,232,211,.9);text-transform:uppercase;background:rgba(20,14,9,.45);padding:4px 8px}
+
+/* ---------- WEATHER WINDOW ---------- */
+#weather{background:var(--forest);color:var(--cream)}
+#weather .sec-head p{color:var(--paper);opacity:.7}
+.window-frame{max-width:520px;margin:0 auto;border:14px solid var(--wood);border-radius:6px;position:relative;background:#0b1512;aspect-ratio:4/3;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.window-frame::before,.window-frame::after{content:'';position:absolute;background:var(--wood);z-index:5}
+.window-frame::before{left:calc(50% - 3px);top:0;bottom:0;width:6px}
+.window-frame::after{top:calc(50% - 3px);left:0;right:0;height:6px}
+.window-scene{position:absolute;inset:0;background:linear-gradient(180deg,#3c5a4d,#152922 60%,#0c1713)}
+.window-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:filter .5s ease}
+.window-scene.rain .window-photo{filter:blur(1.5px) saturate(.85) brightness(.92)}
+.window-photo-fallback{position:absolute;inset:0;background:linear-gradient(180deg,#3c5a4d,#152922 60%,#0c1713);display:none}
+.window-mtn{position:absolute;bottom:0;left:0;width:100%;height:60%;opacity:.85}
+.window-fog{position:absolute;inset:0;background:linear-gradient(180deg,rgba(220,225,222,0),rgba(220,225,222,.55));opacity:0;transition:opacity .6s ease}
+.window-scene.mist .window-fog{opacity:.7}
+.window-rain{position:absolute;inset:0;opacity:0;transition:opacity .4s ease;overflow:hidden}
+.window-scene.rain .window-rain{opacity:1}
+.window-rain span{position:absolute;top:-20%;width:1.5px;height:40px;background:linear-gradient(rgba(200,220,220,.8),transparent);animation:rdrop .9s linear infinite}
+@keyframes rdrop{to{transform:translateY(140%)}}
+.weather-controls{display:flex;justify-content:center;gap:10px;margin-top:26px}
+.chai-note{text-align:center;font-family:var(--hand);font-size:20px;color:var(--gold);margin-top:14px;height:26px;opacity:0;transition:opacity .5s ease}
+.chai-note.show{opacity:1}
+#weather .chip{color:var(--cream);border-color:rgba(243,232,211,.4)}
+#weather .chip.active{background:var(--gold);border-color:var(--gold);color:var(--coffee)}
+
+/* ---------- ORDER CHOICE (physical table) ---------- */
+#paths{background:linear-gradient(180deg,#3a2a1c,var(--wood));color:var(--cream)}
+#paths .sec-head p{color:var(--paper);opacity:.75}
+.table-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:44px;align-items:center}
+@media(max-width:760px){.table-grid{grid-template-columns:1fr}}
+.paper-card{background:var(--paper);color:var(--ink);padding:38px;box-shadow:0 14px 30px rgba(0,0,0,.35);transform:rotate(-1.2deg);position:relative;text-decoration:none;display:block}
+.paper-card::after{content:'';position:absolute;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(110,66,43,.18),transparent 70%);top:20px;right:30px}
+.paper-card h3{font-size:26px;margin:12px 0 8px}
+.paper-card p{opacity:.75;font-size:14.5px;max-width:340px}
+.paper-card .go{display:inline-block;margin-top:18px;font-weight:600;color:var(--brick);font-size:13.5px}
+.mystery-card{background:var(--coffee);color:var(--cream);padding:34px;transform:rotate(1.5deg);position:relative;text-decoration:none;display:block;border:1px dashed var(--gold)}
+.mystery-card h3{font-family:var(--serif);font-size:22px;color:var(--gold);margin:10px 0 8px}
+.mystery-card p{opacity:.7;font-size:14px}
+.mystery-card .go{display:inline-block;margin-top:16px;font-weight:600;color:var(--gold);font-size:13.5px}
+.pencil-note{font-family:var(--hand);font-size:16px;color:var(--wood);position:absolute;bottom:14px;right:18px;transform:rotate(-3deg)}
+
+/* ---------- MENU ---------- */
+#menu{background:linear-gradient(180deg,var(--wood) 0,var(--wood) 90px,var(--paper) 90px)}
+.menu-title-card{background:var(--paper);padding:40px 40px 0;max-width:900px;margin:0 auto}
+.menu-controls{display:flex;flex-direction:column;gap:16px;margin-bottom:30px}
+.menu-search{width:100%;padding:13px 16px;border:1px solid var(--wood);background:var(--cream);font-size:15px;border-radius:3px;font-family:var(--sans)}
+.filter-row{display:flex;gap:9px;flex-wrap:wrap}
+.tab-row{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.tab-btn{background:var(--paper-2);border:1px solid var(--line);border-bottom:0;padding:10px 18px;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--wood);border-radius:8px 8px 0 0;position:relative;top:1px}
+.tab-btn.active{background:var(--cream);color:var(--brick);border-color:var(--wood)}
+.menu-body{background:var(--cream);border:1px solid var(--line);padding:34px;max-width:900px;margin:0 auto 40px}
+.menu-cat-title{font-family:var(--serif);font-size:22px;margin:40px 0 18px;font-style:italic;color:var(--wood)}
+.menu-feature{display:grid;grid-template-columns:.85fr 1.15fr;gap:0;border:1px solid var(--line);margin-bottom:30px;background:#fff}
+@media(max-width:640px){.menu-feature{grid-template-columns:1fr}}
+.menu-feature .food-art{min-height:240px}
+.mf-body{padding:28px}
+.mf-name{font-family:var(--serif);font-size:25px}
+.mf-desc{margin-top:8px;opacity:.72;font-size:14px;max-width:380px}
+.mf-price{font-family:var(--serif);font-size:20px;margin-top:16px;color:var(--brick)}
+.mf-hand{font-family:var(--hand);color:var(--brick);font-size:18px;margin-top:10px;display:inline-block;transform:rotate(-2deg)}
+.menu-list-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
+@media(max-width:700px){.menu-list-grid{grid-template-columns:1fr}}
+.menu-item{display:grid;grid-template-columns:1fr auto;gap:16px;padding:16px 0;border-bottom:1px dashed var(--line);align-items:baseline}
+.mi-name-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.mi-name{font-family:var(--serif);font-size:16.5px;font-weight:600}
+.badge{font-size:10px;border:1px solid var(--line);padding:2px 6px;border-radius:2px;color:var(--wood);opacity:.7}
+.mi-desc{opacity:.68;font-size:13px;margin-top:4px;max-width:320px}
+.mi-hand{font-family:var(--hand);color:var(--brick);font-size:14.5px;margin-top:3px}
+.mi-meta{font-size:10.5px;opacity:.45;margin-top:6px}
+.mi-price{font-family:var(--serif);font-size:16px}
+.menu-empty{padding:50px 0;text-align:center}
+.disclaimer{font-size:11.5px;opacity:.55;margin-top:24px;max-width:640px}
+
+/* ---------- FIND MY CUP ---------- */
+#findmycup{position:relative;background:linear-gradient(180deg,#0e1c17,#142E25 60%);color:var(--cream);overflow:hidden}
+#findmycup .eyebrow{color:var(--gold)}
+#findmycup .sec-head p{color:var(--paper);opacity:.75}
+.fmc-box{border:1px solid rgba(243,232,211,.22);padding:40px;max-width:680px;margin:0 auto;background:rgba(10,20,17,.4)}
+@media(max-width:640px){.fmc-box{padding:24px 18px}}
+.fmc-progress{display:flex;gap:8px;margin-bottom:30px}
+.fmc-progress span{height:2px;flex:1;background:rgba(243,232,211,.2)}
+.fmc-progress span.done{background:var(--gold)}
+.fmc-step-label{font-size:12px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.fmc-question{font-family:var(--serif);font-size:clamp(22px,3vw,28px);margin-bottom:26px}
+.fmc-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.fmc-options{grid-template-columns:1fr}}
+.fmc-opt{padding:16px 18px;border:1px solid rgba(243,232,211,.28);background:transparent;color:var(--cream);text-align:left;font-size:15px;border-radius:6px;min-height:54px;display:flex;align-items:center;gap:10px}
+.fmc-opt .em{font-size:19px}
+.fmc-opt:hover{border-color:var(--gold)}
+.fmc-opt.picked{background:var(--gold);border-color:var(--gold);color:var(--coffee);font-weight:600}
+/* mood atmosphere: selections subtly shift the box, not the whole page */
+.fmc-box.mood-cozy{background:rgba(166,83,63,.16);border-color:rgba(240,179,90,.35)}
+.fmc-box.mood-energy{filter:contrast(1.12) saturate(1.08)}
+.fmc-box.mood-study{background-image:linear-gradient(rgba(10,20,17,.4),rgba(10,20,17,.4)),repeating-linear-gradient(180deg,rgba(243,232,211,.03) 0 2px,transparent 2px 26px)}
+.fmc-box.mood-rain{position:relative;overflow:hidden}
+.fmc-box.mood-rain::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.25;
+  background-image:repeating-linear-gradient(100deg,rgba(200,220,220,.4) 0 1px,transparent 1px 40px);animation:boxrain 1.4s linear infinite}
+@keyframes boxrain{from{background-position-y:0}to{background-position-y:60px}}
+.fmc-box.mood-surprise{animation:surprisepulse 1.4s ease}
+@keyframes surprisepulse{0%{transform:scale(1)}30%{transform:scale(1.015)}60%{transform:scale(.99)}100%{transform:scale(1)}}
+/* result screen v2 */
+.why-breakdown{margin:24px auto 0;max-width:360px;text-align:left}
+.why-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13.5px}
+.why-row .wl{width:80px;flex-shrink:0;color:var(--paper);opacity:.8}
+.why-row .wbar{flex:1;height:6px;background:rgba(243,232,211,.15);border-radius:4px;overflow:hidden}
+.why-row .wbar span{display:block;height:100%;background:var(--gold);border-radius:4px}
+.why-row .wv{width:38px;text-align:right;color:var(--gold);font-weight:600;font-size:12.5px}
+.verified-box{margin:28px auto 0;max-width:400px;text-align:left;border:1px solid rgba(243,232,211,.25);background:rgba(10,20,17,.35)}
+.verified-box .vb-tag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);padding:10px 16px;border-bottom:1px solid rgba(243,232,211,.15);font-family:var(--sans)}
+.verified-box dl{margin:0;padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px}
+.verified-box dt{color:var(--paper);opacity:.6}
+.verified-box dd{margin:0;color:var(--cream)}
+.ask-house-btn{margin-top:26px}
+.human-pick{display:none;margin-top:20px;padding-top:20px;border-top:1px dashed rgba(243,232,211,.3)}
+.human-pick.show{display:block}
+.fmc-nav{display:flex;justify-content:space-between;margin-top:28px}
+.fmc-loading{text-align:center;padding:40px 0}
+.brew-cup{width:70px;height:56px;margin:0 auto;position:relative}
+.brew-cup .body{position:absolute;bottom:0;left:8px;right:8px;top:14px;background:var(--paper);border-radius:0 0 14px 14px}
+.brew-cup .handle{position:absolute;right:-10px;top:20px;width:16px;height:20px;border:5px solid var(--paper);border-left:0;border-radius:0 10px 10px 0}
+.brew-steam{position:absolute;top:-22px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.brew-steam span{width:3px;height:18px;background:rgba(243,232,211,.5);border-radius:2px;animation:steam 1.6s ease-in-out infinite}
+.brew-steam span:nth-child(2){animation-delay:.3s}
+.brew-steam span:nth-child(3){animation-delay:.6s}
+@keyframes steam{0%{transform:translateY(0);opacity:0}30%{opacity:.8}100%{transform:translateY(-16px);opacity:0}}
+.brew-text{margin-top:20px;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--gold)}
+.fmc-result{text-align:center}
+.match-pct{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.06em}
+.match-title{font-family:var(--serif);font-size:clamp(26px,4vw,38px);margin:12px 0 4px}
+.match-price{font-family:var(--serif);font-size:19px;margin-top:12px;color:var(--gold)}
+.why-list{list-style:none;padding:0;margin:22px auto 0;max-width:340px;text-align:left;font-size:14px;color:var(--paper)}
+.why-list li{padding:6px 0 6px 22px;position:relative;border-bottom:1px solid rgba(243,232,211,.12)}
+.why-list li::before{content:'—';position:absolute;left:0;color:var(--gold)}
+.human-pick{margin-top:34px;padding-top:28px;border-top:1px dashed rgba(243,232,211,.3)}
+.human-pick .eyebrow{color:var(--paper);opacity:.7}
+.human-pick .hp-name{font-family:var(--serif);font-size:20px;margin-top:8px}
+.human-pick p{font-family:var(--serif);font-style:italic;opacity:.7;margin-top:6px;font-size:14px}
+.fmc-result-actions{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.fmc-nomatch{padding:20px 0}
+
+/* ---------- HOUSE PICKS (photo strip) ---------- */
+#housepicks{background:var(--cream)}
+.hp-strip{display:flex;gap:22px;overflow-x:auto;padding-bottom:14px;scroll-snap-type:x proximity}
+.hp-card{flex:0 0 240px;scroll-snap-align:start;background:#fff;border:1px solid var(--line)}
+.hp-art{aspect-ratio:1/.85}
+.hp-body{padding:18px}
+.hp-name{font-family:var(--serif);font-size:17px}
+.hp-hand{font-family:var(--hand);color:var(--brick);font-size:16px;margin-top:4px}
+.hp-price{margin-top:10px;font-family:var(--serif);font-size:14px;opacity:.7}
+
+/* ---------- FIND YOUR CORNER ---------- */
+#corner{background:var(--paper)}
+.corner-choices{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+.corner-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:30px}
+@media(max-width:640px){.corner-tiles{grid-template-columns:repeat(2,1fr)}}
+.corner-tile{background:var(--cream);border:1px solid var(--line);padding:16px;text-align:center;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;color:var(--wood);transition:background .2s ease}
+.corner-tile.lit{background:var(--gold);color:var(--coffee);border-color:var(--gold)}
+.corner-tile svg{width:26px;height:26px;margin:0 auto 8px;display:block}
+.corner-result{border:1px solid var(--line);max-width:460px;display:none;background:#fff;overflow:hidden}
+.corner-result.show{display:block}
+.corner-result .cr-visual{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.corner-result .cr-body{padding:28px}
+.corner-result .kick{font-size:12px;letter-spacing:.1em;color:var(--brick);text-transform:uppercase}
+.corner-result h3{font-family:var(--serif);font-size:26px;margin-top:8px}
+.corner-result p{font-family:var(--serif);font-style:italic;margin-top:14px;font-size:14.5px;opacity:.85;white-space:pre-line}
+
+/* ---------- PASSPORT ---------- */
+#passport{background:var(--wood)}
+#passport .sec-head{color:var(--cream)}
+#passport .sec-head p{color:var(--paper);opacity:.8}
+.passport-wrap{max-width:420px;margin:0 auto;perspective:1200px}
+.passport-cover{background:linear-gradient(160deg,#173a2c,var(--forest));border:1px solid rgba(240,179,90,.4);border-radius:4px;padding:60px 30px;text-align:center;cursor:pointer;box-shadow:0 18px 40px rgba(0,0,0,.4);color:var(--cream)}
+.passport-cover .pp-title{font-family:var(--serif);font-size:24px;letter-spacing:.03em}
+.passport-cover .pp-sub{font-size:11px;letter-spacing:.2em;opacity:.65;margin-top:10px}
+.passport-cover .pp-elev{margin-top:26px;font-size:13px;color:var(--gold);letter-spacing:.1em}
+.passport-cover .pp-cta{margin-top:24px;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--paper);opacity:.7}
+.passport-pages{display:none;background:var(--cream);padding:34px;border:1px solid var(--line)}
+.passport-pages.open{display:block}
+.stamp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:6px}
+@media(max-width:520px){.stamp-grid{grid-template-columns:repeat(2,1fr)}}
+.stamp{aspect-ratio:1;border:2px solid var(--wood);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;text-align:center;padding:8px;font-size:10px;letter-spacing:.03em;font-weight:700;text-transform:uppercase;color:var(--wood);opacity:.25;filter:grayscale(1)}
+.stamp svg{width:22px;height:22px}
+.stamp.unlocked{opacity:1;filter:none;color:var(--brick);border-color:var(--brick);transform:rotate(var(--r,-4deg));background:rgba(166,83,63,.08)}
+.stamp.thump{animation:thump .4s ease}
+@keyframes thump{0%{transform:scale(1) rotate(var(--r,-4deg))}40%{transform:scale(1.25) rotate(var(--r,-4deg))}100%{transform:scale(1) rotate(var(--r,-4deg))}}
+
+/* ---------- BEAN DROP ---------- */
+#beandrop{background:var(--coffee);color:var(--cream)}
+#beandrop .sec-head p{color:var(--paper);opacity:.75}
+.bd-tag{font-size:13px;opacity:.6;margin-bottom:14px}
+.bd-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.bd-stat{font-family:var(--serif);font-size:15px}
+#beandrop-area{position:relative;height:420px;overflow:hidden;touch-action:none;border:6px solid var(--wood);border-radius:6px;
+  background:linear-gradient(180deg,#3c5a4d 0%,#1c2f27 42%,#4a3320 42%,#3a2717 100%)}
+.bd-rain span{position:absolute;top:-10%;width:1px;height:36px;background:linear-gradient(rgba(210,225,222,.6),transparent);animation:bdrain 1s linear infinite}
+@keyframes bdrain{to{transform:translateY(460px)}}
+.bean{position:absolute;width:26px;height:20px;border-radius:50% 50% 45% 45%;cursor:default}
+.bean::after{content:'';position:absolute;left:50%;top:3px;bottom:3px;width:1px;background:rgba(0,0,0,.25);transform:translateX(-50%)}
+.mug{position:absolute;bottom:14px;width:64px;height:46px;background:var(--cream);border-radius:0 0 12px 12px;box-shadow:0 6px 14px rgba(0,0,0,.4)}
+.mug::after{content:'';position:absolute;right:-12px;top:8px;width:16px;height:20px;border:5px solid var(--cream);border-left:0;border-radius:0 10px 10px 0}
+.bd-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(20,14,9,.92);text-align:center;padding:20px;color:var(--cream)}
+.bd-overlay h3{font-family:var(--serif);font-size:26px;margin-bottom:10px}
+.bd-overlay p{opacity:.7;margin-bottom:20px;max-width:320px}
+.bd-countdown{font-family:var(--serif);font-size:64px;color:var(--gold)}
+
+/* ---------- CLOUD COINS (noticeboard) ---------- */
+#coins{background:var(--wood);color:var(--cream)}
+#coins .sec-head p{color:var(--paper);opacity:.8}
+.board{background:#4a3320;border:10px solid #2e2013;border-radius:4px;padding:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:760px){.board{grid-template-columns:1fr}}
+.ticket{background:var(--cream);color:var(--ink);padding:20px;position:relative;box-shadow:0 8px 16px rgba(0,0,0,.3);transform:rotate(var(--rot,-1.5deg))}
+.ticket::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:var(--brick);box-shadow:0 2px 3px rgba(0,0,0,.4)}
+.ticket-cost{font-family:var(--serif);font-size:19px;color:var(--brick)}
+.ticket-name{font-size:14.5px;font-weight:600;margin-top:6px}
+.ticket-desc{font-size:12.5px;opacity:.65;margin-top:4px}
+.coin-badge{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe3a8,var(--gold) 60%,#b9782d 100%);display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:var(--coffee);border:1px solid #8a5a20}
+
+/* ---------- SECRET ---------- */
+#secret-modal{position:fixed;inset:0;background:rgba(10,7,5,.95);z-index:100;display:none;align-items:center;justify-content:center;padding:24px}
+#secret-modal.open{display:flex}
+#secret-modal.flicker{animation:flicker .5s steps(3) 1}
+@keyframes flicker{0%,100%{opacity:1}30%{opacity:.3}60%{opacity:.85}80%{opacity:.15}}
+.secret-box{max-width:600px;width:100%;background:linear-gradient(160deg,#2e1e12,var(--coffee));border:1px solid var(--gold);padding:42px;color:var(--cream);max-height:88vh;overflow:auto}
+.secret-box h3{font-family:var(--serif);font-size:27px;color:var(--gold)}
+.secret-items{margin-top:24px;display:grid;gap:16px}
+.secret-item{border-top:1px dashed rgba(243,232,211,.2);padding-top:14px}
+.secret-item .n{font-family:var(--serif);font-size:17px}
+.secret-item .d{font-size:12.5px;opacity:.6;margin-top:4px}
+.elev-click{cursor:pointer;border-bottom:1px dotted rgba(243,232,211,.4)}
+
+/* ---------- POSTCARD ---------- */
+#postcard{background:var(--forest);color:var(--cream)}
+#postcard .sec-head p{color:var(--paper);opacity:.75}
+.postcard-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+@media(max-width:800px){.postcard-layout{grid-template-columns:1fr}}
+.pc-scenes{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px}
+#postcard .chip{color:var(--cream);border-color:rgba(243,232,211,.35)}
+#postcard .chip.active{background:var(--gold);border-color:var(--gold);color:var(--coffee)}
+.pc-textarea{width:100%;padding:13px;border:1px solid rgba(243,232,211,.35);background:transparent;color:var(--cream);font-family:var(--sans);font-size:14px;min-height:100px;resize:vertical}
+.pc-count{font-size:11.5px;opacity:.6;margin-top:6px}
+.pc-canvas-wrap{position:relative}
+.pc-stamp{position:absolute;top:14px;right:14px;width:52px;height:64px;border:1.5px dashed rgba(243,232,211,.6);display:flex;align-items:center;justify-content:center;font-size:8px;letter-spacing:.08em;color:rgba(243,232,211,.7);text-align:center;z-index:2}
+canvas#pc-canvas{width:100%;border:1px solid rgba(243,232,211,.2);border-radius:2px}
+
+/* ---------- WINTERLINE ---------- */
+#winterline-sec{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--coffee),var(--wood));color:var(--cream)}
+body.winterline #winterline-sec{background:linear-gradient(180deg,#2a1420 0%,#a6533f 45%,#F0B35A 68%,var(--wood) 100%)}
+#winterline-sec .sec-head p{color:var(--paper);opacity:.8}
+.wl-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.28;transition:opacity .6s ease}
+body.winterline .wl-photo{opacity:.55}
+.wl-mtn{position:absolute;bottom:0;left:0;width:100%;height:55%;opacity:.6;pointer-events:none}
+body.winterline .wl-mtn{opacity:.85}
+
+/* ---------- AI TRANSPARENCY ---------- */
+#ai{background:var(--forest);color:var(--cream)}
+#ai .eyebrow{color:var(--gold)}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:8px}
+@media(max-width:760px){.ai-grid{grid-template-columns:1fr}}
+.ai-block h4{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.ai-block p,.ai-block ul{font-size:14px;opacity:.82;line-height:1.6;color:var(--paper)}
+.ai-block ul{padding-left:18px;margin:0}
+.ai-final{margin-top:44px;padding-top:30px;border-top:1px solid rgba(243,232,211,.15);text-align:center}
+.ai-final h3{font-family:var(--serif);font-size:14px;letter-spacing:.05em;text-transform:uppercase;opacity:.6}
+.ai-final .big{font-family:var(--serif);font-size:clamp(28px,4vw,44px);margin-top:8px;color:var(--gold)}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--coffee);color:var(--paper);padding:56px 0 30px}
+.foot-top{display:flex;justify-content:space-between;gap:36px;flex-wrap:wrap;padding-bottom:34px;border-bottom:1px solid rgba(243,232,211,.12)}
+.foot-brand{font-family:var(--serif);font-size:24px;color:var(--cream)}
+.foot-tag{font-style:italic;font-family:var(--serif);opacity:.65;margin-top:6px}
+.foot-links{display:flex;gap:24px;flex-wrap:wrap}
+.foot-links a{font-size:13px;text-decoration:none;color:var(--paper);opacity:.75}
+.foot-links a:hover{opacity:1;color:var(--gold)}
+.foot-bottom{padding-top:22px;font-size:11px;opacity:.45;line-height:1.7;max-width:760px}
+
+/* ---------- TOAST ---------- */
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--coffee);color:var(--cream);padding:14px 22px;border-radius:3px;font-size:13.5px;z-index:200;opacity:0;pointer-events:none;transition:all .35s ease;display:flex;align-items:center;gap:10px;border:1px solid var(--gold)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div id="door-overlay" aria-hidden="true">
+  <div class="door-half left"><span class="door-handle"></span></div>
+  <div class="door-half right"><span class="door-handle"></span></div>
+</div>
+
+<nav id="nav">
+  <div class="wrap nav-row">
+    <div class="brand">MIST &amp; MUG <small>2,005 M · MUSSOORIE</small></div>
+    <div class="nav-links">
+      <a href="#menu">Menu</a>
+      <a href="#findmycup">Your Cup ✦</a>
+      <a href="#housepicks">The Café</a>
+      <a href="#beandrop">Play</a>
+      <a href="#passport">Passport</a>
+      <a href="#ai">About AI</a>
+      <span class="coins-pill" aria-live="polite"><span class="coin-badge">M&amp;M</span> <span id="coin-count">0</span></span>
+    </div>
+    <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
+  </div>
+  <div id="mobile-menu">
+    <a href="#menu">Menu</a>
+    <a href="#findmycup">Your Cup ✦</a>
+    <a href="#housepicks">The Café</a>
+    <a href="#corner">Pick Your Corner</a>
+    <a href="#beandrop">Play</a>
+    <a href="#passport">Passport</a>
+    <a href="#ai">About AI</a>
+  </div>
+</nav>
+
+<header id="hero">
+  <div class="hero-photo-fallback" aria-hidden="true"></div>
+  <img class="hero-photo" id="hero-photo"
+    src="https://images.unsplash.com/photo-1774017092224-54c07e928a39?auto=format&fit=crop&w=1600&q=60"
+    srcset="https://images.unsplash.com/photo-1774017092224-54c07e928a39?auto=format&fit=crop&w=900&q=60 900w,
+            https://images.unsplash.com/photo-1774017092224-54c07e928a39?auto=format&fit=crop&w=1600&q=60 1600w,
+            https://images.unsplash.com/photo-1774017092224-54c07e928a39?auto=format&fit=crop&w=2400&q=60 2400w"
+    sizes="100vw" width="2400" height="1350"
+    alt="Fictional atmospheric mountain-village-at-dusk concept imagery for Mist & Mug — not a photo of a real café"
+    loading="eager" decoding="async"
+    onerror="this.style.display='none';document.querySelector('.hero-photo-fallback').style.display='block'">
+  <div class="hero-rain" id="hero-rain" aria-hidden="true"></div>
+  <div class="fog-layer">
+    <div class="fog-band"></div>
+    <div class="fog-band b2"></div>
+  </div>
+  <div class="cafe-window" aria-hidden="true"></div>
+  <div class="hero-steam" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="hero-glass" aria-hidden="true"></div>
+  <svg class="mtn" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
+    <polygon points="0,400 0,220 180,120 340,210 520,70 700,200 900,100 1050,190 1200,130 1200,400" fill="#0a130f" opacity=".7"/>
+    <polygon points="0,400 0,300 220,190 420,270 640,160 860,280 1080,200 1200,260 1200,400" fill="#0c1713"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="hero-kicker">A café somewhere in the clouds</div>
+    <h1 class="hero-title">MIST &amp; MUG</h1>
+    <div class="hero-come-in">Come in.<br>It's cold outside.</div>
+    <p class="hero-tag">Coffee tastes different above the clouds.</p>
+    <div class="hero-ctas">
+      <button type="button" class="btn gold" id="step-inside">STEP INSIDE →</button>
+      <a href="#findmycup" class="btn ghost" style="border-color:var(--cream);color:var(--cream)">FIND MY CUP ✦</a>
+    </div>
+    <div class="hero-note">"we saved you the window seat."</div>
+    <div class="hero-note" style="margin-top:2px;font-size:12px;color:rgba(243,232,211,.55);font-family:var(--sans)">
+      <button type="button" id="elev-click" class="elev-click" style="background:none;border:0;color:inherit;font-family:inherit;padding:0">CONCEPT CAFÉ · 2,005 M ↑</button>
+    </div>
+  </div>
+</header>
+
+<section id="weather">
+  <div class="wrap">
+    <div class="sec-head" style="text-align:center;margin:0 auto 30px">
+      <span class="eyebrow">Through the glass</span>
+      <h2>What's the<br>weather doing?</h2>
+      <span class="margin-hand">probably changing again.</span>
+    </div>
+    <div class="window-frame">
+      <div class="window-scene" id="window-scene">
+        <div class="window-photo-fallback" aria-hidden="true"></div>
+        <img class="window-photo" id="window-photo"
+          src="https://images.unsplash.com/photo-1756155160750-42354f02c1b7?auto=format&fit=crop&w=800&q=60"
+          srcset="https://images.unsplash.com/photo-1756155160750-42354f02c1b7?auto=format&fit=crop&w=500&q=60 500w,
+                  https://images.unsplash.com/photo-1756155160750-42354f02c1b7?auto=format&fit=crop&w=800&q=60 800w"
+          sizes="(max-width: 640px) 90vw, 520px" width="800" height="600"
+          alt="Fictional atmospheric misty pine-mountain concept imagery, seen through the café window"
+          loading="lazy" decoding="async"
+          onerror="this.style.display='none';document.querySelector('.window-photo-fallback').style.display='block'">
+        <div class="window-fog" aria-hidden="true"></div>
+        <div class="window-rain" id="window-rain" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="weather-controls" role="group" aria-label="Weather Window">
+      <button class="chip active" data-weather="clear">CLEAR</button>
+      <button class="chip" data-weather="mist">MIST</button>
+      <button class="chip" data-weather="rain">RAIN</button>
+    </div>
+    <p class="chai-note" id="chai-note">"chai weather."</p>
+    <p style="text-align:center;font-size:12.5px;opacity:.55;max-width:340px;margin:16px auto 0">A fictional visual setting — no real weather or location is read. Inside the café stays warm either way.</p>
+  </div>
+</section>
+
+<section id="paths">
+  <div class="wrap sec-head">
+    <span class="eyebrow">Pull up a chair</span>
+    <h2>How do you want to order?</h2>
+  </div>
+  <div class="wrap"><div class="table-grid">
+    <a href="#menu" class="paper-card">
+      <span class="eyebrow" style="color:var(--wood)">The paper menu</span>
+      <h3>Explore the Menu</h3>
+      <p>30+ things worth getting distracted by. Turn the page at your own pace — no questions asked.</p>
+      <span class="go">→ open the menu</span>
+      <span class="pencil-note">turn the page</span>
+    </a>
+    <a href="#findmycup" class="mystery-card">
+      <span class="eyebrow" style="color:var(--gold)">Not sure?</span>
+      <h3>Let Us Pick ✦</h3>
+      <p>Tell us the mood, we'll narrow the clouds. A short, honest prototype of assisted discovery.</p>
+      <span class="go">→ five quick questions</span>
+    </a>
+  </div></div>
+</section>
+
+<section id="menu">
+  <div class="menu-title-card">
+    <div class="sec-head">
+      <span class="eyebrow">The Menu</span>
+      <h2>Made for slow mornings, long conversations, and weather that changes its mind.</h2>
+      <span class="margin-hand">best when it rains</span>
+    </div>
+    <div class="menu-controls">
+      <label for="menu-search" style="position:absolute;left:-9999px">Search the menu</label>
+      <input id="menu-search" class="menu-search" type="search" placeholder="Search the menu — try 'chai' or 'cold'">
+      <div class="filter-row" id="filter-row" role="group" aria-label="Menu filters">
+        <button class="chip active" data-filter="all">ALL</button>
+        <button class="chip" data-filter="under250">UNDER ₹250</button>
+        <button class="chip" data-filter="veg">VEGETARIAN</button>
+        <button class="chip" data-filter="vegan">VEGAN</button>
+        <button class="chip" data-filter="hot">HOT</button>
+        <button class="chip" data-filter="cold">COLD</button>
+        <button class="chip" data-filter="lowcaf">LOW CAFFEINE</button>
+      </div>
+      <div class="tab-row" id="cat-row" role="group" aria-label="Categories"></div>
+    </div>
+  </div>
+  <div class="menu-body">
+    <div id="menu-list"></div>
+    <p class="disclaimer">For educational demonstration only. Dietary and allergen information shown here is fictional and must not be used for real-world health decisions. "yes, breakfast is allowed at 4pm."</p>
+  </div>
+</section>
+
+<section id="findmycup">
+  <div class="wrap">
+    <div class="sec-head" style="max-width:640px;margin:0 auto 36px;text-align:center">
+      <span class="eyebrow">Assisted Discovery — Prototype</span>
+      <h2 style="font-size:clamp(30px,5vw,52px)">Let's find<br>your cup.</h2>
+      <p>Five short questions. Once deterministic rules filter the menu to what actually fits your answers, an AI model ranks among those eligible items and explains its pick — see <a href="#ai" style="text-decoration:underline">About AI</a> for exactly how that's validated.</p>
+    </div>
+    <div class="fmc-box" id="fmc-box"></div>
+  </div>
+</section>
+
+<section id="housepicks">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">If you asked the person behind the counter...</span>
+      <h2>"They'd probably say these."</h2>
+    </div>
+    <div class="hp-strip" id="hp-grid"></div>
+  </div>
+</section>
+
+<section id="corner">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Pick Your Corner</span>
+      <h2>What are you here for?</h2>
+      <p>A simple rule-based suggestion — not AI, just six honest answers to six honest reasons.</p>
+    </div>
+    <div class="corner-choices" id="corner-choices" role="group" aria-label="Reason for visiting"></div>
+    <div class="corner-tiles" id="corner-tiles" aria-hidden="true"></div>
+    <div class="corner-result" id="corner-result"></div>
+  </div>
+</section>
+
+<section id="passport">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Cloud Passport</span>
+      <h2>Your stamps so far</h2>
+      <p>An anonymous, browser-local record of what you've discovered. No account, no identity, no tracking — it lives only on this device.</p>
+    </div>
+    <div class="passport-wrap">
+      <div class="passport-cover" id="passport-cover">
+        <div class="pp-title">MIST &amp; MUG</div>
+        <div class="pp-sub">CLOUD PASSPORT</div>
+        <div class="pp-elev">2005 M</div>
+        <div class="pp-cta">Click to open</div>
+      </div>
+      <div class="passport-pages" id="passport-pages">
+        <div class="stamp-grid" id="stamp-grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="beandrop">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">A Small Game</span>
+      <h2>Bean<br>Drop</h2>
+      <p class="bd-tag">45 seconds. One mug. Questionable hand-eye coordination. <span class="hand" style="font-size:16px">winner buys chai.</span></p>
+    </div>
+    <div class="bd-hud">
+      <span class="bd-stat">Score: <strong id="bd-score">0</strong></span>
+      <span class="bd-stat">Time: <strong id="bd-time">45</strong>s</span>
+      <span class="bd-stat">Best: <strong id="bd-best">0</strong></span>
+    </div>
+    <div id="beandrop-area">
+      <div class="bd-overlay" id="bd-overlay">
+        <h3>Bean Drop</h3>
+        <p>Move your mug to catch what falls. +10 normal, +30 gold, −15 if you catch a burnt one. Score 150+ for the Bean Hunter stamp.</p>
+        <button class="btn gold" id="bd-start">START GAME</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="coins">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Cloud Coins</span>
+      <h2>The noticeboard</h2>
+      <p>Earned through Bean Drop and a few discoveries around the site. Concept rewards only — no monetary value, nothing to redeem in real life.</p>
+    </div>
+    <div class="board" id="rewards-grid"></div>
+  </div>
+</section>
+
+<section id="postcard">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Postcard From the Clouds</span>
+      <h2>Send yourself a mountain</h2>
+      <p>Write something short. We never ask who it's for.</p>
+    </div>
+    <div class="postcard-layout">
+      <div>
+        <div class="pc-scenes" id="pc-scenes" role="group" aria-label="Postcard scene"></div>
+        <label for="pc-message" style="font-size:13px;font-weight:600;display:block;margin-bottom:8px">Your message</label>
+        <textarea id="pc-message" class="pc-textarea" maxlength="180" placeholder="Wish you could see this fog..."></textarea>
+        <div class="pc-count"><span id="pc-count">0</span>/180</div>
+        <button class="btn gold" id="pc-render" style="margin-top:16px">Render Postcard</button>
+        <button class="btn ghost" id="pc-download" style="margin-top:16px;border-color:rgba(243,232,211,.5);color:var(--cream)" disabled>Download PNG</button>
+      </div>
+      <div class="pc-canvas-wrap">
+        <div class="pc-stamp" aria-hidden="true">MIST<br>&amp;<br>MUG</div>
+        <canvas id="pc-canvas" width="900" height="600"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="winterline-sec">
+  <div class="wl-photo-fallback" aria-hidden="true"></div>
+  <img class="wl-photo" id="wl-photo"
+    src="https://images.unsplash.com/photo-1759434188733-03ff6f0d8cc5?auto=format&fit=crop&w=1400&q=60"
+    srcset="https://images.unsplash.com/photo-1759434188733-03ff6f0d8cc5?auto=format&fit=crop&w=900&q=60 900w,
+            https://images.unsplash.com/photo-1759434188733-03ff6f0d8cc5?auto=format&fit=crop&w=1400&q=60 1400w"
+    sizes="100vw" width="1400" height="700"
+    alt="Fictional atmospheric hazy mountain sunset concept imagery, evoking Mussoorie's winterline"
+    loading="lazy" decoding="async"
+    onerror="this.style.display='none';document.querySelector('.wl-photo-fallback').style.display='block'">
+  <svg class="wl-mtn" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+    <polygon points="0,300 0,180 200,90 380,170 600,60 820,160 1000,80 1200,150 1200,300" fill="#1a1010" opacity=".55"/>
+    <polygon points="0,300 0,220 240,140 460,210 700,120 940,200 1200,150 1200,300" fill="#120a0a"/>
+  </svg>
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="sec-head">
+      <span class="eyebrow">Wait. Don't leave yet.</span>
+      <h2>The winterline is out.</h2>
+      <p>A recurring Mussoorie sunset band, right before the lights come on across the valley. Try it on the rest of the page.</p>
+    </div>
+    <button class="btn gold" id="winterline-toggle">ACTIVATE WINTERLINE MODE</button>
+  </div>
+</section>
+
+<section id="ai">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">About AI</span>
+      <h2>AI, without the mystery.</h2>
+      <span class="margin-hand" style="color:var(--gold)">the algorithm doesn't drink coffee. we do.</span>
+    </div>
+    <div class="ai-grid">
+      <div class="ai-block">
+        <h4>How AI is used here</h4>
+        <p>After your mood, budget, taste, and dietary answers pass through deterministic filtering, the eligible items — never the whole menu — are sent to an AI model to rank by preference and write a one-line explanation. The model never sees full menu data, only what's needed to reason.</p>
+      </div>
+      <div class="ai-block">
+        <h4>What code controls, always</h4>
+        <p>Price, ingredients, dietary tags, allergens, and availability are attached from our structured menu data after the AI responds — never generated, never edited by the model. The AI can only choose among items that already passed the hard filters.</p>
+      </div>
+      <div class="ai-block">
+        <h4>Where AI is not trusted for facts</h4>
+        <ul><li>Prices</li><li>Ingredients</li><li>Dietary classifications</li><li>Allergens</li><li>Rewards</li><li>Core menu data</li></ul>
+      </div>
+      <div class="ai-block">
+        <h4>Validated before you see it</h4>
+        <p>Every AI response is checked: is the item ID real, was it in the eligible set, does it still fit the budget and diet you picked? If any check fails, the result is replaced by our deterministic house rules and labeled "Rule-based fallback" — never shown as if it came from the model.</p>
+      </div>
+      <div class="ai-block">
+        <h4>What the model receives</h4>
+        <p>Only your selected mood and taste preferences plus the eligible candidate list (id, name, category, price, temperature, caffeine, taste and mood tags). No name, no device or account identifiers, no Cloud Coins or Passport history, no free-form text from you.</p>
+      </div>
+      <div class="ai-block">
+        <h4>What we don't ask for</h4>
+        <ul><li>Names</li><li>Phone numbers</li><li>Emails</li><li>IDs</li><li>Payment information</li><li>Location</li></ul>
+      </div>
+    </div>
+    <div class="ai-block" style="margin-top:28px;border-top:1px solid rgba(243,232,211,.15);padding-top:24px">
+      <h4>An honest limitation</h4>
+      <p>This page calls the AI model directly from your browser using this platform's built-in, keyless request path — no API key is ever embedded in this page's code. That mechanism only works while this page is running inside Claude's own preview environment. If this file is hosted elsewhere as a plain website, that request will fail automatically and safely: Find My Cup falls back to the deterministic house rules every time, clearly labeled "Rule-based fallback." A true always-on deployment would need a small real server holding its own key — not built or deployed here.</p>
+    </div>
+    <div class="ai-final">
+      <h3>Who gets the final say?</h3>
+      <p class="big">You do. Always.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand">MIST &amp; MUG</div>
+        <div class="foot-tag">"An imaginary café above the clouds."</div>
+        <div class="hand" style="font-size:16px;margin-top:10px;opacity:.8">still here? we like you.</div>
+      </div>
+      <div class="foot-links">
+        <a href="#menu">Menu</a>
+        <a href="#findmycup">Your Cup</a>
+        <a href="#housepicks">The Café</a>
+        <a href="#passport">Passport</a>
+        <a href="#ai">About AI</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      MIST &amp; MUG is a fictional educational café concept. Products, rewards, café details and customer scenarios shown on this website are simulated. For educational demonstration only. MUSSOORIE-INSPIRED · CONCEPT PROJECT · 2026
+    </div>
+  </div>
+</footer>
+
+<div id="secret-modal" role="dialog" aria-modal="true" aria-labelledby="secret-title">
+  <div class="secret-box">
+    <svg viewBox="0 0 80 80" style="width:52px;height:52px;margin-bottom:14px"><circle cx="40" cy="40" r="26" fill="none" stroke="#F0B35A" stroke-width="1.5" opacity=".5"/><circle cx="40" cy="40" r="18" fill="none" stroke="#F0B35A" stroke-width="1.5" opacity=".8"/><circle cx="40" cy="40" r="6" fill="#F0B35A"/></svg>
+    <span class="eyebrow" style="color:var(--gold)">Above 2,000</span>
+    <h3 id="secret-title">You found the other menu.</h3>
+    <p style="opacity:.7;font-size:13.5px;margin-top:10px">Off-menu experiments — small batches, no promises they'll be back tomorrow.</p>
+    <div class="secret-items" id="secret-items"></div>
+    <button class="btn ghost secret-close" id="secret-close" style="border-color:var(--cream);color:var(--cream);margin-top:26px">Close the door</button>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============ DATA ============ */
+const MENU = [
+{id:'m01',name:'Landour Latte',category:'COFFEE',description:'Espresso, steamed milk, a whisper of cardamom.',price:220,ingredients:['espresso','milk','cardamom'],vegetarian:true,vegan:false,allergens:['dairy'],caffeine:'high',sweetness:'low',temp:'hot',taste:['creamy','strong'],mood:['cozy','focused'],featured:true,housePick:true,note:"yes, it's the obvious choice."},
+{id:'m02',name:'Classic Cappuccino',category:'COFFEE',description:'Equal parts espresso, milk, and foam.',price:190,ingredients:['espresso','milk'],vegetarian:true,vegan:false,allergens:['dairy'],caffeine:'high',sweetness:'low',temp:'hot',taste:['creamy','strong'],mood:['social','cozy'],featured:false,housePick:false},
+{id:'m03',name:'Flat White',category:'COFFEE',description:'Ristretto shots under a thin layer of micro-foam.',price:210,ingredients:['espresso','milk'],vegetarian:true,vegan:false,allergens:['dairy'],caffeine:'high',sweetness:'low',temp:'hot',taste:['creamy','strong'],mood:['focused'],featured:false,housePick:false},
+{id:'m04',name:'Espresso',category:'COFFEE',description:'A double shot, nothing standing in its way.',price:140,ingredients:['espresso'],vegetarian:true,vegan:true,allergens:[],caffeine:'high',sweetness:'low',temp:'hot',taste:['strong'],mood:['focused','adventurous'],featured:false,housePick:false,note:'strong enough for Monday.'},
+{id:'m05',name:'Hazelnut Cortado',category:'COFFEE',description:'Espresso cut with warm milk, a note of roasted hazelnut.',price:230,ingredients:['espresso','milk','hazelnut syrup'],vegetarian:true,vegan:false,allergens:['dairy','nuts'],caffeine:'high',sweetness:'medium',temp:'hot',taste:['creamy','sweet'],mood:['cozy'],featured:false,housePick:false},
+{id:'m06',name:'Cold Brew',category:'COFFEE',description:'Steeped 18 hours, served over ice, no dilution.',price:210,ingredients:['coffee','water','ice'],vegetarian:true,vegan:true,allergens:[],caffeine:'high',sweetness:'low',temp:'cold',taste:['strong','refreshing'],mood:['adventurous','focused'],featured:true,housePick:false},
+{id:'m07',name:'Orange Espresso Tonic',category:'COFFEE',description:'Espresso over tonic water, a wide slice of orange.',price:260,ingredients:['espresso','tonic water','orange'],vegetarian:true,vegan:true,allergens:[],caffeine:'medium',sweetness:'medium',temp:'cold',taste:['refreshing'],mood:['adventurous','social'],featured:true,housePick:false},
+{id:'m08',name:'Americano',category:'COFFEE',description:'Espresso, opened up with hot water.',price:160,ingredients:['espresso','water'],vegetarian:true,vegan:true,allergens:[],caffeine:'high',sweetness:'low',temp:'hot',taste:['strong'],mood:['focused'],featured:false,housePick:false},
+
+{id:'m09',name:'Pahadi Masala Chai',category:'MOUNTAIN WARMERS',description:'Black tea, whole spices, simmered with milk the hill way.',price:130,ingredients:['tea','milk','spices'],vegetarian:true,vegan:false,allergens:['dairy'],caffeine:'medium',sweetness:'medium',temp:'hot',taste:['sweet','creamy'],mood:['cozy','social'],featured:false,housePick:true,note:"good when it's raining."},
+{id:'m10',name:'Kashmiri Kahwa',category:'MOUNTAIN WARMERS',description:'Green tea, saffron, almond slivers, a little cinnamon.',price:150,ingredients:['green tea','saffron','almond','cinnamon'],vegetarian:true,vegan:true,allergens:['nuts'],caffeine:'low',sweetness:'low',temp:'hot',taste:['refreshing'],mood:['cozy','focused'],featured:false,housePick:false},
+{id:'m11',name:'Himalayan Hot Chocolate',category:'MOUNTAIN WARMERS',description:'Dark chocolate melted slowly into whole milk.',price:240,ingredients:['dark chocolate','milk'],vegetarian:true,vegan:false,allergens:['dairy'],caffeine:'low',sweetness:'high',temp:'hot',taste:['sweet','creamy'],mood:['cozy','social'],featured:true,housePick:true},
+{id:'m12',name:'Ginger Lemon Honey',category:'MOUNTAIN WARMERS',description:'Fresh ginger, lemon, and honey in hot water.',price:170,ingredients:['ginger','lemon','honey'],vegetarian:true,vegan:false,allergens:[],caffeine:'none',sweetness:'medium',temp:'hot',taste:['refreshing'],mood:['cozy'],featured:false,housePick:false},
+{id:'m13',name:'Turmeric Milk',category:'MOUNTAIN WARMERS',description:'Warm milk, turmeric, a little black pepper.',price:180,ingredients:['milk','turmeric','pepper'],vegetarian:true,vegan:false,allergens:['dairy'],caffeine:'none',sweetness:'low',temp:'hot',taste:['creamy'],mood:['cozy'],featured:false,housePick:false},
+
+{id:'m14',name:'French Butter Croissant',category:'BREAKFAST',description:'Laminated, baked each morning, nothing added.',price:160,ingredients:['flour','butter'],vegetarian:true,vegan:false,allergens:['dairy','gluten'],caffeine:'none',sweetness:'low',temp:'room',taste:['sweet','creamy'],mood:['cozy'],featured:false,housePick:false},
+{id:'m15',name:'Mountain Breakfast Plate',category:'BREAKFAST',description:'Eggs, sautéed greens, roasted potatoes, toast.',price:480,ingredients:['egg','potato','greens','bread'],vegetarian:true,vegan:false,allergens:['dairy','egg','gluten'],caffeine:'none',sweetness:'low',temp:'hot',taste:['strong','creamy'],mood:['social','adventurous'],featured:true,housePick:true},
+{id:'m16',name:'Avocado Sourdough',category:'BREAKFAST',description:'Smashed avocado, chili flake, lemon, on sourdough.',price:320,ingredients:['avocado','sourdough','lemon','chili'],vegetarian:true,vegan:true,allergens:['gluten'],caffeine:'none',sweetness:'low',temp:'room',taste:['refreshing','creamy'],mood:['focused','adventurous'],featured:false,housePick:false},
+{id:'m17',name:'Wild Mushroom Toast',category:'BREAKFAST',description:'Sautéed local mushrooms, thyme, brown butter.',price:340,ingredients:['mushroom','butter','thyme','bread'],vegetarian:true,vegan:false,allergens:['dairy','gluten'],caffeine:'none',sweetness:'low',temp:'hot',taste:['creamy','strong'],mood:['focused'],featured:false,housePick:false},
+{id:'m18',name:'Cinnamon French Toast',category:'BREAKFAST',description:'Brioche, cinnamon custard, maple.',price:300,ingredients:['brioche','egg','milk','cinnamon','maple'],vegetarian:true,vegan:false,allergens:['dairy','egg','gluten'],caffeine:'none',sweetness:'high',temp:'hot',taste:['sweet','creamy'],mood:['cozy','social'],featured:false,housePick:false},
+{id:'m19',name:'Bun Maska',category:'BREAKFAST',description:'Soft bun, cold butter, a little sugar on the side.',price:150,ingredients:['bun','butter','sugar'],vegetarian:true,vegan:false,allergens:['dairy','gluten'],caffeine:'none',sweetness:'medium',temp:'hot',taste:['sweet','creamy'],mood:['cozy'],featured:false,housePick:false},
+
+{id:'m20',name:'Cheese Chilli Toast',category:'SMALL PLATES',description:'Melted cheese, green chili, grilled bread.',price:260,ingredients:['cheese','chili','bread'],vegetarian:true,vegan:false,allergens:['dairy','gluten'],caffeine:'none',sweetness:'low',temp:'hot',taste:['strong','creamy'],mood:['social'],featured:false,housePick:false},
+{id:'m21',name:'Himalayan Herb Fries',category:'SMALL PLATES',description:'Hand-cut fries, mountain herbs, sea salt.',price:220,ingredients:['potato','herbs','salt'],vegetarian:true,vegan:true,allergens:[],caffeine:'none',sweetness:'low',temp:'hot',taste:['strong','refreshing'],mood:['social','adventurous'],featured:false,housePick:false},
+{id:'m22',name:'Roasted Vegetable Sandwich',category:'SMALL PLATES',description:'Seasonal vegetables, herb oil, grilled sourdough.',price:280,ingredients:['vegetables','bread','herb oil'],vegetarian:true,vegan:true,allergens:['gluten'],caffeine:'none',sweetness:'low',temp:'room',taste:['refreshing'],mood:['focused','adventurous'],featured:false,housePick:false},
+{id:'m23',name:'Paneer Tikka Toastie',category:'SMALL PLATES',description:'Tandoor-spiced paneer, mint chutney, toasted bread.',price:300,ingredients:['paneer','spices','bread'],vegetarian:true,vegan:false,allergens:['dairy','gluten'],caffeine:'none',sweetness:'low',temp:'hot',taste:['strong','creamy'],mood:['social'],featured:false,housePick:false},
+{id:'m24',name:'Soup of the Fog',category:'SMALL PLATES',description:'A rotating wild mushroom soup, cream, thyme oil.',price:240,ingredients:['mushroom','cream','thyme'],vegetarian:true,vegan:false,allergens:['dairy'],caffeine:'none',sweetness:'low',temp:'hot',taste:['creamy'],mood:['cozy','focused'],featured:false,housePick:false},
+
+{id:'m25',name:'Burnt Basque Cheesecake',category:'SWEET',description:'Deliberately scorched top, molten center.',price:260,ingredients:['cream cheese','egg','sugar'],vegetarian:true,vegan:false,allergens:['dairy','egg','gluten'],caffeine:'none',sweetness:'high',temp:'cold',taste:['sweet','creamy'],mood:['social','cozy'],featured:true,housePick:false},
+{id:'m26',name:'Apple Cinnamon Tart',category:'SWEET',description:'Thin apple slices, cinnamon, a shortcrust base.',price:210,ingredients:['apple','cinnamon','flour','butter'],vegetarian:true,vegan:false,allergens:['gluten','dairy'],caffeine:'none',sweetness:'high',temp:'room',taste:['sweet'],mood:['cozy','adventurous'],featured:false,housePick:true,note:'order two. trust us.'},
+{id:'m27',name:'Dark Chocolate Eclair',category:'SWEET',description:'Choux pastry, vanilla cream, dark chocolate glaze.',price:230,ingredients:['flour','egg','cream','chocolate'],vegetarian:true,vegan:false,allergens:['dairy','egg','gluten'],caffeine:'none',sweetness:'high',temp:'room',taste:['sweet','creamy'],mood:['cozy','social'],featured:false,housePick:false},
+{id:'m28',name:'Cloud Tiramisu',category:'SWEET',description:'Espresso-soaked layers, mascarpone, cocoa dust.',price:280,ingredients:['espresso','mascarpone','egg','cocoa'],vegetarian:true,vegan:false,allergens:['dairy','egg','gluten'],caffeine:'low',sweetness:'high',temp:'cold',taste:['sweet','creamy','strong'],mood:['social','adventurous'],featured:true,housePick:true},
+{id:'m29',name:'Classic Madeleines',category:'SWEET',description:'Shell-shaped, buttery, a little citrus zest.',price:170,ingredients:['flour','butter','egg','lemon zest'],vegetarian:true,vegan:false,allergens:['dairy','egg','gluten'],caffeine:'none',sweetness:'medium',temp:'room',taste:['sweet'],mood:['cozy','social'],featured:false,housePick:false},
+{id:'m30',name:'Walnut Banana Loaf',category:'SWEET',description:'Dense banana loaf, toasted walnut, a little brown sugar.',price:190,ingredients:['banana','walnut','flour','sugar'],vegetarian:true,vegan:true,allergens:['gluten','nuts'],caffeine:'none',sweetness:'medium',temp:'room',taste:['sweet','creamy'],mood:['cozy','focused'],featured:false,housePick:false}
+];
+
+const SECRET_MENU = [
+  {name:'Winterline Chocolate',price:260,description:'Hot chocolate, chili, orange oil — named for the band of color after sunset.'},
+  {name:'Cloud No. 9',price:280,description:'Nitro cold brew, a thin float of cream, no stirring allowed.'},
+  {name:'After Rain Espresso',price:240,description:'Espresso, rosemary tonic, the smell of wet pine on purpose.'},
+  {name:'The 2,005',price:300,description:"Our signature layered pour — ask and we still won't fully explain it."}
+];
+
+const CATEGORIES = ['COFFEE','MOUNTAIN WARMERS','BREAKFAST','SMALL PLATES','SWEET'];
+const CAT_LABELS = {'COFFEE':'Coffee','MOUNTAIN WARMERS':'Chai & Warmers','BREAKFAST':'Breakfast','SMALL PLATES':'Small Plates','SWEET':'Dessert'};
+const FOOD_ART_CLASS = {'COFFEE':'fa-1','MOUNTAIN WARMERS':'fa-3','BREAKFAST':'fa-2','SMALL PLATES':'fa-4','SWEET':'fa-5'};
+
+function foodIcon(category){
+  if(category==='COFFEE') return '<svg viewBox="0 0 80 80">'+
+    '<ellipse cx="38" cy="63" rx="24" ry="4" fill="#1c130c" opacity=".2"/>'+
+    '<path d="M16 30h44v19a22 22 0 0 1-44 0z" fill="#3a2416"/>'+
+    '<path d="M20 33h36v16a18 18 0 0 1-36 0z" fill="#F3E8D3"/>'+
+    '<path d="M20 33h36v6H20z" fill="#c98d52"/>'+
+    '<path d="M38 36c-6 0-9 3-13 2 3 3 2 6 6 6s5-3 9-2c4 1 4 4 8 2-4-3-1-6-4-7-3-1-3 0-6-1z" fill="#e7c79a" opacity=".9"/>'+
+    '<path d="M60 35h6a9 9 0 0 1 0 18h-6" fill="none" stroke="#3a2416" stroke-width="4"/>'+
+    '<path d="M26 16c3 4-3 6 0 10M37 13c3 4-3 6 0 10M48 16c3 4-3 6 0 10" stroke="#cbb9a0" stroke-width="2.5" fill="none" opacity=".6" stroke-linecap="round"/>'+
+    '</svg>';
+  if(category==='MOUNTAIN WARMERS') return '<svg viewBox="0 0 80 80">'+
+    '<ellipse cx="40" cy="66" rx="22" ry="4" fill="#1c130c" opacity=".2"/>'+
+    '<path d="M22 34h36l-5 28a7 7 0 0 1-7 6H34a7 7 0 0 1-7-6z" fill="#b5754a"/>'+
+    '<path d="M22 34h36l3-7H19z" fill="#8a5a3a"/>'+
+    '<path d="M30 38l20 0-2 20a4 4 0 0 1-4 4h-8a4 4 0 0 1-4-4z" fill="#7a3a1e" opacity=".5"/>'+
+    '<path d="M29 14c3 4-3 6 0 10M40 11c3 4-3 6 0 10M51 14c3 4-3 6 0 10" stroke="#e7d3ba" stroke-width="2.5" fill="none" opacity=".65" stroke-linecap="round"/>'+
+    '</svg>';
+  if(category==='BREAKFAST') return '<svg viewBox="0 0 80 80">'+
+    '<ellipse cx="40" cy="60" rx="26" ry="4" fill="#1c130c" opacity=".15"/>'+
+    '<path d="M10 46c6-16 18-26 30-26s24 10 30 26c-9-7-18-4-23 3-4-9-13-12-17-4-5-8-14-9-20-3z" fill="#c98d52"/>'+
+    '<path d="M10 46c6-16 18-26 30-26s24 10 30 26" fill="none" stroke="#8a5a3a" stroke-width="2" opacity=".5"/>'+
+    '<path d="M20 34c3-5 7-8 11-9M40 26c5 0 9 3 12 8M52 32c3 3 5 7 6 11" stroke="#e7c79a" stroke-width="1.6" fill="none" opacity=".6"/>'+
+    '</svg>';
+  if(category==='SMALL PLATES') return '<svg viewBox="0 0 80 80"><ellipse cx="40" cy="46" rx="30" ry="10" fill="#e7dcc4" opacity=".85"/><ellipse cx="40" cy="43" rx="30" ry="10" fill="#F3E8D3"/><ellipse cx="40" cy="43" rx="22" ry="6.5" fill="#e7dcc4" opacity=".6"/><rect x="26" y="26" width="10" height="18" rx="2" fill="#c98d52"/><rect x="40" y="22" width="10" height="22" rx="2" fill="#d9a35f"/><path d="M28 30h6M42 26h6" stroke="#8a5a3a" stroke-width="1.5" opacity=".5"/></svg>';
+  return '<svg viewBox="0 0 80 80">'+
+    '<ellipse cx="40" cy="62" rx="26" ry="4" fill="#1c130c" opacity=".18"/>'+
+    '<path d="M16 60l24-42 24 42z" fill="#c98d52"/>'+
+    '<path d="M22 60l18-31 18 31z" fill="#a6683a"/>'+
+    '<path d="M28 60l12-21 12 21z" fill="#8a5a3a"/>'+
+    '<path d="M40 18c4 3 3 7 0 9-3-2-4-6 0-9z" fill="#F3E8D3" opacity=".9"/>'+
+    '<circle cx="34" cy="46" r="2" fill="#F3E8D3" opacity=".8"/><circle cx="46" cy="50" r="2" fill="#F3E8D3" opacity=".8"/>'+
+    '</svg>';
+}
+const ART_CLASSES = ['art-1','art-2','art-3','art-4','art-5'];
+function artFor(seed){
+  let h = 0;
+  for(let i=0;i<seed.length;i++) h = (h*31 + seed.charCodeAt(i)) >>> 0;
+  return ART_CLASSES[h % ART_CLASSES.length];
+}
+const STAMP_ICONS = {
+  'FIRST SIP':'<svg viewBox="0 0 40 40"><path d="M10 16h20v10a10 10 0 0 1-20 0z" fill="currentColor"/></svg>',
+  'FOG WALKER':'<svg viewBox="0 0 40 40"><circle cx="16" cy="16" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 28h24M8 32h18" stroke="currentColor" stroke-width="2"/></svg>',
+  'BEAN HUNTER':'<svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="10" ry="14" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 6v28" stroke="currentColor" stroke-width="2"/></svg>',
+  'WINDOW 07':'<svg viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 8v24M8 20h24" stroke="currentColor" stroke-width="2"/></svg>',
+  'SECRET FOUND':'<svg viewBox="0 0 40 40"><circle cx="14" cy="20" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20h14M28 20v6M33 20v4" stroke="currentColor" stroke-width="2"/></svg>',
+  'CLOUD NINE':'<svg viewBox="0 0 40 40"><path d="M12 26a6 6 0 0 1 1-12 8 8 0 0 1 15-3 6 6 0 0 1 1 15z" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+  'ABOVE THE CLOUDS':'<svg viewBox="0 0 40 40"><path d="M6 28l10-14 6 8 6-10 10 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>'
+};
+
+const CORNERS = {
+  READ:{name:'Window 07',lines:['Mountain-facing.','Quiet.','Plug nearby.','Dangerously easy to stay for three hours.']},
+  STUDY:{name:"The Writer's Corner",lines:["Desk height that doesn't lie.",'Plug sockets.','Low chatter.']},
+  DATE:{name:'Fireplace Nook',lines:['Two seats.','Low light.','Closer than the menu suggests.']},
+  FRIENDS:{name:'Game Table',lines:['Cards, chess, low stakes.','Communal.','Never quiet.']},
+  MOUNTAIN:{name:'Cloud Deck',lines:['Open air.','Full valley view.','Bring a jacket.']},
+  NOTHING:{name:'The Long Table',lines:['Sun patch by the window.','No agenda.','Stay as long as you like.']}
+};
+
+/* ============ STATE / LOCALSTORAGE ============ */
+const LS_KEY='mistmug_state_v1';
+function loadState(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {coins:0,stamps:{},beanHigh:0};
+}
+let state = loadState();
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){ /* localStorage unavailable — state stays in-memory for this session */ }
+}
+function addCoins(n){ state.coins += n; saveState(); renderCoins(); }
+function unlockStamp(key,label){
+  if(state.stamps[key]) return;
+  state.stamps[key]=true; saveState(); renderStamps(true);
+  toast('Stamp earned: '+label);
+}
+function renderCoins(){ document.getElementById('coin-count').textContent = state.coins; }
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._h);
+  toast._h = setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+/* ============ NAV ============ */
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobile-menu');
+burger.addEventListener('click',()=>{
+  const open = mobileMenu.classList.toggle('open');
+  burger.setAttribute('aria-expanded', open ? 'true':'false');
+});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  mobileMenu.classList.remove('open'); burger.setAttribute('aria-expanded','false');
+}));
+
+/* ============ DOOR TRANSITION ============ */
+const doorOverlay = document.getElementById('door-overlay');
+document.getElementById('step-inside').addEventListener('click',()=>{
+  doorOverlay.classList.add('playing');
+  document.body.classList.add('inside');
+  setTimeout(()=>{
+    doorOverlay.classList.remove('playing');
+    document.getElementById('menu').scrollIntoView({behavior:'smooth'});
+  },560);
+});
+
+/* restrained parallax: mountains drift slower than the fog above them */
+(function initParallax(){
+  const mtn = document.querySelector('#hero .mtn');
+  if(!mtn || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let ticking = false;
+  window.addEventListener('scroll',()=>{
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(()=>{
+      const y = window.scrollY;
+      if(y < window.innerHeight){ mtn.style.transform = 'translateY(' + (y*0.12) + 'px)'; }
+      ticking = false;
+    });
+  }, {passive:true});
+})();
+
+/* ============ HERO RAIN ============ */
+(function initHeroRain(){
+  const wrap = document.getElementById('hero-rain');
+  for(let i=0;i<26;i++){
+    const s = document.createElement('span');
+    s.style.left = (Math.random()*100)+'%';
+    s.style.animationDelay = (Math.random()*1.2)+'s';
+    s.style.animationDuration = (0.8+Math.random()*0.6)+'s';
+    wrap.appendChild(s);
+  }
+})();
+
+/* ============ WEATHER WINDOW ============ */
+document.querySelectorAll('#weather .chip').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#weather .chip').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const v = btn.dataset.weather;
+    const scene = document.getElementById('window-scene');
+    scene.classList.remove('mist','rain');
+    if(v==='mist'){ scene.classList.add('mist'); document.documentElement.style.setProperty('--fog-opacity','.4'); }
+    if(v==='rain'){
+      scene.classList.add('rain');
+      const rw = document.getElementById('window-rain');
+      if(!rw.dataset.built){
+        for(let i=0;i<22;i++){
+          const s = document.createElement('span');
+          s.style.left = (Math.random()*100)+'%';
+          s.style.animationDelay = (Math.random()*0.9)+'s';
+          rw.appendChild(s);
+        }
+        rw.dataset.built = '1';
+      }
+      unlockStamp('FOG WALKER','Fog Walker');
+      const note = document.getElementById('chai-note');
+      note.classList.add('show');
+      clearTimeout(note._h);
+      note._h = setTimeout(()=>note.classList.remove('show'), 2600);
+    }
+    if(v==='clear'){ document.documentElement.style.setProperty('--fog-opacity','.15'); }
+  });
+});
+
+/* ============ MENU RENDER ============ */
+let activeFilter = 'all';
+let activeCat = 'ALL';
+let searchTerm = '';
+
+function matchesFilter(item){
+  switch(activeFilter){
+    case 'under250': return item.price < 250;
+    case 'veg': return item.vegetarian;
+    case 'vegan': return item.vegan;
+    case 'hot': return item.temp === 'hot';
+    case 'cold': return item.temp === 'cold';
+    case 'lowcaf': return item.caffeine === 'none' || item.caffeine === 'low';
+    default: return true;
+  }
+}
+function matchesSearch(item){
+  if(!searchTerm) return true;
+  const s = searchTerm.toLowerCase();
+  return item.name.toLowerCase().includes(s) || item.description.toLowerCase().includes(s) || item.category.toLowerCase().includes(s);
+}
+
+function renderCatRow(){
+  const row = document.getElementById('cat-row');
+  const cats = ['ALL', ...CATEGORIES];
+  row.innerHTML = cats.map(c=>`<button class="tab-btn${c===activeCat?' active':''}" data-cat="${c}">${c==='ALL'?'All':CAT_LABELS[c]}</button>`).join('');
+  row.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{
+    activeCat = b.dataset.cat; renderCatRow(); renderMenu();
+  }));
+}
+
+function menuItemRow(item){
+  return `<div class="menu-item">
+    <div>
+      <div class="mi-name-row">
+        <span class="mi-name">${item.name}</span>
+        <span class="badge">${item.vegan?'VEGAN':(item.vegetarian?'VEG':'')}</span>
+        ${item.housePick?'<span class="badge">☕ HOUSE</span>':''}
+      </div>
+      <p class="mi-desc">${item.description}</p>
+      ${item.note?`<p class="mi-hand">"${item.note}"</p>`:''}
+      <p class="mi-meta">${item.temp.toUpperCase()} · ${item.caffeine.toUpperCase()} CAFFEINE${item.allergens.length? ' · CONTAINS '+item.allergens.join(', ').toUpperCase() : ''}</p>
+    </div>
+    <div class="mi-price">₹${item.price}</div>
+  </div>`;
+}
+
+function renderMenu(){
+  const list = document.getElementById('menu-list');
+  const cats = activeCat==='ALL' ? CATEGORIES : [activeCat];
+  let anyResults = false;
+  let html = '';
+  cats.forEach(cat=>{
+    const items = MENU.filter(i=>i.category===cat && matchesFilter(i) && matchesSearch(i));
+    if(!items.length) return;
+    anyResults = true;
+    const feature = items.find(i=>i.featured);
+    const rest = items.filter(i=>i!==feature);
+    html += `<div class="menu-cat-block"><h3 class="menu-cat-title">${CAT_LABELS[cat]}</h3>`;
+    if(feature){
+      html += `<div class="menu-feature">
+        <div class="food-art ${FOOD_ART_CLASS[feature.category]}">${foodIcon(feature.category)}<span class="cap">₹${feature.price}</span></div>
+        <div class="mf-body">
+          <div class="mf-name">${feature.name}</div>
+          <p class="mf-desc">${feature.description}</p>
+          <div class="mf-price">₹${feature.price}</div>
+          ${feature.note?`<span class="mf-hand">"${feature.note}"</span>`:''}
+        </div>
+      </div>`;
+    }
+    if(rest.length){
+      html += `<div class="menu-list-grid">${rest.map(menuItemRow).join('')}</div>`;
+    }
+    html += `</div>`;
+  });
+  if(!anyResults){
+    html = `<div class="menu-empty"><p class="disp" style="font-style:italic;font-size:20px">Nothing in the cupboard matches that yet.</p><button class="btn ghost" id="clear-filters-btn" style="margin-top:16px">CLEAR FILTERS →</button></div>`;
+  }
+  list.innerHTML = html;
+  if(!anyResults){
+    document.getElementById('clear-filters-btn').addEventListener('click',()=>{
+      activeFilter='all'; activeCat='ALL'; searchTerm='';
+      document.getElementById('menu-search').value='';
+      document.querySelectorAll('#filter-row .chip').forEach(c=>c.classList.remove('active'));
+      document.querySelector('#filter-row .chip[data-filter="all"]').classList.add('active');
+      renderCatRow(); renderMenu();
+    });
+  }
+}
+document.querySelectorAll('#filter-row .chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#filter-row .chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    activeFilter = chip.dataset.filter;
+    renderMenu();
+  });
+});
+document.getElementById('menu-search').addEventListener('input',(e)=>{
+  searchTerm = e.target.value;
+  renderMenu();
+});
+renderCatRow();
+renderMenu();
+
+/* ============ HOUSE PICKS ============ */
+function renderHousePicks(){
+  const grid = document.getElementById('hp-grid');
+  const picks = MENU.filter(i=>i.housePick);
+  grid.innerHTML = picks.map(p=>`
+    <div class="hp-card">
+      <div class="hp-art food-art ${FOOD_ART_CLASS[p.category]}">${foodIcon(p.category)}</div>
+      <div class="hp-body">
+        <div class="hp-name">${p.name}</div>
+        <div class="hp-hand">"${p.note || 'a house favourite.'}"</div>
+        <div class="hp-price">₹${p.price}</div>
+      </div>
+    </div>
+  `).join('');
+}
+renderHousePicks();
+
+/* ============ FIND MY CUP ============ */
+const FMC_STEPS = [
+  {key:'mood',label:'Step 1', q:'How are we feeling today?', opts:[
+    {v:'Cozy',em:'☁'},{v:'Need Energy',em:'⚡'},{v:'Study Mode',em:'📚'},{v:'Rainy Mood',em:'🌧'},{v:'Surprise Me',em:'🎲'}
+  ]},
+  {key:'budget',label:'Step 2', q:'How much are we spending?', opts:[{v:'Under ₹200'},{v:'₹200–₹350'},{v:'₹350–₹500'},{v:'Surprise Me'}]},
+  {key:'taste',label:'Step 3', q:'What sounds right?', opts:[{v:'Strong'},{v:'Sweet'},{v:'Creamy'},{v:'Refreshing'},{v:'Surprise Me'}]},
+  {key:'diet',label:'Step 4', q:'Dietary preference', opts:[{v:'No preference'},{v:'Vegetarian'},{v:'Vegan'}]}
+];
+const MOOD_MAP = {'Cozy':'cozy','Need Energy':'focused','Study Mode':'focused','Rainy Mood':'cozy','Surprise Me':null};
+let fmcState = {step:0, answers:{}};
+const MOOD_ATMOSPHERE = {'Cozy':'mood-cozy','Need Energy':'mood-energy','Study Mode':'mood-study','Rainy Mood':'mood-rain','Surprise Me':'mood-surprise'};
+function applyMoodAtmosphere(box){
+  const cls = fmcState.answers.mood ? MOOD_ATMOSPHERE[fmcState.answers.mood] : null;
+  box.className = 'fmc-box' + (cls ? ' '+cls : '');
+}
+
+function fmcRender(){
+  const box = document.getElementById('fmc-box');
+  applyMoodAtmosphere(box);
+  if(fmcState.step < FMC_STEPS.length){
+    const s = FMC_STEPS[fmcState.step];
+    const progress = FMC_STEPS.map((_,i)=>`<span class="${i<=fmcState.step?'done':''}"></span>`).join('');
+    box.innerHTML = `
+      <div class="fmc-progress">${progress}</div>
+      <div class="fmc-step-label">${s.label} of ${FMC_STEPS.length}</div>
+      <div class="fmc-question">${s.q}</div>
+      <div class="fmc-options">${s.opts.map(o=>`<button class="fmc-opt${fmcState.answers[s.key]===o.v?' picked':''}" data-val="${o.v}">${o.em?`<span class="em">${o.em}</span>`:''}${o.v}</button>`).join('')}</div>
+      <div class="fmc-nav">
+        <button class="btn ghost" style="border-color:var(--cream);color:var(--cream)" id="fmc-back" ${fmcState.step===0?'disabled':''}>← Back</button>
+        <button class="btn gold" id="fmc-next" ${fmcState.answers[s.key]?'':'disabled'}>${fmcState.step===FMC_STEPS.length-1?'Brew My Match':'Next'}</button>
+      </div>
+    `;
+    box.querySelectorAll('.fmc-opt').forEach(b=>b.addEventListener('click',()=>{
+      fmcState.answers[s.key] = b.dataset.val;
+      fmcRender();
+    }));
+    document.getElementById('fmc-back').addEventListener('click',()=>{
+      if(fmcState.step>0){ fmcState.step--; fmcRender(); }
+    });
+    document.getElementById('fmc-next').addEventListener('click',()=>{
+      if(fmcState.step < FMC_STEPS.length-1){ fmcState.step++; fmcRender(); }
+      else { fmcBrew(); }
+    });
+  }
+}
+
+function budgetRange(b){
+  if(b==='Under ₹200') return [0,200];
+  if(b==='₹200–₹350') return [0,350];
+  if(b==='₹350–₹500') return [0,500];
+  return [0,999];
+}
+
+function escapeHTML(s){
+  const d = document.createElement('div');
+  d.textContent = String(s==null?'':s);
+  return d.innerHTML;
+}
+
+/* ---- Deterministic hard-constraint filter. AI never sees or decides these. ---- */
+function hardFilter(a){
+  const dietOk = (item)=> a.diet==='Vegan' ? item.vegan : (a.diet==='Vegetarian' ? item.vegetarian : true);
+  const [ ,maxBudget] = budgetRange(a.budget);
+  return MENU.filter(i=> dietOk(i) && (i.price <= maxBudget || a.budget==='Surprise Me'));
+}
+
+/* ---- Deterministic scoring — used as: (a) the always-available fallback engine,
+   (b) the comparison baseline / "house" reasoning. Unchanged logic from the prototype. ---- */
+function deterministicPick(eligible,a){
+  const moodTag = MOOD_MAP[a.mood];
+  function score(item){
+    let s = 0, total = 0;
+    const tasteHit = a.taste!=='Surprise Me' && item.taste.includes(a.taste.toLowerCase());
+    const moodHit = !!(moodTag && item.mood.includes(moodTag));
+    total++; if(tasteHit) s++;
+    total++; if(moodHit) s++;
+    return {s,total,tasteHit,moodHit};
+  }
+  const drinkCats = ['COFFEE','MOUNTAIN WARMERS'];
+  const foodCats = ['BREAKFAST','SMALL PLATES','SWEET'];
+  const drinks = eligible.filter(i=>drinkCats.includes(i.category));
+  const foods = eligible.filter(i=>foodCats.includes(i.category));
+  function rank(list){ return list.map(i=>({item:i, ...score(i)})).sort((x,y)=> (y.s/y.total) - (x.s/x.total) || x.item.price - y.item.price); }
+  const rDrinks = rank(drinks), rFoods = rank(foods);
+  const [ ,maxBudget] = budgetRange(a.budget);
+  let best = null;
+  for(const d of rDrinks){
+    for(const f of rFoods){
+      const total = d.item.price + f.item.price;
+      if(total <= maxBudget || a.budget==='Surprise Me'){
+        const combined = (d.s+f.s)/(d.total+f.total);
+        if(!best || combined > best.combined) best = {items:[d.item,f.item],price:total,combined,hits:[d,f]};
+      }
+    }
+  }
+  if(!best){
+    const rAll = rank(eligible);
+    const top = rAll[0];
+    best = {items:[top.item],price:top.item.price,combined:top.s/top.total,hits:[top]};
+  }
+  const moodHitCount = best.hits.filter(h=>h.moodHit).length;
+  const tasteHitCount = best.hits.filter(h=>h.tasteHit).length;
+  return {
+    items: best.items, price: best.price,
+    moodPct: a.mood==='Surprise Me' ? null : Math.round((moodHitCount/best.hits.length)*100),
+    tastePct: a.taste==='Surprise Me' ? null : Math.round((tasteHitCount/best.hits.length)*100)
+  };
+}
+
+/* ---- AI recommendation layer. Only ranks among already-eligible candidates and
+   writes a short explanation. Never a source of truth for price/ingredients/allergens/
+   dietary/caffeine — those are re-attached from MENU after validation. ---- */
+const FMC_DEBUG = new URLSearchParams(location.search).get('debug')==='1';
+let fmcLastDebug = null;
+
+async function callAIRecommendation(eligible, a){
+  const candidatesForAI = eligible.map(i=>({id:i.id,name:i.name,category:i.category,price:i.price,temp:i.temp,caffeine:i.caffeine,taste:i.taste,mood:i.mood}));
+  const systemPrompt = 'You are the recommendation reasoning layer for the fictional MIST & MUG educational café. '+
+    'You may recommend ONLY an item ID contained in ELIGIBLE_CANDIDATES. Never invent menu items. '+
+    'Never modify prices, ingredients, allergens or dietary classifications — those facts are controlled by the application. '+
+    "Use the user's selected mood and taste preferences to rank the eligible candidates. "+
+    'Price must never be treated as an indicator of quality. Indian and Western-style menu items must receive equal consideration. '+
+    'Do not infer or reference gender, age, religion, nationality, income, or health. '+
+    'Return ONLY this JSON object and nothing else — no markdown fences, no commentary: '+
+    '{"recommendedItemId":"<id from ELIGIBLE_CANDIDATES>","reason":"<one short sentence, under 25 words>","preferenceMatches":{"mood":<0-100 integer>,"taste":<0-100 integer>}}';
+  const userMsg = 'PREFERENCES (anonymous, session-only):\nmood='+a.mood+'\ntaste='+a.taste+
+    '\n\nELIGIBLE_CANDIDATES (already passed deterministic budget + dietary filtering):\n'+JSON.stringify(candidatesForAI);
+
+  const controller = new AbortController();
+  const timeout = setTimeout(()=>controller.abort(), 10000);
+  const debug = {preferences:a, eligibleIds:eligible.map(i=>i.id), rawItemId:null, validationPassed:false, fallbackTriggered:false, errorStage:null};
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      signal: controller.signal,
+      body: JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens: 300,
+        system: systemPrompt,
+        messages:[{role:'user',content:userMsg}]
+      })
+    });
+    if(!res.ok){ debug.errorStage = 'http_'+res.status; debug.fallbackTriggered = true; fmcLastDebug = debug; return {ok:false}; }
+    const data = await res.json();
+    const textBlock = (data.content||[]).find(b=>b.type==='text');
+    if(!textBlock){ debug.errorStage = 'no_text_block'; debug.fallbackTriggered = true; fmcLastDebug = debug; return {ok:false}; }
+    let clean = textBlock.text.trim().replace(/^```json/i,'').replace(/^```/,'').replace(/```$/,'').trim();
+    let parsed;
+    try{ parsed = JSON.parse(clean); }
+    catch(e){ debug.errorStage = 'malformed_json'; debug.fallbackTriggered = true; fmcLastDebug = debug; return {ok:false}; }
+
+    debug.rawItemId = parsed && parsed.recommendedItemId;
+    const idOk = typeof parsed.recommendedItemId === 'string' && eligible.some(i=>i.id===parsed.recommendedItemId);
+    const pm = parsed.preferenceMatches || {};
+    const numsOk = Number.isFinite(pm.mood) && Number.isFinite(pm.taste);
+    const reasonOk = typeof parsed.reason === 'string' && parsed.reason.length>0 && parsed.reason.length<300;
+    if(!idOk || !numsOk || !reasonOk){ debug.errorStage = 'validation_failed'; debug.fallbackTriggered = true; fmcLastDebug = debug; return {ok:false}; }
+
+    const item = MENU.find(i=>i.id===parsed.recommendedItemId);
+    if(!item || item.price > budgetRange(a.budget)[1] && a.budget!=='Surprise Me'){ debug.errorStage = 'post_validation_failed'; debug.fallbackTriggered = true; fmcLastDebug = debug; return {ok:false}; }
+    if(a.diet==='Vegan' && !item.vegan){ debug.errorStage = 'diet_violation'; debug.fallbackTriggered = true; fmcLastDebug = debug; return {ok:false}; }
+    if(a.diet==='Vegetarian' && !item.vegetarian){ debug.errorStage = 'diet_violation'; debug.fallbackTriggered = true; fmcLastDebug = debug; return {ok:false}; }
+
+    debug.validationPassed = true;
+    fmcLastDebug = debug;
+    return {ok:true, item, reason:parsed.reason, moodPct:Math.max(0,Math.min(100,Math.round(pm.mood))), tastePct:Math.max(0,Math.min(100,Math.round(pm.taste)))};
+  }catch(err){
+    debug.errorStage = (err && err.name==='AbortError') ? 'timeout' : 'network_error';
+    debug.fallbackTriggered = true;
+    fmcLastDebug = debug;
+    return {ok:false};
+  }finally{
+    clearTimeout(timeout);
+  }
+}
+
+function fmcBrew(){
+  const box = document.getElementById('fmc-box');
+  applyMoodAtmosphere(box);
+  const a = fmcState.answers;
+  const eligible = hardFilter(a);
+  if(!eligible.length){
+    box.innerHTML = `<div class="fmc-nomatch">
+      <p class="disp" style="font-size:22px;font-style:italic">Nothing on our current concept menu fits every choice.</p>
+      <p style="opacity:.7;margin-top:12px;font-size:14px">Try loosening the budget or dietary preference.</p>
+      <div class="fmc-result-actions">
+        <button class="btn gold" id="fmc-restart">CHANGE MY ANSWERS</button>
+      </div>
+    </div>`;
+    document.getElementById('fmc-restart').addEventListener('click',()=>{ fmcState={step:0,answers:{}}; fmcRender(); });
+    return;
+  }
+  box.innerHTML = `<div class="fmc-loading">
+    <div class="brew-cup"><div class="brew-steam"><span></span><span></span><span></span></div><div class="body"></div><div class="handle"></div></div>
+    <div class="brew-text" id="brew-text">brewing your match...</div>
+  </div>`;
+  const phrases = ['brewing your match...','checking the menu...','keeping inside your budget...','comparing the good stuff...','one second...'];
+  let i = 0;
+  const el = document.getElementById('brew-text');
+  const iv = setInterval(()=>{ i++; if(el && i<phrases.length) el.textContent = phrases[i]; },500);
+  const minWait = new Promise(res=>setTimeout(res,1400));
+  Promise.all([callAIRecommendation(eligible,a), minWait]).then(([aiResult])=>{
+    clearInterval(iv);
+    if(aiResult.ok){
+      fmcRenderResult({source:'ai', items:[aiResult.item], price:aiResult.item.price, moodPct:aiResult.moodPct, tastePct:aiResult.tastePct, reasonText:aiResult.reason}, eligible, a);
+    }else{
+      const fb = deterministicPick(eligible,a);
+      fmcRenderResult({source:'fallback', items:fb.items, price:fb.price, moodPct:fb.moodPct, tastePct:fb.tastePct, reasonText:null}, eligible, a);
+    }
+  });
+}
+
+function fmcRenderResult(result, eligible, a){
+  const box = document.getElementById('fmc-box');
+  applyMoodAtmosphere(box);
+  const items = result.items;
+  const resultIds = items.map(i=>i.id);
+  const moodPct = result.moodPct, tastePct = result.tastePct;
+  const overallPct = Math.max(58, Math.round(((moodPct??75)+(tastePct??75))/2));
+
+  const allAllergens = [...new Set(items.flatMap(i=>i.allergens))];
+  const allIngredients = items.flatMap(i=>i.ingredients).join(', ');
+  const allVegan = items.every(i=>i.vegan);
+  const allVeg = items.every(i=>i.vegetarian);
+  const dietLabel = allVegan ? 'Vegan' : (allVeg ? 'Vegetarian' : 'Contains non-veg');
+  const drinkForCaffeine = items.find(i=>i.category==='COFFEE'||i.category==='MOUNTAIN WARMERS');
+  const caffeineLabel = drinkForCaffeine ? drinkForCaffeine.caffeine : 'none';
+  const humanPick = MENU.find(p=>p.housePick && !resultIds.includes(p.id)) || MENU.find(p=>p.housePick);
+  const foodArtCat = items[0].category;
+
+  const sourceTag = result.source==='ai'
+    ? `<span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:3px 8px;border-radius:10px">AI-assisted</span>`
+    : `<span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper);opacity:.7;border:1px solid rgba(243,232,211,.4);padding:3px 8px;border-radius:10px">Rule-based fallback</span>`;
+  const fallbackNotice = result.source==='fallback'
+    ? `<p style="font-size:12.5px;opacity:.65;margin-top:10px;max-width:340px;margin-left:auto;margin-right:auto">The clouds interrupted the connection, so we used our house matching rules instead.</p>`
+    : '';
+  const aiReasonBlock = result.source==='ai'
+    ? `<p style="font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--paper);opacity:.9;max-width:360px;margin:16px auto 0">"${escapeHTML(result.reasonText)}"</p>`
+    : '';
+
+  box.innerHTML = `<div class="fmc-result">
+    <div class="eyebrow" style="color:var(--gold)">Your Cup ✦</div>
+    <div style="margin-top:8px">${sourceTag}</div>
+    <div class="match-pct" style="font-size:15px;margin-top:10px">${overallPct}% MATCH</div>
+    <div class="food-art ${FOOD_ART_CLASS[foodArtCat]}" style="width:120px;height:120px;margin:18px auto;border-radius:50%">${foodIcon(foodArtCat)}</div>
+    <div class="match-title">${items.map(i=>i.name).join(' + ')}</div>
+    <div class="match-price">₹${result.price}</div>
+    ${aiReasonBlock}
+    ${fallbackNotice}
+
+    <button class="btn ghost small" id="fmc-why-toggle" style="margin-top:22px;border-color:var(--cream);color:var(--cream)">WHY ${overallPct}%?</button>
+    <div class="why-breakdown" id="fmc-why-box" style="display:none">
+      ${moodPct!==null ? `<div class="why-row"><span class="wl">Mood</span><span class="wbar"><span style="width:${moodPct}%"></span></span><span class="wv">${moodPct}%</span></div>` : `<div class="why-row"><span class="wl">Mood</span><span class="wbar"><span style="width:100%"></span></span><span class="wv">any</span></div>`}
+      ${tastePct!==null ? `<div class="why-row"><span class="wl">Taste</span><span class="wbar"><span style="width:${tastePct}%"></span></span><span class="wv">${tastePct}%</span></div>` : `<div class="why-row"><span class="wl">Taste</span><span class="wbar"><span style="width:100%"></span></span><span class="wv">any</span></div>`}
+      <div class="why-row"><span class="wl">Budget</span><span class="wbar"><span style="width:100%"></span></span><span class="wv">✓</span></div>
+      <div class="why-row"><span class="wl">Dietary</span><span class="wbar"><span style="width:100%"></span></span><span class="wv">✓</span></div>
+    </div>
+
+    <div class="verified-box">
+      <div class="vb-tag">Verified menu facts — from structured data, not generated</div>
+      <dl>
+        <dt>Price</dt><dd>₹${result.price}</dd>
+        <dt>Ingredients</dt><dd>${escapeHTML(allIngredients)}</dd>
+        <dt>Vegetarian/Vegan</dt><dd>${dietLabel}</dd>
+        <dt>Caffeine</dt><dd>${caffeineLabel.charAt(0).toUpperCase()+caffeineLabel.slice(1)}</dd>
+        <dt>Allergens</dt><dd>${allAllergens.length ? escapeHTML(allAllergens.join(', ')) : 'None listed'}</dd>
+      </dl>
+    </div>
+
+    <div class="ask-house-btn">
+      <span class="eyebrow" style="color:var(--paper);opacity:.7">Not feeling it?</span><br>
+      <button class="btn ghost small" id="ask-house" style="margin-top:10px;border-color:var(--gold);color:var(--gold)">ASK THE HOUSE ☕</button>
+    </div>
+    <div class="human-pick" id="human-pick-block">
+      <span class="eyebrow">The house disagrees</span>
+      <div class="hp-name">${humanPick.name} ☕</div>
+      <p>"You picked ${escapeHTML(a.mood.toLowerCase())} + ${escapeHTML(a.taste.toLowerCase())}. The algorithm had its reasons. We'd still make you this."</p>
+      <button class="btn ghost small" id="fmc-human-why-toggle" style="margin-top:14px;border-color:var(--cream);color:var(--cream)">WHY THE HUMAN OVERRIDE?</button>
+      <p id="fmc-human-why-box" style="display:none;font-size:13px;opacity:.75;margin-top:12px;max-width:340px;margin-left:auto;margin-right:auto">The AI ranks by preference similarity to what you selected. The house pick prioritizes the intended café experience instead — sometimes that means recommending something you didn't ask for but would probably enjoy more.</p>
+    </div>
+
+    ${FMC_DEBUG && fmcLastDebug ? `<div style="margin-top:26px;text-align:left;background:rgba(0,0,0,.3);border:1px solid rgba(243,232,211,.2);padding:14px;font-size:11px;font-family:monospace;color:var(--paper);white-space:pre-wrap">DEV DIAGNOSTIC (debug=1)\n${escapeHTML(JSON.stringify(fmcLastDebug,null,2))}</div>` : ''}
+
+    <div class="fmc-result-actions">
+      <button class="btn gold" id="fmc-again">TRY ANOTHER MATCH</button>
+      <button class="btn ghost" id="fmc-restart2" style="border-color:var(--cream);color:var(--cream)">CHANGE MY ANSWERS</button>
+    </div>
+  </div>`;
+  document.getElementById('fmc-why-toggle').addEventListener('click',()=>{
+    const el = document.getElementById('fmc-why-box');
+    el.style.display = el.style.display==='none' ? 'block' : 'none';
+  });
+  document.getElementById('ask-house').addEventListener('click',(e)=>{
+    document.getElementById('human-pick-block').classList.add('show');
+    e.target.style.display = 'none';
+  });
+  const hwt = document.getElementById('fmc-human-why-toggle');
+  if(hwt) hwt.addEventListener('click',()=>{
+    const el = document.getElementById('fmc-human-why-box');
+    el.style.display = el.style.display==='none' ? 'block' : 'none';
+  });
+  document.getElementById('fmc-again').addEventListener('click',fmcBrew);
+  document.getElementById('fmc-restart2').addEventListener('click',()=>{ fmcState={step:0,answers:{}}; fmcRender(); });
+
+  unlockStamp('FIRST SIP','First Sip');
+}
+fmcRender();
+
+/* ============ FIND MY CORNER ============ */
+const cornerChoices = document.getElementById('corner-choices');
+const cornerLabels = [['READ','Read'],['STUDY','Study'],['DATE','Date'],['FRIENDS','Friends'],['MOUNTAIN','View'],['NOTHING','Nothing']];
+cornerChoices.innerHTML = cornerLabels.map(([k,l])=>`<button class="chip" data-corner="${k}">${l.toUpperCase()}</button>`).join('');
+const cornerTiles = document.getElementById('corner-tiles');
+const TILE_LIST = ['Window Seat','Fireplace','Bookshelf','Game Table','Balcony','Quiet Corner'];
+const TILE_ICONS = {
+  'Window Seat':'<svg viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 8v24M8 20h24" stroke="currentColor" stroke-width="2"/></svg>',
+  'Fireplace':'<svg viewBox="0 0 40 40"><path d="M14 30c-4-6 0-10 2-13-1 4 3 4 3 1 2 3 5 5 3 10-1 2-1 2 0 2 3-1 3-4 2-6 3 2 4 6 1 9-4 4-9 3-11-3z" fill="currentColor"/></svg>',
+  'Bookshelf':'<svg viewBox="0 0 40 40"><rect x="8" y="8" width="5" height="24" fill="currentColor"/><rect x="15" y="12" width="5" height="20" fill="currentColor" opacity=".8"/><rect x="22" y="9" width="5" height="23" fill="currentColor" opacity=".6"/><rect x="29" y="14" width="4" height="18" fill="currentColor" opacity=".8"/></svg>',
+  'Game Table':'<svg viewBox="0 0 40 40"><rect x="8" y="8" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"/><rect x="22" y="8" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="22" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="27" cy="27" r="5" fill="currentColor" opacity=".7"/></svg>',
+  'Balcony':'<svg viewBox="0 0 40 40"><path d="M6 30l10-14 6 8 6-10 10 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  'Quiet Corner':'<svg viewBox="0 0 40 40"><path d="M14 8v20a6 6 0 0 0 12 0" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8h18" stroke="currentColor" stroke-width="2"/></svg>'
+};
+cornerTiles.innerHTML = TILE_LIST.map(t=>`<div class="corner-tile" data-tile="${t}">${TILE_ICONS[t]}${t}</div>`).join('');
+const TILE_FOR = {READ:'Window Seat',STUDY:'Quiet Corner',DATE:'Fireplace',FRIENDS:'Game Table',MOUNTAIN:'Balcony',NOTHING:'Bookshelf'};
+const CORNER_VISUAL = {
+  DATE: {photo:'https://images.unsplash.com/photo-1760981248078-bfcb0c887b5a', alt:'Fictional atmospheric fireplace concept imagery — not a photo of a real MIST & MUG interior'},
+  MOUNTAIN: {photo:'https://images.unsplash.com/photo-1756155160750-42354f02c1b7', alt:'Fictional atmospheric foggy mountain balcony concept imagery'},
+  READ: {art:'fa-2', icon:TILE_ICONS['Window Seat']},
+  STUDY: {art:'fa-4', icon:TILE_ICONS['Quiet Corner']},
+  FRIENDS: {art:'fa-5', icon:TILE_ICONS['Game Table']},
+  NOTHING: {art:'fa-1', icon:TILE_ICONS['Bookshelf']}
+};
+function cornerVisualHTML(key){
+  const v = CORNER_VISUAL[key];
+  if(v.photo){
+    return `<img class="cr-visual" src="${v.photo}?auto=format&fit=crop&w=800&q=60" srcset="${v.photo}?auto=format&fit=crop&w=500&q=60 500w, ${v.photo}?auto=format&fit=crop&w=800&q=60 800w" sizes="(max-width:640px) 90vw, 460px" width="800" height="500" alt="${v.alt}" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
+  }
+  return `<div class="cr-visual food-art ${v.art}" style="display:flex;align-items:center;justify-content:center"><div style="width:64px;height:64px;color:#F3E8D3">${v.icon}</div></div>`;
+}
+cornerChoices.querySelectorAll('.chip').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    cornerChoices.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const key = btn.dataset.corner;
+    const c = CORNERS[key];
+    cornerTiles.querySelectorAll('.corner-tile').forEach(t=>t.classList.toggle('lit', t.dataset.tile===TILE_FOR[key]));
+    const box = document.getElementById('corner-result');
+    box.classList.add('show');
+    box.innerHTML = `${cornerVisualHTML(key)}<div class="cr-body"><div class="kick">We saved you</div><h3>${c.name}</h3><p>${c.lines.join('\\n')}</p></div>`;
+    if(c.name==='Window 07') unlockStamp('WINDOW 07','Window 07');
+  });
+});
+
+/* ============ PASSPORT ============ */
+document.getElementById('passport-cover').addEventListener('click',()=>{
+  document.getElementById('passport-pages').classList.toggle('open');
+});
+const STAMPS = [
+  {key:'FIRST SIP',label:'First Sip'},
+  {key:'FOG WALKER',label:'Fog Walker'},
+  {key:'BEAN HUNTER',label:'Bean Hunter'},
+  {key:'WINDOW 07',label:'Window 07'},
+  {key:'SECRET FOUND',label:'Secret Found'},
+  {key:'CLOUD NINE',label:'Cloud Nine'},
+  {key:'ABOVE THE CLOUDS',label:'Above the Clouds'}
+];
+function renderStamps(justUnlocked){
+  const grid = document.getElementById('stamp-grid');
+  grid.innerHTML = STAMPS.map((s,i)=>{
+    const unlocked = !!state.stamps[s.key];
+    const rot = (i%2===0? -1:1) * (3+ (i%3)*2);
+    return `<div class="stamp${unlocked?' unlocked':''}" style="--r:${rot}deg" data-key="${s.key}">${STAMP_ICONS[s.key]||''}<span>${s.label}</span></div>`;
+  }).join('');
+  if(justUnlocked){
+    grid.querySelectorAll('.stamp.unlocked').forEach(el=>{
+      el.classList.add('thump');
+      setTimeout(()=>el.classList.remove('thump'), 450);
+    });
+  }
+}
+renderStamps(false);
+renderCoins();
+
+/* ============ BEAN DROP (mug-catch) ============ */
+const bdArea = document.getElementById('beandrop-area');
+const bdOverlay = document.getElementById('bd-overlay');
+const bdStartBtn = document.getElementById('bd-start');
+let bdRunning = false, bdScore = 0, bdTime = 45, bdInterval=null, bdSpawnInterval=null;
+let mug = null, mugX = 50, beans = [];
+document.getElementById('bd-best').textContent = state.beanHigh||0;
+
+function ensureMug(){
+  if(!mug){
+    mug = document.createElement('div');
+    mug.className = 'mug';
+    bdArea.appendChild(mug);
+  }
+  mug.style.left = 'calc(' + mugX + '% - 32px)';
+}
+function setMugFromEvent(e){
+  const rect = bdArea.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const pct = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+  mugX = pct;
+  ensureMug();
+}
+bdArea.addEventListener('mousemove', setMugFromEvent);
+bdArea.addEventListener('touchmove', (e)=>{ setMugFromEvent(e); e.preventDefault(); }, {passive:false});
+
+function spawnBean(){
+  if(!bdRunning) return;
+  const r = Math.random();
+  let type='normal', color='#5a3a22';
+  if(r>0.85){ type='gold'; color='#F0B35A'; }
+  else if(r>0.68){ type='burnt'; color='#1c130c'; }
+  const bean = document.createElement('div');
+  bean.className='bean';
+  bean.style.background = color;
+  const leftPct = Math.random()*88;
+  bean.style.left = leftPct+'%';
+  bean.style.top = '-30px';
+  bdArea.appendChild(bean);
+  const duration = 2400 + Math.random()*1200;
+  const start = performance.now();
+  const beanObj = {el:bean,leftPct,caught:false,type};
+  beans.push(beanObj);
+  function fall(t){
+    if(!bdRunning || beanObj.caught){ return; }
+    const p = (t-start)/duration;
+    const areaH = bdArea.clientHeight;
+    const topPx = p*areaH;
+    bean.style.top = topPx+'px';
+    if(topPx > areaH-58 && topPx < areaH-14){
+      const mugLeftPct = mugX - 12, mugRightPct = mugX + 12;
+      if(leftPct > mugLeftPct && leftPct < mugRightPct){
+        beanObj.caught = true;
+        let delta = type==='gold'?30:(type==='burnt'?-15:10);
+        bdScore = Math.max(0,bdScore+delta);
+        document.getElementById('bd-score').textContent = bdScore;
+        bean.remove();
+        return;
+      }
+    }
+    if(p>=1){ bean.remove(); return; }
+    requestAnimationFrame(fall);
+  }
+  requestAnimationFrame(fall);
+}
+
+function bdCountdown(cb){
+  bdOverlay.style.display='flex';
+  let n = 3;
+  bdOverlay.innerHTML = `<div class="bd-countdown" id="bd-cd">READY?</div>`;
+  const cdEl = ()=>document.getElementById('bd-cd');
+  setTimeout(()=>{ if(cdEl()) cdEl().textContent = n; },500);
+  const iv = setInterval(()=>{
+    n--;
+    if(n>0){ if(cdEl()) cdEl().textContent = n; }
+    else { clearInterval(iv); if(cdEl()) cdEl().textContent = 'BREW!'; setTimeout(cb, 400); }
+  },600);
+}
+
+function bdStart(){
+  bdCountdown(()=>{
+    bdRunning = true; bdScore=0; bdTime=45; beans=[];
+    document.getElementById('bd-score').textContent='0';
+    document.getElementById('bd-time').textContent='45';
+    bdOverlay.style.display='none';
+    bdArea.querySelectorAll('.bean').forEach(b=>b.remove());
+    ensureMug();
+    bdSpawnInterval = setInterval(spawnBean, 550);
+    bdInterval = setInterval(()=>{
+      bdTime--;
+      document.getElementById('bd-time').textContent = bdTime;
+      if(bdTime<=0) bdEnd();
+    },1000);
+  });
+}
+function bdEnd(){
+  bdRunning = false;
+  clearInterval(bdInterval); clearInterval(bdSpawnInterval);
+  bdArea.querySelectorAll('.bean').forEach(b=>b.remove());
+  const isHigh = bdScore > (state.beanHigh||0);
+  if(isHigh){ state.beanHigh = bdScore; saveState(); }
+  document.getElementById('bd-best').textContent = state.beanHigh||0;
+  const coinsEarned = Math.max(0, Math.floor(bdScore/10));
+  if(coinsEarned>0) addCoins(coinsEarned);
+  if(bdScore>=150) unlockStamp('BEAN HUNTER','Bean Hunter');
+  bdOverlay.style.display='flex';
+  bdOverlay.innerHTML = `<h3>The beans escaped.</h3>
+    <p>Score: ${bdScore} ${isHigh?'— new best!':''} · Earned ${coinsEarned} Cloud Coins</p>
+    <button class="btn gold" id="bd-restart">PLAY AGAIN</button>`;
+  document.getElementById('bd-restart').addEventListener('click', bdStart);
+}
+bdStartBtn.addEventListener('click', bdStart);
+
+/* ============ CLOUD COINS / REWARDS ============ */
+const REWARDS = [
+  {cost:100,name:'Secret Menu Preview',desc:'Unlock the off-menu experiments early, no hunting required.',action:'secret',rot:'-2deg'},
+  {cost:200,name:'Postcard Theme',desc:'Unlocks a fifth scene for the postcard maker.',action:'theme',rot:'1.5deg'},
+  {cost:300,name:'10% Concept Reward',desc:'A cosmetic badge only — concept rewards have no monetary value.',action:'badge',rot:'-1deg'}
+];
+function renderRewards(){
+  const grid = document.getElementById('rewards-grid');
+  grid.innerHTML = REWARDS.map(r=>`
+    <div class="ticket" style="--rot:${r.rot}">
+      <div class="ticket-cost">${r.cost} <span class="coin-badge">M&amp;M</span></div>
+      <div class="ticket-name">${r.name}</div>
+      <div class="ticket-desc">${r.desc}</div>
+      <button class="btn ghost small" data-action="${r.action}" data-cost="${r.cost}" style="margin-top:12px" ${state.coins>=r.cost?'':'disabled'}>Unlock</button>
+    </div>
+  `).join('');
+  grid.querySelectorAll('button[data-action]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const cost = parseInt(btn.dataset.cost,10);
+      if(state.coins < cost) return;
+      state.coins -= cost; saveState(); renderCoins(); renderRewards();
+      const action = btn.dataset.action;
+      if(action==='secret'){ openSecret(); }
+      else if(action==='theme'){ pcThemeUnlocked = true; renderPcScenes(); toast('Postcard theme unlocked'); }
+      else { toast('10% Concept Reward badge unlocked (concept only)'); }
+    });
+  });
+}
+renderRewards();
+
+/* ============ SECRET ============ */
+let elevClicks = 0;
+const secretModal = document.getElementById('secret-modal');
+document.getElementById('elev-click').addEventListener('click',()=>{
+  elevClicks++;
+  if(elevClicks>=3) openSecret();
+});
+function openSecret(){
+  document.getElementById('secret-items').innerHTML = SECRET_MENU.map(s=>`
+    <div class="secret-item"><div class="n">${s.name} — ₹${s.price}</div><div class="d">${s.description}</div></div>
+  `).join('');
+  secretModal.classList.add('open','flicker');
+  setTimeout(()=>secretModal.classList.remove('flicker'), 600);
+  unlockStamp('SECRET FOUND','Secret Found');
+}
+document.getElementById('secret-close').addEventListener('click',()=>secretModal.classList.remove('open'));
+secretModal.addEventListener('click',(e)=>{ if(e.target===secretModal) secretModal.classList.remove('open'); });
+
+/* ============ POSTCARD ============ */
+const PC_SCENES = [
+  {key:'rain',label:'Rain in Landour',c1:'#5c6b6b',c2:'#1e2c2c'},
+  {key:'fog7',label:'Fog at 7AM',c1:'#dfe3df',c2:'#7c8b87'},
+  {key:'winterline',label:'Winterline',c1:'#f0c491',c2:'#a6533f'},
+  {key:'lights',label:'Lights Over the Valley',c1:'#2a3540',c2:'#0d1216'}
+];
+let pcThemeUnlocked = false;
+let pcActiveScene = PC_SCENES[0];
+function renderPcScenes(){
+  const wrap = document.getElementById('pc-scenes');
+  let scenes = PC_SCENES.slice();
+  if(pcThemeUnlocked) scenes.push({key:'aurora',label:'Aurora Ridge (bonus)',c1:'#9fd8c9',c2:'#1e3a4a'});
+  wrap.innerHTML = scenes.map(s=>`<button class="chip${pcActiveScene.key===s.key?' active':''}" data-scene="${s.key}">${s.label}</button>`).join('');
+  wrap.querySelectorAll('.chip').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      wrap.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      btn.classList.add('active');
+      pcActiveScene = scenes.find(s=>s.key===btn.dataset.scene);
+    });
+  });
+}
+renderPcScenes();
+const pcMsg = document.getElementById('pc-message');
+pcMsg.addEventListener('input',()=>{ document.getElementById('pc-count').textContent = pcMsg.value.length; });
+
+function wrapText(ctx,text,x,y,maxWidth,lineHeight){
+  const words = text.split(' ');
+  let line = '';
+  const lines = [];
+  words.forEach(word=>{
+    const test = line + word + ' ';
+    if(ctx.measureText(test).width > maxWidth && line){ lines.push(line); line = word+' '; }
+    else line = test;
+  });
+  lines.push(line);
+  lines.forEach((l,i)=> ctx.fillText(l.trim(), x, y + i*lineHeight));
+  return lines.length;
+}
+document.getElementById('pc-render').addEventListener('click',()=>{
+  const canvas = document.getElementById('pc-canvas');
+  const ctx = canvas.getContext('2d');
+  const g = ctx.createLinearGradient(0,0,0,canvas.height);
+  g.addColorStop(0, pcActiveScene.c1);
+  g.addColorStop(1, pcActiveScene.c2);
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = 'rgba(20,14,9,.55)';
+  ctx.beginPath();
+  ctx.moveTo(0,600); ctx.lineTo(0,420); ctx.lineTo(180,320); ctx.lineTo(360,400); ctx.lineTo(560,280);
+  ctx.lineTo(760,390); ctx.lineTo(900,300); ctx.lineTo(900,600); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = 'rgba(20,14,9,.8)';
+  ctx.beginPath();
+  ctx.moveTo(0,600); ctx.lineTo(0,480); ctx.lineTo(220,420); ctx.lineTo(420,500); ctx.lineTo(680,410);
+  ctx.lineTo(900,470); ctx.lineTo(900,600); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = 'rgba(243,232,211,.9)'; ctx.lineWidth = 14; ctx.strokeRect(7,7,canvas.width-14,canvas.height-14);
+  ctx.fillStyle = '#F3E8D3';
+  ctx.font = '600 22px Inter, sans-serif';
+  ctx.fillText('MIST & MUG', 46, 66);
+  ctx.font = 'italic 16px Georgia, serif';
+  ctx.fillText(pcActiveScene.label.toUpperCase()+' · 2,005 M', 46, 92);
+  ctx.fillStyle = '#F3E8D3';
+  ctx.font = '30px Georgia, serif';
+  const msg = pcMsg.value.trim() || 'Wish you could see this fog.';
+  wrapText(ctx, msg, 46, 460, canvas.width-260, 40);
+  ctx.textAlign = 'right';
+  ctx.font = 'italic 20px Georgia, serif';
+  ctx.fillText('— sent from above the clouds', canvas.width-46, canvas.height-40);
+  ctx.textAlign = 'left';
+  document.getElementById('pc-download').disabled = false;
+  unlockStamp('CLOUD NINE','Cloud Nine');
+});
+document.getElementById('pc-download').addEventListener('click',()=>{
+  const canvas = document.getElementById('pc-canvas');
+  const link = document.createElement('a');
+  link.download = 'mist-and-mug-postcard.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
+
+/* ============ WINTERLINE ============ */
+document.getElementById('winterline-toggle').addEventListener('click',(e)=>{
+  const on = document.body.classList.toggle('winterline');
+  e.target.textContent = on ? 'TURN OFF WINTERLINE MODE' : 'ACTIVATE WINTERLINE MODE';
+  if(on) unlockStamp('ABOVE THE CLOUDS','Above the Clouds');
+});
+
+})();
+</script>
+</body>
+</html>
