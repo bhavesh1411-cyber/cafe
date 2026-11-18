@@ -409,6 +409,123 @@ footer{background:var(--coffee);color:var(--paper);padding:56px 0 30px}
 /* ---------- TOAST ---------- */
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--coffee);color:var(--cream);padding:14px 22px;border-radius:3px;font-size:13.5px;z-index:200;opacity:0;pointer-events:none;transition:all .35s ease;display:flex;align-items:center;gap:10px;border:1px solid var(--gold)}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- MISTY — RESERVATION ASSISTANT ---------- */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+[hidden]{display:none!important}
+.mm-launcher{position:fixed;right:20px;bottom:20px;z-index:70;display:inline-flex;align-items:center;gap:8px;padding:12px 18px;min-height:48px;border-radius:26px;border:1px solid var(--gold);background:linear-gradient(160deg,#2c1c12,var(--coffee));color:var(--cream);font-size:13.5px;font-weight:600;letter-spacing:.02em;box-shadow:0 8px 22px rgba(0,0,0,.35);transition:transform .2s ease}
+.mm-launcher:hover{transform:translateY(-2px)}
+.mm-launcher[hidden]{display:none!important}
+.mm-modal{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(20,14,9,.68)}
+.mm-modal.open{display:flex}
+.mm-panel{width:min(580px,100%);height:min(780px,100%);max-height:calc(100vh - 40px);background:var(--paper);border-radius:10px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);border:1px solid rgba(240,179,90,.4);color:var(--ink)}
+.mm-panel :focus-visible{outline:2.5px solid var(--forest);outline-offset:2px}
+.mm-head :focus-visible{outline-color:var(--gold)}
+@media(max-width:640px){
+  .mm-modal{padding:0}
+  .mm-panel{width:100%;height:100vh;max-height:100vh;border-radius:0;border:0}
+  .mm-launcher{right:14px;bottom:14px;padding:11px 15px}
+}
+@supports(height:100dvh){@media(max-width:640px){.mm-panel{height:100dvh;max-height:100dvh}}}
+.mm-head{position:relative;padding:16px 18px 12px;background:linear-gradient(165deg,#1f3a30,var(--forest) 60%,#0f241c);color:var(--cream);overflow:hidden}
+.mm-peaks{position:absolute;right:0;bottom:0;width:62%;height:70%;opacity:.14;pointer-events:none}
+.mm-head-row{position:relative;display:flex;align-items:center;gap:12px}
+.mm-avatar{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe3a8,var(--gold) 62%,#b9782d);color:var(--coffee);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.mm-head-text{flex:1;min-width:0}
+.mm-head-text h2{font-size:20px;color:var(--cream);line-height:1.1}
+.mm-head-text p{font-size:12.5px;color:var(--gold);letter-spacing:.03em;margin-top:2px}
+.mm-close{background:none;border:1px solid rgba(243,232,211,.4);color:var(--cream);width:44px;height:44px;border-radius:50%;font-size:16px;flex-shrink:0}
+.mm-close:hover{border-color:var(--gold);color:var(--gold)}
+.mm-tabs{position:relative;display:flex;gap:8px;margin-top:12px}
+.mm-tab{min-height:40px;padding:8px 14px;border-radius:20px;border:1px solid rgba(243,232,211,.4);background:transparent;color:var(--cream);font-size:13px;font-weight:600}
+.mm-tab[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--coffee)}
+.mm-progress{padding:10px 18px 8px;background:var(--cream);border-bottom:1px solid var(--line)}
+.mm-segs{display:flex;gap:5px}
+.mm-seg{flex:1;height:4px;border-radius:2px;background:rgba(110,66,43,.2);transition:background .3s ease}
+.mm-seg.done{background:var(--wood)}
+.mm-seg.cur{background:var(--gold)}
+.mm-ptext{font-size:12px;color:var(--wood);margin-top:6px;letter-spacing:.04em;font-weight:600}
+.mm-scroll{flex:1;overflow-y:auto;padding:18px 16px 8px;background:linear-gradient(180deg,var(--paper),#efe2c9);overscroll-behavior:contain}
+@media(prefers-reduced-motion:no-preference){.mm-scroll{scroll-behavior:smooth}}
+.mm-row{display:flex;margin-bottom:10px}
+.mm-row.user{justify-content:flex-end}
+.mm-bubble{max-width:90%;padding:11px 14px;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere}
+.mm-bubble.bot{background:var(--cream);border:1px solid var(--line);border-radius:14px 14px 14px 4px}
+.mm-bubble.user{background:var(--coffee);color:var(--cream);border-radius:14px 14px 4px 14px}
+.fresh{animation:mmIn .35s ease both}
+@keyframes mmIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mm-typing{display:inline-flex;gap:5px;padding:4px 2px}
+.mm-typing span{width:7px;height:7px;border-radius:50%;background:var(--wood);opacity:.35;animation:mmDot 1s ease-in-out infinite}
+.mm-typing span:nth-child(2){animation-delay:.15s}
+.mm-typing span:nth-child(3){animation-delay:.3s}
+@keyframes mmDot{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:.9;transform:translateY(-3px)}}
+.mm-controls{margin:2px 0 16px}
+.mm-grid{display:grid;gap:8px}
+.mm-grid-2{grid-template-columns:repeat(2,1fr)}
+.mm-grid-3{grid-template-columns:repeat(3,1fr)}
+.mm-grid-4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:380px){.mm-grid-4{grid-template-columns:repeat(3,1fr)}}
+.mm-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;padding:10px 8px;background:var(--cream);color:var(--ink);border:1px solid rgba(110,66,43,.45);border-radius:8px;font-size:14px;font-weight:600;text-align:center;transition:border-color .15s ease,background .15s ease,transform .15s ease}
+.mm-choice:hover{border-color:var(--brick);transform:translateY(-1px)}
+.mm-choice.is-selected{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.mm-choice .mm-big{font-family:var(--serif);font-size:24px;line-height:1.1}
+.mm-choice .mm-sub{font-size:11.5px;font-weight:500;opacity:.75;line-height:1.3}
+.mm-choice .mm-ico{font-size:22px;line-height:1.1}
+.mm-choice .mm-tagline{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.mm-time-h{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--wood);font-weight:700;margin:12px 0 6px}
+.mm-time-h:first-child{margin-top:0}
+.mm-note{font-size:12.5px;color:var(--wood);margin-top:8px;line-height:1.5}
+.mm-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.mm-chips{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.mm-input{width:100%;min-height:46px;padding:11px 13px;border:1px solid var(--wood);background:var(--cream);border-radius:6px;font:inherit;font-size:15px;color:var(--ink)}
+textarea.mm-input{min-height:84px;resize:vertical}
+.mm-input[aria-invalid="true"]{border-color:#8a2f1d;box-shadow:0 0 0 1px #8a2f1d}
+.mm-field{margin-bottom:12px}
+.mm-field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--coffee)}
+.mm-field .mm-opt{font-weight:500;opacity:.65}
+.mm-err{color:#8a2f1d;font-size:12.5px;margin-top:5px;line-height:1.4}
+.mm-err:empty{display:none}
+.mm-err:not(:empty)::before{content:"\26A0\00a0"}
+.mm-count{font-size:11.5px;color:var(--wood);text-align:right;margin-top:3px}
+.mm-seat{display:flex;gap:14px;align-items:center;margin-top:10px;padding:12px;background:#fff;border:1px solid var(--line);border-radius:8px}
+.mm-seat svg{width:112px;height:auto;flex-shrink:0}
+.mm-seat h3{font-size:17px;color:var(--coffee)}
+.mm-seat .mm-meta{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--brick);font-weight:700;margin-top:3px}
+.mm-seat p{font-size:13px;margin-top:5px;opacity:.82;line-height:1.45}
+@media(max-width:430px){.mm-seat{flex-direction:column;align-items:flex-start}.mm-seat svg{width:96px}}
+.mm-chair{fill:none;stroke:var(--wood);stroke-width:1.5}
+.mm-chair.on{fill:var(--gold)}
+.mm-tbl{fill:var(--wood);opacity:.88}
+.mm-summary{background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:4px 14px}
+.mm-sum-row{display:grid;grid-template-columns:92px 1fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.mm-sum-row:last-child{border-bottom:0}
+.mm-sum-row dt{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--wood);font-weight:700}
+.mm-sum-row dd{margin:0;overflow-wrap:anywhere}
+.mm-edit{background:none;border:0;color:var(--brick);text-decoration:underline;font-size:13px;min-height:40px;padding:0 6px;font-weight:600}
+.mm-warn{margin-top:10px;padding:9px 12px;border-left:3px solid var(--brick);background:rgba(166,83,63,.1);font-size:13px;line-height:1.45}
+.mm-card{position:relative;margin:10px 0;padding:22px 20px 18px;background:var(--paper);border:2px solid var(--coffee);outline:1px solid var(--coffee);outline-offset:-8px;border-radius:4px;overflow:hidden;box-shadow:0 10px 22px rgba(42,24,18,.18)}
+.mm-card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46px;background:linear-gradient(to top,rgba(20,46,37,.14),transparent);pointer-events:none}
+.mm-card-stamp{position:absolute;top:16px;right:14px;transform:rotate(-12deg);border:2px solid var(--brick);color:var(--brick);padding:2px 10px;font-weight:800;letter-spacing:.14em;font-size:13px;border-radius:3px;opacity:.85}
+.mm-card-brand{font-family:var(--serif);font-weight:650;font-size:24px;color:var(--coffee);letter-spacing:.02em}
+.mm-card-sub{font-size:11px;letter-spacing:.22em;color:var(--brick);font-weight:700;margin-top:2px}
+.mm-card-dl{margin:14px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+.mm-card-dl div{min-width:0}
+.mm-card-dl .wide{grid-column:1/-1}
+.mm-card-dl dt{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--wood);font-weight:700}
+.mm-card-dl dd{margin:1px 0 0;font-family:var(--serif);font-size:17px;color:var(--coffee);overflow-wrap:anywhere}
+.mm-card-quote{font-family:var(--serif);font-style:italic;margin-top:14px;font-size:14px;color:var(--coffee);opacity:.85}
+.mm-card-disc{position:relative;z-index:1;margin-top:10px;font-size:11.5px;line-height:1.45;color:var(--coffee);font-weight:600}
+.mm-saved-item{background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:12px}
+.mm-saved-top{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:14px;color:var(--coffee)}
+.mm-badge{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--brick);color:var(--brick);padding:2px 8px;border-radius:10px;font-weight:700}
+.mm-badge.past{border-color:var(--wood);color:var(--wood)}
+.mm-saved-item p{font-size:13.5px;margin-top:5px}
+.mm-muted{opacity:.7}
+.mm-confirm-row{margin-top:10px;padding:10px;background:rgba(166,83,63,.1);border-radius:6px;font-size:13.5px}
+.mm-foot{display:flex;justify-content:space-between;gap:10px;padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--cream)}
+.mm-link{background:none;border:0;color:var(--wood);font-size:13.5px;font-weight:600;min-height:44px;padding:0 10px;border-radius:6px}
+.mm-link:hover:not([disabled]){color:var(--brick);text-decoration:underline}
+.mm-link[disabled]{opacity:.35;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -437,6 +554,7 @@ footer{background:var(--coffee);color:var(--paper);padding:56px 0 30px}
     <a href="#findmycup">Your Cup ✦</a>
     <a href="#housepicks">The Café</a>
     <a href="#corner">Pick Your Corner</a>
+    <a href="#" data-misty-open>Reserve a corner</a>
     <a href="#beandrop">Play</a>
     <a href="#passport">Passport</a>
     <a href="#ai">About AI</a>
@@ -758,6 +876,7 @@ footer{background:var(--coffee);color:var(--paper);padding:56px 0 30px}
         <a href="#housepicks">The Café</a>
         <a href="#passport">Passport</a>
         <a href="#ai">About AI</a>
+        <a href="#" data-misty-open>Reserve a corner</a>
       </div>
     </div>
     <div class="foot-bottom">
@@ -776,6 +895,38 @@ footer{background:var(--coffee);color:var(--paper);padding:56px 0 30px}
     <button class="btn ghost secret-close" id="secret-close" style="border-color:var(--cream);color:var(--cream);margin-top:26px">Close the door</button>
   </div>
 </div>
+
+<button type="button" class="mm-launcher" id="misty-launcher" aria-haspopup="dialog"><span aria-hidden="true">☁</span> Reserve a corner</button>
+
+<div class="mm-modal" id="misty-modal" aria-hidden="true">
+  <div class="mm-panel" role="dialog" aria-modal="true" aria-label="Misty — Your Café Reservation Companion">
+    <div class="mm-head">
+      <svg class="mm-peaks" viewBox="0 0 300 80" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,80 0,50 50,18 90,44 140,8 190,44 240,24 300,50 300,80" fill="#F3E8D3"/></svg>
+      <div class="mm-head-row">
+        <div class="mm-avatar" aria-hidden="true">☁</div>
+        <div class="mm-head-text">
+          <h2 id="misty-title">Misty</h2>
+          <p>Your Café Reservation Companion</p>
+        </div>
+        <button type="button" class="mm-close" id="misty-close" aria-label="Close reservation assistant">✕</button>
+      </div>
+      <div class="mm-tabs">
+        <button type="button" class="mm-tab" id="mm-tab-chat" aria-pressed="true">Plan a visit</button>
+        <button type="button" class="mm-tab" id="mm-tab-saved" aria-pressed="false">Saved (<span id="mm-saved-count">0</span>)</button>
+      </div>
+    </div>
+    <div class="mm-progress" id="mm-progress" role="progressbar" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1" aria-valuetext="Step 1 of 7">
+      <div class="mm-segs" id="mm-segs" aria-hidden="true"></div>
+      <p class="mm-ptext" id="mm-ptext" aria-hidden="true"></p>
+    </div>
+    <div class="mm-scroll" id="misty-scroll"><div id="misty-chat"></div></div>
+    <div class="mm-foot" id="mm-foot">
+      <button type="button" class="mm-link" id="mm-back">← Back</button>
+      <button type="button" class="mm-link" id="mm-restart">↺ Restart</button>
+    </div>
+  </div>
+</div>
+<div class="sr-only" id="misty-live" aria-live="polite" aria-atomic="true"></div>
 
 <div id="toast" role="status" aria-live="polite"></div>
 
@@ -1471,7 +1622,8 @@ cornerChoices.querySelectorAll('.chip').forEach(btn=>{
     cornerTiles.querySelectorAll('.corner-tile').forEach(t=>t.classList.toggle('lit', t.dataset.tile===TILE_FOR[key]));
     const box = document.getElementById('corner-result');
     box.classList.add('show');
-    box.innerHTML = `${cornerVisualHTML(key)}<div class="cr-body"><div class="kick">We saved you</div><h3>${c.name}</h3><p>${c.lines.join('\\n')}</p></div>`;
+    box.innerHTML = `${cornerVisualHTML(key)}<div class="cr-body"><div class="kick">We saved you</div><h3>${c.name}</h3><p>${c.lines.join('\n')}</p><button type="button" class="btn gold small" id="plan-visit-btn" style="margin-top:16px">Plan My Visit</button></div>`;
+    document.getElementById('plan-visit-btn').addEventListener('click',()=>openMisty({cornerKey:key}));
     if(c.name==='Window 07') unlockStamp('WINDOW 07','Window 07');
   });
 });
@@ -1753,6 +1905,838 @@ document.getElementById('winterline-toggle').addEventListener('click',(e)=>{
   e.target.textContent = on ? 'TURN OFF WINTERLINE MODE' : 'ACTIVATE WINTERLINE MODE';
   if(on) unlockStamp('ABOVE THE CLOUDS','Above the Clouds');
 });
+
+
+/* ====================================================================
+   MISTY — TABLE RESERVATION ASSISTANT (demo, browser-only)
+   No database, no backend: demo reservations live in localStorage.
+   ==================================================================== */
+
+/* ---- MISTY CORE (pure logic, no DOM) — START ---- */
+const MISTY_CONFIG = {
+  openMinutes: 8 * 60,                 // café opens 8:00 AM
+  closeMinutes: 21 * 60,               // café closes 9:00 PM
+  slotMinutes: 30,                     // slot spacing
+  lastSeatingBeforeCloseMinutes: 60,   // last seating = closing time - 60 min
+  leadMinutes: 30,                     // today's slots must start at least this far ahead
+  maxAdvanceDays: 90,
+  closedWeekdays: [],                  // 0 = Sunday ... 6 = Saturday
+  maxGuests: 6,
+  maxSaved: 30
+};
+
+const MISTY_TABLES = [
+  {id:'cloud-window', name:'The Cloud Window', capacity:2, atmospheres:['mountain'], outdoor:false, tag:'Mountain-facing · Indoor',
+   loves:'love peaceful mountain views', desc:'A two-seat bench at the tall mountain-facing window. Rain on the glass, fog in the valley.'},
+  {id:'long-window', name:'The Long Window Bench', capacity:6, atmospheres:['mountain'], outdoor:false, tag:'Mountain-facing · Indoor',
+   loves:'want the whole valley view with room to spread out', desc:'A long wooden bench along the glass, with space for a group and the whole view.'},
+  {id:'reading-nook', name:'The Reading Nook', capacity:2, atmospheres:['quiet'], outdoor:false, tag:'Quiet · Indoor',
+   loves:'like quiet, lamplit corners', desc:'A lamp, a shelf, and a table just big enough for two books and a pot of chai.'},
+  {id:'lamp-alcove', name:'The Lamp Alcove', capacity:4, atmospheres:['quiet'], outdoor:false, tag:'Quiet · Indoor',
+   loves:'want a calm corner for a small group', desc:'A curtained alcove with a brass lamp, made for slow conversation or a small book club.'},
+  {id:'hearth-nook', name:'The Hearth Nook', capacity:4, atmospheres:['fireplace'], outdoor:false, tag:'Fireplace · Indoor',
+   loves:'want to feel warm and unhurried', desc:'Leather seats beside the stone fireplace. Warm from the first minute.'},
+  {id:'misty-terrace', name:'The Misty Terrace', capacity:4, atmospheres:['terrace'], outdoor:true, tag:'Open-air · Outdoor',
+   loves:'like fresh air and drifting fog', desc:'Open-air tables where the clouds drift past. Bring a jacket.'},
+  {id:'cloud-deck', name:'The Cloud Deck', capacity:6, atmospheres:['terrace'], outdoor:true, tag:'Open-air · Outdoor',
+   loves:"don't mind a little weather for a big view", desc:'A long open-air table at the edge of the deck, made for groups who can handle a breeze.'},
+  {id:'friends-table', name:"The Friends' Table", capacity:6, atmospheres:['friends'], outdoor:false, tag:'Social · Indoor',
+   loves:'come to talk over each other', desc:'A long shared table with board games stacked nearby. Never quiet.'}
+];
+
+const MISTY_PREFS = [
+  {id:'mountain', label:'Mountain View', icon:'🏔', blurb:'Tall windows, the whole valley'},
+  {id:'fireplace', label:'Cozy Fireplace', icon:'🔥', blurb:'Stone hearth, leather seats'},
+  {id:'quiet', label:'Quiet Reading Corner', icon:'📖', blurb:'Lamplight, low chatter'},
+  {id:'terrace', label:'Misty Terrace', icon:'☁', blurb:'Open air, drifting fog'},
+  {id:'friends', label:"Friends' Corner", icon:'🎲', blurb:'Long table, board games'},
+  {id:'surprise', label:'Surprise Me', icon:'✦', blurb:'Let Misty choose'}
+];
+
+/* "Closest suitable alternative" when no table of the wanted atmosphere fits the group. */
+const MISTY_RELATED = {
+  mountain:['terrace'], terrace:['mountain'],
+  fireplace:['quiet','friends'], quiet:['fireplace'], friends:['fireplace']
+};
+
+/* Existing Pick Your Corner result keys -> Misty atmosphere (reuses the CORNERS keys; no logic duplicated). */
+const CORNER_TO_PREF = {READ:'mountain', STUDY:'quiet', DATE:'fireplace', FRIENDS:'friends', MOUNTAIN:'terrace', NOTHING:'quiet'};
+
+const MISTY_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function pad2(n){ return String(n).padStart(2,'0'); }
+function isoFromDate(d){ return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
+function parseISODate(s){
+  if(typeof s !== 'string') return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  if(!m) return null;
+  const y = +m[1], mo = +m[2], d = +m[3];
+  const dt = new Date(Date.UTC(y, mo-1, d));
+  if(dt.getUTCFullYear() !== y || dt.getUTCMonth() !== mo-1 || dt.getUTCDate() !== d) return null;
+  return {y:y, m:mo, d:d, weekday:dt.getUTCDay()};
+}
+function formatDateLong(s){ const p = parseISODate(s); return p ? p.d+' '+MISTY_MONTHS[p.m-1]+' '+p.y : ''; }
+function formatTime12(min){
+  const h = Math.floor(min/60), m = min % 60;
+  return ((h % 12) === 0 ? 12 : h % 12)+':'+pad2(m)+' '+(h >= 12 ? 'PM' : 'AM');
+}
+function timeStrToMinutes(t){
+  const m = /^(\d{2}):(\d{2})$/.exec(typeof t === 'string' ? t : '');
+  if(!m) return null;
+  const h = +m[1], mi = +m[2];
+  return (h > 23 || mi > 59) ? null : h*60 + mi;
+}
+function minutesToTimeStr(min){ return pad2(Math.floor(min/60))+':'+pad2(min % 60); }
+function maxDateISO(now, cfg){
+  cfg = cfg || MISTY_CONFIG;
+  return isoFromDate(new Date(now.getFullYear(), now.getMonth(), now.getDate() + cfg.maxAdvanceDays));
+}
+
+function validateGuests(n, cfg){
+  cfg = cfg || MISTY_CONFIG;
+  return (Number.isInteger(n) && n >= 1 && n <= cfg.maxGuests)
+    ? {ok:true} : {ok:false, error:'Please choose between 1 and '+cfg.maxGuests+' guests.'};
+}
+function validateDate(dateStr, now, cfg){
+  cfg = cfg || MISTY_CONFIG;
+  const p = parseISODate(dateStr);
+  if(!p) return {ok:false, error:'Please pick a valid date.'};
+  const t = parseISODate(isoFromDate(now));
+  const diff = Math.round((Date.UTC(p.y,p.m-1,p.d) - Date.UTC(t.y,t.m-1,t.d)) / 86400000);
+  if(diff < 0) return {ok:false, error:'That date has already passed. Please pick today or later.'};
+  if(diff > cfg.maxAdvanceDays) return {ok:false, error:'We can only plan '+cfg.maxAdvanceDays+' days ahead.'};
+  if(cfg.closedWeekdays.indexOf(p.weekday) !== -1) return {ok:false, error:'The café is closed that day. Please pick another.'};
+  return {ok:true};
+}
+function slotsForDate(dateStr, now, cfg){
+  cfg = cfg || MISTY_CONFIG;
+  if(!validateDate(dateStr, now, cfg).ok) return [];
+  const last = cfg.closeMinutes - cfg.lastSeatingBeforeCloseMinutes;
+  const cutoff = (dateStr === isoFromDate(now)) ? now.getHours()*60 + now.getMinutes() + cfg.leadMinutes : -1;
+  const out = [];
+  for(let m = cfg.openMinutes; m <= last; m += cfg.slotMinutes){ if(m >= cutoff) out.push(m); }
+  return out;
+}
+function validateTime(dateStr, timeStr, now, cfg){
+  const min = timeStrToMinutes(timeStr);
+  if(min === null) return {ok:false, error:'Please choose a time.'};
+  return slotsForDate(dateStr, now, cfg).indexOf(min) !== -1
+    ? {ok:true} : {ok:false, error:"That time isn't available. Please choose another."};
+}
+
+function validateName(s){
+  const v = String(s == null ? '' : s).trim().replace(/\s+/g,' ');
+  if(v.length < 2) return {ok:false, error:'Please tell us a name (at least 2 characters).'};
+  if(v.length > 60) return {ok:false, error:'That name is a bit long (60 characters max).'};
+  return {ok:true, value:v};
+}
+function validateEmail(s){
+  const v = String(s == null ? '' : s).trim();
+  if(!v) return {ok:false, error:'Please enter an email address.'};
+  if(v.length > 120 || !/^[^\s@]+@([^\s@.]+\.)+[^\s@.]{2,}$/.test(v)) return {ok:false, error:"That email address doesn't look right."};
+  return {ok:true, value:v};
+}
+function validatePhone(s){
+  const v = String(s == null ? '' : s).trim();
+  if(!v) return {ok:true, value:''};
+  const digits = v.replace(/\D/g,'');
+  if(!/^[+()\-.\s\d]{7,20}$/.test(v) || digits.length < 7 || digits.length > 15) return {ok:false, error:'Please enter a valid phone number, or leave it blank.'};
+  return {ok:true, value:v};
+}
+function validateRequest(s){
+  const v = String(s == null ? '' : s).trim();
+  if(v.length > 200) return {ok:false, error:'Special requests are limited to 200 characters.'};
+  return {ok:true, value:v};
+}
+
+function tableById(id){ for(let i=0;i<MISTY_TABLES.length;i++){ if(MISTY_TABLES[i].id === id) return MISTY_TABLES[i]; } return null; }
+function prefById(id){ for(let i=0;i<MISTY_PREFS.length;i++){ if(MISTY_PREFS[i].id === id) return MISTY_PREFS[i]; } return null; }
+function hashString(s){ let h = 0; for(let i=0;i<s.length;i++){ h = (h*31 + s.charCodeAt(i)) >>> 0; } return h; }
+
+/* Deterministic ranking: capacity is a HARD filter; atmosphere match and snug fit are soft scores. */
+function rankTables(guests, pref, seed){
+  const eligible = MISTY_TABLES.filter(function(t){ return t.capacity >= guests; });
+  if(!eligible.length) return [];
+  const related = MISTY_RELATED[pref] || [];
+  const scored = eligible.map(function(t, idx){
+    let base = 0, match = 'fit';
+    if(pref !== 'surprise'){
+      if(t.atmospheres.indexOf(pref) !== -1){ base = 10; match = 'exact'; }
+      else if(t.atmospheres.some(function(a){ return related.indexOf(a) !== -1; })){ base = 5; match = 'related'; }
+    }
+    return {table:t, match:match, score: base - 0.6*(t.capacity - guests), idx:idx};
+  });
+  if(pref === 'surprise'){
+    scored.sort(function(a,b){ return (a.table.capacity - b.table.capacity) || (a.idx - b.idx); });
+    const near = scored.filter(function(s){ return s.table.capacity - guests <= 2; });
+    const pool = near.length ? near : scored;
+    const start = hashString(String(seed == null ? '' : seed)) % pool.length;
+    const rotated = pool.slice(start).concat(pool.slice(0, start));
+    return rotated.concat(scored.filter(function(s){ return pool.indexOf(s) === -1; }));
+  }
+  scored.sort(function(a,b){ return (b.score - a.score) || (a.idx - b.idx); });
+  return scored;
+}
+
+function groupPhrase(n){ return n === 1 ? 'one person' : ({2:'two people',3:'three people',4:'four people',5:'five people',6:'six people'}[n] || (n+' people')); }
+function explainTable(entry, guests, pref){
+  const t = entry.table, p = prefById(pref);
+  if(pref === 'surprise') return "You said surprise me, so I picked "+t.name+". "+t.desc;
+  if(entry.match === 'exact') return "Based on your preferences, I'd recommend "+t.name+". It's perfect for "+groupPhrase(guests)+" who "+t.loves+".";
+  return "We don't have a "+(p ? p.label : 'matching')+" corner that seats "+groupPhrase(guests)+", so the closest fit is "+t.name+". "+t.desc;
+}
+
+/* ---- Stored data hygiene ---- */
+function sanitizeReservation(o){
+  if(!o || typeof o !== 'object') return null;
+  const str = function(v, max){ return typeof v === 'string' ? v.slice(0, max) : null; };
+  const ref = str(o.ref, 20);
+  if(!ref || !/^DEMO-MM-\d{4,5}$/.test(ref)) return null;
+  const name = str(o.name, 60);
+  if(!name || !name.trim()) return null;
+  const email = str(o.email, 120);
+  if(!email) return null;
+  if(!parseISODate(o.date)) return null;
+  if(timeStrToMinutes(o.time) === null) return null;
+  if(!Number.isInteger(o.guests) || o.guests < 1 || o.guests > MISTY_CONFIG.maxGuests) return null;
+  if(!tableById(o.tableId)) return null;
+  return {
+    ref:ref, name:name, email:email,
+    phone: typeof o.phone === 'string' ? o.phone.slice(0,30) : '',
+    date:o.date, time:o.time, guests:o.guests, tableId:o.tableId,
+    request: typeof o.request === 'string' ? o.request.slice(0,200) : '',
+    createdAt: typeof o.createdAt === 'string' ? o.createdAt.slice(0,40) : ''
+  };
+}
+function parseStoredReservations(raw){
+  let arr;
+  try{ arr = JSON.parse(raw); }catch(e){ return []; }
+  if(!Array.isArray(arr)) return [];
+  const seen = {}, out = [];
+  arr.forEach(function(o){
+    const r = sanitizeReservation(o);
+    if(r && !seen[r.ref]){ seen[r.ref] = true; out.push(r); }
+  });
+  return out;
+}
+const MISTY_LS_KEY = 'mistmug_reservations_v1';
+/* getStorage() may throw (storage blocked) — then we fall back to an in-memory list for this tab only. */
+function createReservationStore(getStorage){
+  let memory = null;
+  function read(){
+    if(memory) return memory.slice();
+    try{ const raw = getStorage().getItem(MISTY_LS_KEY); return raw ? parseStoredReservations(raw) : []; }
+    catch(e){ memory = []; return []; }
+  }
+  function write(list){
+    if(memory){ memory = list.slice(); return false; }
+    try{ getStorage().setItem(MISTY_LS_KEY, JSON.stringify(list)); return true; }
+    catch(e){ memory = list.slice(); return false; }
+  }
+  return {
+    list: read,
+    isPersistent: function(){ return memory === null; },
+    add: function(res){ const l = read(); l.push(res); return write(l); },
+    remove: function(ref){ write(read().filter(function(r){ return r.ref !== ref; })); }
+  };
+}
+
+function generateReference(existing, rng){
+  const used = {}; existing.forEach(function(r){ used[r] = true; });
+  for(let i=0;i<200;i++){
+    const ref = 'DEMO-MM-'+(1000 + Math.floor(rng()*9000));
+    if(!used[ref]) return ref;
+  }
+  return 'DEMO-MM-'+(10000 + Math.floor(rng()*90000));
+}
+
+/* Whole-draft validation (used on the summary screen and again right before saving). */
+function validateDraft(d, now){
+  if(!validateGuests(d.guests).ok) return {ok:false, step:0, error:'Please choose how many guests.'};
+  const dv = validateDate(d.date, now); if(!dv.ok) return {ok:false, step:1, error:dv.error};
+  const tv = validateTime(d.date, d.time, now); if(!tv.ok) return {ok:false, step:2, error:tv.error};
+  if(!prefById(d.pref)) return {ok:false, step:3, error:'Please choose an atmosphere.'};
+  const t = tableById(d.tableId);
+  if(!t || t.capacity < d.guests) return {ok:false, step:4, error:'That corner is too small for your group. Let me find another.'};
+  const n = validateName(d.name); if(!n.ok) return {ok:false, step:5, error:n.error};
+  const e = validateEmail(d.email); if(!e.ok) return {ok:false, step:5, error:e.error};
+  const p = validatePhone(d.phone); if(!p.ok) return {ok:false, step:5, error:p.error};
+  const r = validateRequest(d.request); if(!r.ok) return {ok:false, step:5, error:r.error};
+  return {ok:true};
+}
+function buildReservation(d, now, existingRefs, rng){
+  return {
+    ref: generateReference(existingRefs, rng),
+    name: validateName(d.name).value, email: validateEmail(d.email).value,
+    phone: validatePhone(d.phone).value, date: d.date, time: d.time,
+    guests: d.guests, tableId: d.tableId, request: validateRequest(d.request).value,
+    createdAt: now.toISOString()
+  };
+}
+function reservationIsPast(r, now){
+  const p = parseISODate(r.date), m = timeStrToMinutes(r.time);
+  if(!p || m === null) return false;
+  return new Date(p.y, p.m-1, p.d, Math.floor(m/60), m % 60).getTime() < now.getTime();
+}
+function compareReservations(a, b){
+  return (a.date < b.date ? -1 : a.date > b.date ? 1 : 0) || (a.time < b.time ? -1 : a.time > b.time ? 1 : 0) || (a.ref < b.ref ? -1 : 1);
+}
+function reservationText(r){
+  const t = tableById(r.tableId);
+  const lines = [
+    'MIST & MUG — A CORNER IN THE CLOUDS',
+    'Reservation: '+r.ref,
+    'Guest: '+r.name,
+    'Date: '+formatDateLong(r.date),
+    'Time: '+formatTime12(timeStrToMinutes(r.time)),
+    'Guests: '+r.guests,
+    'Corner: '+(t ? t.name : 'Unknown'),
+    'Status: Saved Demo'
+  ];
+  if(r.request) lines.push('Special request: '+r.request);
+  lines.push('This is a demo reservation saved in your browser. It has not been sent to the café.');
+  return lines.join('\n');
+}
+/* ---- MISTY CORE — END ---- */
+
+/* ====================== MISTY UI ====================== */
+const S_GUESTS = 0, S_DATE = 1, S_TIME = 2, S_PREF = 3, S_TABLE = 4, S_INFO = 5, S_REVIEW = 6, S_DONE = 7;
+const MM_STEP_LABELS = ['Guests','Date','Time','Atmosphere','Corner','Details','Review'];
+const MM_WELCOME = "Welcome to Mist & Mug! ☁️ Let me help you find your perfect little corner in the clouds.";
+const mmStore = createReservationStore(function(){ return window.localStorage; });
+const MM = {
+  open:false, view:'chat', step:S_GUESTS, stack:[], editReturn:false,
+  data:null, presetPref:null, presetCornerName:null,
+  savedRef:null, persisted:true, notice:'', token:0, opener:null,
+  confirmCancel:null, expanded:null, live:''
+};
+function mmNow(){ return new Date(); }
+function mmReduced(){ return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+function mmId(id){ return document.getElementById(id); }
+
+/* Small DOM helper: text is always inserted via textContent / text nodes (never innerHTML) so user input can't inject markup. */
+function mmEl(tag, props){
+  const el = document.createElement(tag);
+  if(props){
+    Object.keys(props).forEach(function(k){
+      const v = props[k];
+      if(v === null || v === undefined || v === false) return;
+      if(k === 'class') el.className = v;
+      else if(k.slice(0,2) === 'on') el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? '' : v);
+    });
+  }
+  for(let i = 2; i < arguments.length; i++){
+    const kids = Array.isArray(arguments[i]) ? arguments[i] : [arguments[i]];
+    kids.forEach(function(c){
+      if(c === null || c === undefined || c === false) return;
+      el.appendChild((typeof c === 'string' || typeof c === 'number') ? document.createTextNode(String(c)) : c);
+    });
+  }
+  return el;
+}
+
+function mmFreshData(){ return {guests:null, date:'', time:'', pref:null, tableId:'', name:'', email:'', phone:'', request:'', altIndex:0}; }
+function mmReset(opts){
+  MM.view = 'chat'; MM.step = S_GUESTS; MM.stack = []; MM.editReturn = false;
+  MM.data = mmFreshData(); MM.savedRef = null; MM.notice = '';
+  MM.presetPref = null; MM.presetCornerName = null;
+  if(opts && opts.cornerKey && CORNER_TO_PREF[opts.cornerKey]){
+    MM.presetPref = CORNER_TO_PREF[opts.cornerKey];
+    MM.data.pref = MM.presetPref;
+    const c = CORNERS[opts.cornerKey];
+    MM.presetCornerName = c ? c.name : null;
+  }
+}
+mmReset();
+
+function mmEntry(){
+  const d = MM.data;
+  if(!validateGuests(d.guests).ok || !prefById(d.pref)) return null;
+  const ranked = rankTables(d.guests, d.pref, (d.date||'')+'|'+(d.time||'')+'|'+d.guests);
+  if(!ranked.length) return null;
+  const n = Math.min(3, ranked.length);
+  const idx = ((d.altIndex % n) + n) % n;
+  return {entry:ranked[idx], n:n, idx:idx};
+}
+
+/* ---- navigation ---- */
+function mmNextAfter(s){
+  if(MM.editReturn){
+    if(s === S_GUESTS || s === S_PREF) return S_TABLE;
+    if(s === S_DATE) return S_TIME;
+    if(s === S_TIME || s === S_TABLE || s === S_INFO) return S_REVIEW;
+  }
+  return s + 1;
+}
+function mmGo(step, opts){
+  opts = opts || {};
+  MM.stack.push(MM.step); if(MM.stack.length > 100) MM.stack.shift();
+  MM.step = step;
+  if(step === S_REVIEW || step === S_DONE) MM.editReturn = false;
+  MM.notice = opts.notice || '';
+  mmRender({animate:true, typing: opts.typing !== false});
+}
+function mmComplete(s){ mmGo(mmNextAfter(s)); }
+function mmBack(){
+  if(!MM.stack.length || MM.step === S_DONE) return;
+  MM.step = MM.stack.pop(); MM.editReturn = false; MM.notice = '';
+  mmRender({animate:false, typing:false});
+}
+function mmEdit(step){ MM.editReturn = true; mmGo(step, {typing:false}); }
+
+/* ---- step content ---- */
+function mmSeatSvg(capacity, guests){
+  let chairs = '';
+  for(let i=0;i<capacity;i++){
+    const ang = (2*Math.PI*i/capacity) - Math.PI/2;
+    chairs += '<circle cx="'+(60+Math.cos(ang)*46).toFixed(1)+'" cy="'+(42+Math.sin(ang)*31).toFixed(1)+'" r="6" class="mm-chair'+(i < guests ? ' on' : '')+'"/>';
+  }
+  const wrap = document.createElement('div');
+  wrap.innerHTML = '<svg viewBox="0 0 120 84" role="img" aria-label="Table seating diagram: '+capacity+' seats, '+guests+' filled" focusable="false"><rect x="30" y="24" width="60" height="36" rx="10" class="mm-tbl"/>'+chairs+'</svg>';
+  return wrap.firstChild;
+}
+function mmSeatCard(entry, guests){
+  const t = entry.table;
+  return mmEl('div', {class:'mm-seat'},
+    mmSeatSvg(t.capacity, guests),
+    mmEl('div', null,
+      mmEl('h3', null, t.name),
+      mmEl('p', {class:'mm-meta'}, 'Seats up to '+t.capacity+' · '+t.tag),
+      mmEl('p', null, t.desc)));
+}
+function mmQuestionText(s){
+  switch(s){
+    case S_GUESTS: return 'How many people are joining us?';
+    case S_DATE: return 'When would you like to visit?';
+    case S_TIME: return 'What time should we save your corner for?';
+    case S_PREF: return 'What kind of atmosphere are you looking for?';
+    case S_TABLE: {
+      const info = mmEntry();
+      return info ? explainTable(info.entry, MM.data.guests, MM.data.pref) : "I couldn't find a corner for that group. Let's adjust your answers.";
+    }
+    case S_INFO: return 'Almost there! Who should we save the corner for?';
+    case S_REVIEW: return "Here's everything. Have a last look before I save it.";
+    default: return 'Your corner in the clouds is saved in this browser! ☁️';
+  }
+}
+function mmQuestionNodes(s){
+  const nodes = [mmQuestionText(s)];
+  if(s === S_TABLE){ const info = mmEntry(); if(info) nodes.push(mmSeatCard(info.entry, MM.data.guests)); }
+  return nodes;
+}
+function mmAnswerText(s){
+  const d = MM.data;
+  switch(s){
+    case S_GUESTS: return d.guests === 1 ? '1 guest' : d.guests+' guests';
+    case S_DATE: return formatDateLong(d.date);
+    case S_TIME: return formatTime12(timeStrToMinutes(d.time));
+    case S_PREF: { const p = prefById(d.pref); return p ? p.label : ''; }
+    case S_TABLE: { const info = mmEntry(); return info ? info.entry.table.name+' sounds perfect' : ''; }
+    case S_INFO: return d.name;
+    default: return null;
+  }
+}
+
+function mmBubble(kind, content, extra){
+  return mmEl('div', {class:'mm-row '+kind}, mmEl('div', Object.assign({class:'mm-bubble '+kind}, extra || {}), content));
+}
+
+/* ---- controls for each step ---- */
+function mmControlsGuests(){
+  const wrap = mmEl('div', {class:'mm-controls mm-grid mm-grid-3', role:'group', 'aria-label':'Number of guests'});
+  for(let n=1;n<=MISTY_CONFIG.maxGuests;n++){
+    const sel = MM.data.guests === n;
+    wrap.appendChild(mmEl('button', {type:'button', class:'mm-choice'+(sel?' is-selected':''), 'aria-pressed': sel?'true':'false', 'data-autofocus': (sel || (MM.data.guests === null && n === 1)),
+      onclick:function(){
+        if(!validateGuests(n).ok) return;
+        if(MM.data.guests !== n){ MM.data.guests = n; MM.data.altIndex = 0; }
+        mmComplete(S_GUESTS);
+      }},
+      mmEl('span', {class:'mm-big'}, String(n)), mmEl('span', {class:'mm-sub'}, n === 1 ? 'guest' : 'guests')));
+  }
+  return wrap;
+}
+function mmControlsDate(){
+  const now = mmNow(), todayISO = isoFromDate(now);
+  const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
+  const input = mmEl('input', {type:'date', id:'mm-date', class:'mm-input', min:todayISO, max:maxDateISO(now), 'aria-describedby':'mm-date-err', 'data-autofocus':true});
+  input.value = MM.data.date || '';
+  const err = mmEl('p', {class:'mm-err', id:'mm-date-err', role:'alert'});
+  function fail(msg){ err.textContent = msg; input.setAttribute('aria-invalid','true'); input.focus(); }
+  function submit(val){
+    err.textContent = ''; input.removeAttribute('aria-invalid');
+    const v = validateDate(val, mmNow());
+    if(!v.ok) return fail(v.error);
+    if(!slotsForDate(val, mmNow()).length) return fail("We've taken our last seating for that day. Try tomorrow.");
+    if(MM.data.date !== val){ MM.data.date = val; MM.data.altIndex = 0; }
+    mmComplete(S_DATE);
+  }
+  const quick = function(label, iso){ return mmEl('button', {type:'button', class:'chip', onclick:function(){ input.value = iso; submit(iso); }}, label); };
+  return mmEl('div', {class:'mm-controls'},
+    mmEl('div', {class:'mm-chips'}, quick('Today', todayISO), quick('Tomorrow', isoFromDate(tomorrow))),
+    mmEl('label', {for:'mm-date', class:'sr-only'}, 'Visit date'),
+    input, err,
+    mmEl('div', {class:'mm-actions'}, mmEl('button', {type:'button', class:'btn gold', onclick:function(){ submit(input.value); }}, 'Continue →')),
+    mmEl('p', {class:'mm-note'}, 'Past dates are blocked. We plan up to '+MISTY_CONFIG.maxAdvanceDays+' days ahead.'));
+}
+function mmControlsTime(){
+  const slots = slotsForDate(MM.data.date, mmNow());
+  if(MM.data.time && slots.indexOf(timeStrToMinutes(MM.data.time)) === -1) MM.data.time = '';
+  if(!slots.length){
+    return mmEl('div', {class:'mm-controls'}, mmEl('p', {class:'mm-err', role:'alert'}, 'No seatings left for that date.'),
+      mmEl('div', {class:'mm-actions'}, mmEl('button', {type:'button', class:'btn ghost', 'data-autofocus':true, onclick:mmBack}, '← Pick another date')));
+  }
+  const groups = [['Morning', function(m){ return m < 12*60; }], ['Afternoon', function(m){ return m >= 12*60 && m < 17*60; }], ['Evening', function(m){ return m >= 17*60; }]];
+  const wrap = mmEl('div', {class:'mm-controls', role:'group', 'aria-label':'Available times'});
+  let focusSet = false;
+  groups.forEach(function(g){
+    const ms = slots.filter(g[1]);
+    if(!ms.length) return;
+    wrap.appendChild(mmEl('p', {class:'mm-time-h'}, g[0]));
+    const grid = mmEl('div', {class:'mm-grid mm-grid-4'});
+    ms.forEach(function(m){
+      const sel = MM.data.time === minutesToTimeStr(m);
+      const af = sel || (!MM.data.time && !focusSet);
+      if(af) focusSet = true;
+      grid.appendChild(mmEl('button', {type:'button', class:'mm-choice'+(sel?' is-selected':''), 'aria-pressed': sel?'true':'false', 'data-autofocus':af,
+        onclick:function(){ if(MM.data.time !== minutesToTimeStr(m)){ MM.data.time = minutesToTimeStr(m); MM.data.altIndex = 0; } mmComplete(S_TIME); }},
+        mmEl('span', {class:'mm-sub', style:'opacity:1;font-size:13.5px;font-weight:600'}, formatTime12(m))));
+    });
+    wrap.appendChild(grid);
+  });
+  const last = MISTY_CONFIG.closeMinutes - MISTY_CONFIG.lastSeatingBeforeCloseMinutes;
+  wrap.appendChild(mmEl('p', {class:'mm-note'}, 'Open '+formatTime12(MISTY_CONFIG.openMinutes)+' – '+formatTime12(MISTY_CONFIG.closeMinutes)+' · last seating '+formatTime12(last)));
+  return wrap;
+}
+function mmControlsPref(){
+  const wrap = mmEl('div', {class:'mm-controls mm-grid mm-grid-2', role:'group', 'aria-label':'Atmosphere'});
+  MISTY_PREFS.forEach(function(p, i){
+    const sel = MM.data.pref === p.id;
+    wrap.appendChild(mmEl('button', {type:'button', class:'mm-choice'+(sel?' is-selected':''), 'aria-pressed': sel?'true':'false', 'data-autofocus': (sel || (!MM.data.pref && i === 0)),
+      onclick:function(){ if(MM.data.pref !== p.id){ MM.data.pref = p.id; MM.data.altIndex = 0; } mmComplete(S_PREF); }},
+      mmEl('span', {class:'mm-ico', 'aria-hidden':'true'}, p.icon),
+      mmEl('span', null, p.label),
+      mmEl('span', {class:'mm-sub'}, p.blurb),
+      (MM.presetPref === p.id && MM.presetCornerName) ? mmEl('span', {class:'mm-tagline'}, 'From Pick Your Corner') : null));
+  });
+  return wrap;
+}
+function mmControlsTable(){
+  const info = mmEntry();
+  if(!info) return mmEl('div', {class:'mm-controls'}, mmEl('button', {type:'button', class:'btn ghost', 'data-autofocus':true, onclick:mmBack}, '← Change my answers'));
+  const row = mmEl('div', {class:'mm-actions'},
+    mmEl('button', {type:'button', class:'btn gold', 'data-autofocus':true, onclick:function(){ MM.data.tableId = info.entry.table.id; mmComplete(S_TABLE); }}, "That's the one →"));
+  if(info.n > 1) row.appendChild(mmEl('button', {type:'button', class:'btn ghost', onclick:function(){ MM.data.altIndex = info.idx + 1; mmRender({animate:true, typing:false}); }}, 'Show me another ('+(info.idx+1)+'/'+info.n+')'));
+  return mmEl('div', {class:'mm-controls'}, row);
+}
+function mmControlsInfo(){
+  const d = MM.data;
+  function field(id, label, optional, input){
+    const err = mmEl('p', {class:'mm-err', id:id+'-err', role:'alert'});
+    input.setAttribute('aria-describedby', id+'-err');
+    return {err:err, input:input, row: mmEl('div', {class:'mm-field'}, mmEl('label', {for:id}, label, optional ? mmEl('span', {class:'mm-opt'}, ' (optional)') : null), input, err)};
+  }
+  const nameI = mmEl('input', {type:'text', id:'mm-name', class:'mm-input', maxlength:'60', autocomplete:'name', 'aria-required':'true', 'data-autofocus':true}); nameI.value = d.name || '';
+  const emailI = mmEl('input', {type:'email', id:'mm-email', class:'mm-input', maxlength:'120', autocomplete:'email', inputmode:'email', 'aria-required':'true'}); emailI.value = d.email || '';
+  const phoneI = mmEl('input', {type:'tel', id:'mm-phone', class:'mm-input', maxlength:'20', autocomplete:'tel', inputmode:'tel'}); phoneI.value = d.phone || '';
+  const reqI = mmEl('textarea', {id:'mm-request', class:'mm-input', maxlength:'200', rows:'3'}); reqI.value = d.request || '';
+  const fn = field('mm-name', 'Name', false, nameI), fe = field('mm-email', 'Email', false, emailI),
+        fp = field('mm-phone', 'Phone number', true, phoneI), fr = field('mm-request', 'Special request', true, reqI);
+  const count = mmEl('p', {class:'mm-count', 'aria-hidden':'true'}, (reqI.value.length)+'/200');
+  reqI.addEventListener('input', function(){ count.textContent = reqI.value.length+'/200'; });
+  function submit(){
+    const checks = [[fn, validateName(nameI.value)], [fe, validateEmail(emailI.value)], [fp, validatePhone(phoneI.value)], [fr, validateRequest(reqI.value)]];
+    let firstBad = null;
+    checks.forEach(function(c){
+      c[0].err.textContent = c[1].ok ? '' : c[1].error;
+      if(c[1].ok) c[0].input.removeAttribute('aria-invalid'); else { c[0].input.setAttribute('aria-invalid','true'); if(!firstBad) firstBad = c[0].input; }
+    });
+    if(firstBad){ firstBad.focus(); return; }
+    d.name = checks[0][1].value; d.email = checks[1][1].value; d.phone = checks[2][1].value; d.request = checks[3][1].value;
+    mmComplete(S_INFO);
+  }
+  return mmEl('form', {class:'mm-controls', novalidate:true, onsubmit:function(e){ e.preventDefault(); submit(); }},
+    fn.row, fe.row, fp.row, fr.row, count,
+    mmEl('p', {class:'mm-note'}, 'Kept only in this browser (localStorage). Nothing is sent to the café or anywhere else.'),
+    mmEl('div', {class:'mm-actions'}, mmEl('button', {type:'submit', class:'btn gold'}, 'Review →')));
+}
+function mmSummaryRow(label, value, step){
+  return mmEl('div', {class:'mm-sum-row'}, mmEl('dt', null, label), mmEl('dd', null, value || '—'),
+    mmEl('button', {type:'button', class:'mm-edit', 'aria-label':'Edit '+label.toLowerCase(), onclick:function(){ mmEdit(step); }}, 'Edit'));
+}
+function mmControlsReview(){
+  const d = MM.data, info = mmEntry();
+  if(info) d.tableId = info.entry.table.id;
+  const p = prefById(d.pref), t = tableById(d.tableId);
+  const dup = mmStore.list().some(function(r){ return r.date === d.date && r.time === d.time; });
+  const wrap = mmEl('div', {class:'mm-controls'});
+  if(MM.notice) wrap.appendChild(mmEl('p', {class:'mm-err', role:'alert'}, MM.notice));
+  wrap.appendChild(mmEl('dl', {class:'mm-summary'},
+    mmSummaryRow('Guests', String(d.guests), S_GUESTS),
+    mmSummaryRow('Date', formatDateLong(d.date), S_DATE),
+    mmSummaryRow('Time', formatTime12(timeStrToMinutes(d.time) || 0), S_TIME),
+    mmSummaryRow('Atmosphere', p ? p.label : '', S_PREF),
+    mmSummaryRow('Corner', t ? t.name : '', S_TABLE),
+    mmSummaryRow('Name', d.name, S_INFO),
+    mmSummaryRow('Email', d.email, S_INFO),
+    mmSummaryRow('Phone', d.phone || 'Not provided', S_INFO),
+    mmSummaryRow('Request', d.request || 'None', S_INFO)));
+  if(dup) wrap.appendChild(mmEl('p', {class:'mm-warn'}, 'You already have a demo reservation saved for this date and time in this browser.'));
+  wrap.appendChild(mmEl('p', {class:'mm-note'}, 'Demo only: table availability is not checked, and nothing is sent to the café.'));
+  const save = mmEl('button', {type:'button', class:'btn gold', 'data-autofocus':true, onclick:function(){ save.disabled = true; mmSave(); }}, 'Save demo reservation');
+  wrap.appendChild(mmEl('div', {class:'mm-actions'}, save));
+  return wrap;
+}
+function mmSave(){
+  if(MM.step === S_DONE) return;
+  const info = mmEntry();
+  if(info) MM.data.tableId = info.entry.table.id;
+  const v = validateDraft(MM.data, mmNow());
+  if(!v.ok){ MM.editReturn = true; mmGo(v.step, {typing:false, notice:v.error}); return; }
+  const existing = mmStore.list();
+  if(existing.length >= MISTY_CONFIG.maxSaved){ MM.notice = 'You have '+MISTY_CONFIG.maxSaved+' saved demo reservations. Cancel one first.'; mmRender({animate:false, typing:false}); return; }
+  const res = buildReservation(MM.data, mmNow(), existing.map(function(r){ return r.ref; }), Math.random);
+  MM.lastSaved = res;
+  MM.persisted = mmStore.add(res);
+  MM.savedRef = res.ref;
+  mmGo(S_DONE);
+}
+
+/* ---- reservation card, image, copy ---- */
+function mmReservationCard(r){
+  const t = tableById(r.tableId);
+  const item = function(label, value, wide){ return mmEl('div', {class: wide ? 'wide' : null}, mmEl('dt', null, label), mmEl('dd', null, value)); };
+  return mmEl('div', {class:'mm-card', role:'group', 'aria-label':'Demo reservation '+r.ref},
+    mmEl('div', {class:'mm-card-stamp', 'aria-hidden':'true'}, 'DEMO'),
+    mmEl('p', {class:'mm-card-brand'}, 'MIST & MUG'),
+    mmEl('p', {class:'mm-card-sub'}, 'A CORNER IN THE CLOUDS'),
+    mmEl('dl', {class:'mm-card-dl'},
+      item('Reservation', r.ref, true), item('Guest', r.name, true),
+      item('Date', formatDateLong(r.date)), item('Time', formatTime12(timeStrToMinutes(r.time))),
+      item('Guests', String(r.guests)), item('Corner', t ? t.name : '—'),
+      item('Status', 'Saved Demo', true)),
+    mmEl('p', {class:'mm-card-quote'}, '"This little corner is waiting in your plans."'),
+    mmEl('p', {class:'mm-card-disc'}, 'This is a demo reservation saved in your browser. It has not been sent to the café.'));
+}
+function mmCopy(text){
+  function fallback(){
+    try{
+      const ta = mmEl('textarea', {style:'position:fixed;left:-9999px;top:0', 'aria-hidden':'true'}); ta.value = text;
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand && document.execCommand('copy'); ta.remove();
+      toast(ok ? 'Reservation details copied' : "Couldn't copy here. Select the text on the card instead.");
+    }catch(e){ toast("Couldn't copy here. Select the text on the card instead."); }
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ toast('Reservation details copied'); }, fallback);
+  } else fallback();
+}
+function mmDownloadImage(r){
+  try{
+    const t = tableById(r.tableId);
+    const c = document.createElement('canvas'); c.width = 900; c.height = 560;
+    const ctx = c.getContext('2d'); if(!ctx) throw new Error('no canvas');
+    ctx.fillStyle = '#F3E8D3'; ctx.fillRect(0,0,900,560);
+    ctx.fillStyle = 'rgba(20,46,37,.13)'; ctx.beginPath(); ctx.moveTo(34,526); ctx.lineTo(34,440); ctx.lineTo(180,350); ctx.lineTo(300,420); ctx.lineTo(450,320); ctx.lineTo(600,420); ctx.lineTo(740,360); ctx.lineTo(866,430); ctx.lineTo(866,526); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = '#2A1812'; ctx.lineWidth = 3; ctx.strokeRect(18,18,864,524); ctx.lineWidth = 1; ctx.strokeRect(30,30,840,500);
+    const spaced = function(text, x, y, gap){ let cx = x; for(let i=0;i<text.length;i++){ ctx.fillText(text[i], cx, y); cx += ctx.measureText(text[i]).width + gap; } };
+    const fit = function(text, maxW){ let s = String(text); while(s.length > 1 && ctx.measureText(s).width > maxW) s = s.slice(0,-2)+'…'; return s; };
+    ctx.fillStyle = '#2A1812'; ctx.font = '700 44px Fraunces, Georgia, serif'; ctx.fillText('MIST & MUG', 70, 108);
+    ctx.fillStyle = '#A6533F'; ctx.font = '700 14px Inter, Arial, sans-serif'; spaced('A CORNER IN THE CLOUDS', 72, 136, 3.5);
+    const field = function(label, value, x, y, maxW){
+      ctx.fillStyle = '#6E422B'; ctx.font = '700 12px Inter, Arial, sans-serif'; spaced(label.toUpperCase(), x, y, 1.6);
+      ctx.fillStyle = '#2A1812'; ctx.font = '26px Fraunces, Georgia, serif'; ctx.fillText(fit(value, maxW), x, y+32);
+    };
+    field('Reservation', r.ref, 70, 196, 760);
+    field('Guest', r.name, 70, 266, 760);
+    field('Date', formatDateLong(r.date), 70, 336, 340); field('Time', formatTime12(timeStrToMinutes(r.time)), 470, 336, 340);
+    field('Guests', String(r.guests), 70, 406, 340); field('Corner', t ? t.name : '—', 470, 406, 380);
+    ctx.fillStyle = '#A6533F'; ctx.font = '700 14px Inter, Arial, sans-serif'; spaced('STATUS: SAVED DEMO', 70, 470, 2);
+    ctx.save(); ctx.translate(740,100); ctx.rotate(-0.21); ctx.strokeStyle = '#A6533F'; ctx.lineWidth = 3; ctx.strokeRect(-60,-26,120,52);
+    ctx.fillStyle = '#A6533F'; ctx.font = '800 26px Inter, Arial, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('DEMO', 0, 9); ctx.restore();
+    ctx.textAlign = 'left'; ctx.fillStyle = '#2A1812'; ctx.font = 'italic 17px Fraunces, Georgia, serif'; ctx.fillText('"This little corner is waiting in your plans."', 70, 506);
+    ctx.font = '600 12px Inter, Arial, sans-serif'; ctx.fillText('This is a demo reservation saved in your browser. It has not been sent to the café.', 70, 524);
+    const a = document.createElement('a'); a.download = 'mist-and-mug-'+r.ref+'.png'; a.href = c.toDataURL('image/png');
+    document.body.appendChild(a); a.click(); a.remove();
+    toast('Reservation card downloaded');
+  }catch(e){ toast("Couldn't make the image in this browser. Try Copy details instead."); }
+}
+function mmCardActions(r){
+  return mmEl('div', {class:'mm-actions'},
+    mmEl('button', {type:'button', class:'btn gold small', onclick:function(){ mmDownloadImage(r); }}, 'Download image'),
+    mmEl('button', {type:'button', class:'btn ghost small', onclick:function(){ mmCopy(reservationText(r)); }}, 'Copy details'));
+}
+function mmControlsDone(){
+  const r = mmStore.list().filter(function(x){ return x.ref === MM.savedRef; })[0] || (MM.lastSaved && MM.lastSaved.ref === MM.savedRef ? MM.lastSaved : null);
+  const wrap = mmEl('div', {class:'mm-controls'});
+  if(!r){ wrap.appendChild(mmEl('p', {class:'mm-err', role:'alert'}, "We couldn't find that reservation any more.")); return wrap; }
+  if(!MM.persisted) wrap.appendChild(mmEl('p', {class:'mm-warn'}, "Your browser blocked saving, so this demo reservation will vanish when you close or refresh this tab. Use Download image or Copy details to keep it."));
+  wrap.appendChild(mmReservationCard(r));
+  wrap.appendChild(mmCardActions(r));
+  wrap.appendChild(mmEl('div', {class:'mm-actions'},
+    mmEl('button', {type:'button', class:'btn ghost small', 'data-autofocus':true, onclick:function(){ mmReset(); mmRender({animate:true, typing:false}); }}, 'Start another reservation'),
+    mmEl('button', {type:'button', class:'btn ghost small', onclick:function(){ MM.view = 'saved'; mmRender({animate:false, typing:false}); }}, 'View saved reservations')));
+  return wrap;
+}
+function mmControlsFor(s){
+  switch(s){
+    case S_GUESTS: return mmControlsGuests();
+    case S_DATE: return mmControlsDate();
+    case S_TIME: return mmControlsTime();
+    case S_PREF: return mmControlsPref();
+    case S_TABLE: return mmControlsTable();
+    case S_INFO: return mmControlsInfo();
+    case S_REVIEW: return mmControlsReview();
+    default: return mmControlsDone();
+  }
+}
+
+/* ---- saved reservations view ---- */
+function mmSavedView(){
+  const list = mmStore.list().sort(compareReservations), now = mmNow();
+  const wrap = mmEl('div', null);
+  wrap.appendChild(mmBubble('bot', list.length ? 'Here are the demo reservations saved in this browser.' : 'Nothing saved yet. Your corner is waiting whenever you are.'));
+  if(!mmStore.isPersistent()) wrap.appendChild(mmEl('p', {class:'mm-warn'}, "Your browser is blocking storage, so saved demo reservations only last until this tab closes."));
+  list.forEach(function(r){
+    const t = tableById(r.tableId), past = reservationIsPast(r, now), open = MM.expanded === r.ref, asking = MM.confirmCancel === r.ref;
+    const item = mmEl('article', {class:'mm-saved-item'},
+      mmEl('div', {class:'mm-saved-top'}, mmEl('strong', null, r.ref), mmEl('span', {class:'mm-badge'+(past?' past':'')}, past ? 'Past' : 'Demo')),
+      mmEl('p', null, formatDateLong(r.date)+' · '+formatTime12(timeStrToMinutes(r.time))+' · '+r.guests+(r.guests === 1 ? ' guest' : ' guests')),
+      mmEl('p', {class:'mm-muted'}, (t ? t.name : 'Unknown corner')+' · for '+r.name),
+      r.request ? mmEl('p', {class:'mm-muted'}, 'Request: '+r.request) : null);
+    const actions = mmEl('div', {class:'mm-actions'},
+      mmEl('button', {type:'button', class:'btn ghost small', 'aria-expanded': open ? 'true':'false', onclick:function(){ MM.expanded = open ? null : r.ref; mmRender({animate:false, typing:false}); }}, open ? 'Hide details' : 'Details'),
+      mmEl('button', {type:'button', class:'btn ghost small', onclick:function(){ MM.confirmCancel = r.ref; mmRender({animate:false, typing:false}); }}, 'Cancel reservation'));
+    item.appendChild(actions);
+    if(asking){
+      item.appendChild(mmEl('div', {class:'mm-confirm-row', role:'alert'}, 'Cancel this demo reservation? This removes it from this browser.',
+        mmEl('div', {class:'mm-actions'},
+          mmEl('button', {type:'button', class:'btn gold small', 'data-autofocus':true, onclick:function(){ mmStore.remove(r.ref); MM.confirmCancel = null; if(MM.expanded === r.ref) MM.expanded = null; toast('Demo reservation cancelled'); mmRender({animate:false, typing:false}); }}, 'Yes, cancel it'),
+          mmEl('button', {type:'button', class:'btn ghost small', onclick:function(){ MM.confirmCancel = null; mmRender({animate:false, typing:false}); }}, 'Keep it'))));
+    }
+    if(open){ item.appendChild(mmReservationCard(r)); item.appendChild(mmCardActions(r)); }
+    wrap.appendChild(item);
+  });
+  wrap.appendChild(mmEl('p', {class:'mm-note'}, 'Saved only in this browser. Not shared with the café, and never visible to other visitors.'));
+  if(!list.length) wrap.appendChild(mmEl('div', {class:'mm-actions'}, mmEl('button', {type:'button', class:'btn gold', 'data-autofocus':true, onclick:function(){ MM.view = 'chat'; mmRender({animate:false, typing:false}); }}, 'Plan a visit')));
+  return wrap;
+}
+
+/* ---- rendering ---- */
+function mmUpdateChrome(){
+  mmId('mm-tab-chat').setAttribute('aria-pressed', MM.view === 'chat' ? 'true':'false');
+  mmId('mm-tab-saved').setAttribute('aria-pressed', MM.view === 'saved' ? 'true':'false');
+  mmId('mm-saved-count').textContent = String(mmStore.list().length);
+  const segs = mmId('mm-segs'); segs.replaceChildren();
+  for(let i=0;i<MM_STEP_LABELS.length;i++){
+    segs.appendChild(mmEl('span', {class:'mm-seg'+(MM.step > i ? ' done' : (MM.step === i && MM.view === 'chat' ? ' cur' : ''))}));
+  }
+  const done = MM.step >= S_DONE;
+  const text = MM.view === 'saved' ? 'Saved demo reservations' : (done ? 'All set — demo reservation saved' : 'Step '+(MM.step+1)+' of 7 · '+MM_STEP_LABELS[MM.step]);
+  mmId('mm-ptext').textContent = text;
+  const pb = mmId('mm-progress');
+  pb.setAttribute('aria-valuenow', String(Math.min(7, MM.step + 1))); pb.setAttribute('aria-valuetext', text);
+  const chat = MM.view === 'chat';
+  mmId('mm-back').hidden = !chat || done;
+  mmId('mm-back').disabled = !MM.stack.length;
+  mmId('mm-restart').hidden = !chat;
+}
+function mmBuildTranscript(typing){
+  const rows = [mmBubble('bot', MM_WELCOME)];
+  if(MM.presetPref && MM.presetCornerName){
+    const p = prefById(MM.presetPref);
+    rows.push(mmBubble('bot', 'I see you were eyeing '+MM.presetCornerName+' in Pick Your Corner. I\'ll start you off with '+(p ? p.label : 'that atmosphere')+'.'));
+  }
+  for(let s = 0; s <= MM.step; s++){
+    const current = s === MM.step;
+    if(current && typing){ rows.push(mmBubble('bot', mmEl('span', {class:'mm-typing', 'aria-hidden':'true'}, mmEl('span'), mmEl('span'), mmEl('span')))); break; }
+    rows.push(mmBubble('bot', mmQuestionNodes(s), current ? {'data-current':true} : null));
+    if(current){ MM.live = mmQuestionText(s); rows.push(mmControlsFor(s)); }
+    else { const a = mmAnswerText(s); if(a) rows.push(mmBubble('user', a)); }
+  }
+  return rows;
+}
+function mmRender(o){
+  o = o || {};
+  const tok = ++MM.token;
+  mmUpdateChrome();
+  const chat = mmId('misty-chat'); chat.replaceChildren();
+  if(MM.view === 'saved'){
+    MM.live = 'Saved demo reservations';
+    chat.appendChild(mmSavedView());
+    mmAfterRender(true);
+    return;
+  }
+  const typing = !!o.typing && !mmReduced();
+  const rows = mmBuildTranscript(typing);
+  if(o.animate) rows.slice(-3).forEach(function(r){ r.classList.add('fresh'); });
+  rows.forEach(function(r){ chat.appendChild(r); });
+  if(typing){
+    mmScroll();
+    setTimeout(function(){ if(tok === MM.token && MM.open) mmRender({animate:true, typing:false}); }, 480);
+    return;
+  }
+  mmAfterRender(false);
+}
+function mmScroll(){
+  const sc = mmId('misty-scroll'), cur = sc.querySelector('[data-current]');
+  sc.scrollTop = cur ? Math.max(0, cur.offsetTop - 12) : sc.scrollHeight;
+}
+function mmAfterRender(){
+  mmScroll();
+  mmId('misty-live').textContent = MM.live || '';
+  const chat = mmId('misty-chat');
+  const f = chat.querySelector('[data-autofocus]') || chat.querySelector('.mm-controls button, .mm-controls input');
+  if(f && MM.open) f.focus({preventScroll:true});
+}
+
+/* ---- open / close / events ---- */
+function openMisty(opts){
+  opts = opts || {};
+  if(opts.cornerKey) mmReset({cornerKey:opts.cornerKey});
+  MM.view = opts.view || 'chat';
+  if(!MM.open){ MM.opener = document.activeElement; }
+  MM.open = true;
+  mmId('misty-modal').classList.add('open'); mmId('misty-modal').setAttribute('aria-hidden','false');
+  mmId('misty-launcher').hidden = true;
+  document.body.style.overflow = 'hidden';
+  mmRender({animate:false, typing:false});
+}
+function closeMisty(){
+  if(!MM.open) return;
+  MM.open = false; MM.token++;
+  mmId('misty-modal').classList.remove('open'); mmId('misty-modal').setAttribute('aria-hidden','true');
+  mmId('misty-launcher').hidden = false;
+  document.body.style.overflow = '';
+  const o = MM.opener;
+  if(o && document.body.contains(o) && o.focus) o.focus(); else mmId('misty-launcher').focus();
+  MM.opener = null;
+}
+mmId('misty-launcher').addEventListener('click', function(){ openMisty(); });
+mmId('misty-close').addEventListener('click', closeMisty);
+mmId('misty-modal').addEventListener('click', function(e){ if(e.target === mmId('misty-modal')) closeMisty(); });
+mmId('mm-tab-chat').addEventListener('click', function(){ MM.view = 'chat'; mmRender({animate:false, typing:false}); });
+mmId('mm-tab-saved').addEventListener('click', function(){ MM.view = 'saved'; MM.confirmCancel = null; mmRender({animate:false, typing:false}); });
+mmId('mm-back').addEventListener('click', mmBack);
+mmId('mm-restart').addEventListener('click', function(){ mmReset(); mmRender({animate:true, typing:false}); });
+document.querySelectorAll('[data-misty-open]').forEach(function(a){
+  a.addEventListener('click', function(e){ e.preventDefault(); openMisty(); });
+});
+document.addEventListener('keydown', function(e){
+  if(!MM.open) return;
+  if(e.key === 'Escape'){ e.preventDefault(); closeMisty(); return; }
+  if(e.key === 'Tab'){
+    const nodes = Array.prototype.filter.call(mmId('misty-modal').querySelectorAll('button, input, textarea, a[href], [tabindex]:not([tabindex="-1"])'),
+      function(n){ return !n.disabled && !n.hidden && !n.closest('[hidden]'); });
+    if(!nodes.length) return;
+    const first = nodes[0], last = nodes[nodes.length-1];
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    else if(!mmId('misty-modal').contains(document.activeElement)){ e.preventDefault(); first.focus(); }
+  }
+});
+mmUpdateChrome();
 
 })();
 </script>
