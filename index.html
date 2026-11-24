@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -844,6 +847,93 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
 .fmc-explain-tags span{border:1px solid rgba(230,173,98,.5);border-radius:99px;padding:5px 9px;font-size:.7rem;color:var(--gold)}
 .fmc-explain-note{font-size:.76rem;line-height:1.55;color:var(--paper);opacity:.78}
 
+
+/* === Optional Smart Ordering Cart: isolated styling === */
+.cart-open{position:fixed;right:clamp(12px,3vw,30px);top:90px;z-index:75;border:1px solid #E6AD62;background:#241711;color:#FAF3E6;border-radius:999px;padding:11px 17px;min-height:44px;font:600 12px/1.2 var(--sans);letter-spacing:.04em;box-shadow:0 8px 24px #24171138}
+.cart-open:hover,.cart-add:hover{filter:brightness(1.1)}
+.cart-count{display:inline-block;margin-left:8px;background:#E6AD62;color:#241711;border-radius:50%;min-width:22px;padding:4px;font-size:11px;text-align:center}
+.cart-add{margin-top:12px;min-height:42px;border:1px solid #70472F;border-radius:999px;background:transparent;color:#70472F;padding:8px 16px;font:700 11px var(--sans);letter-spacing:.07em;text-transform:uppercase}
+.cart-add:focus-visible,.cart-open:focus-visible,.cart-x:focus-visible{outline:3px solid #E6AD62;outline-offset:3px}
+.cart-overlay[hidden]{display:none!important}
+.cart-overlay{position:fixed;inset:0;z-index:450;background:rgba(20,14,9,.7);display:flex;justify-content:flex-end}
+.cart-panel{width:min(480px,100%);height:100%;overflow:auto;background:#F4EBDD;color:#241711;padding:clamp(20px,4vw,36px);box-shadow:-15px 0 50px #0005;display:flex;flex-direction:column;gap:16px}
+.cart-head{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #70472F55;padding-bottom:14px}
+.cart-head h2{font:400 clamp(28px,5vw,42px)/1.1 var(--serif)}
+.cart-x{width:44px;height:44px;border:1px solid #70472F;border-radius:50%;background:transparent;color:#241711;font-size:24px}
+.cart-items{display:grid;gap:12px;flex:1;align-content:start}
+.cart-line{display:grid;grid-template-columns:1fr auto;gap:10px;border-bottom:1px solid #70472F35;padding:12px 0}
+.cart-line h3{font:450 20px/1.2 var(--serif)}
+.cart-line small{display:block;color:#70472F;font-size:12px;margin-top:5px}
+.cart-qty{display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px}
+.cart-qty button{width:36px;height:36px;border:1px solid #70472F;border-radius:50%;background:#FAF3E6;color:#241711;font-size:18px}
+.cart-totals{border-top:1px solid #70472F55;padding-top:16px}
+.cart-totalrow{display:flex;justify-content:space-between;gap:12px;margin:8px 0}
+.cart-primary{width:100%;min-height:48px;background:#142E25;color:#FAF3E6;border:0;border-radius:999px;font:700 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
+.cart-primary:disabled{opacity:.45;cursor:not-allowed}
+.cart-note{font-size:12px;color:#70472F;line-height:1.5}
+.cart-status{font-size:14px;color:#142E25;min-height:20px}
+.cart-receipt[hidden],.cart-items[hidden],.cart-totals[hidden]{display:none!important}
+.cart-receipt{background:#FAF3E6;border:1px solid #C8B69F;border-radius:14px;padding:24px 20px;margin-top:12px}
+.cart-receipt h3{font:450 30px/1.12 var(--serif);margin:10px 0;color:#142E25}
+.cart-receipt p{font-size:14px;line-height:1.55;margin:8px 0}
+.cart-receipt .receipt-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #70472F30;font-size:14px}
+.cart-receipt .receipt-total{font-weight:750;font-size:19px;border-bottom:0}
+.cart-receipt .receipt-kicker{font:700 11px var(--sans);letter-spacing:.15em;color:#964A33;text-transform:uppercase}
+.cart-receipt .receipt-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.cart-receipt .receipt-actions button{flex:1;min-width:130px;padding:12px;border:1px solid #142E25;border-radius:999px;background:#142E25;color:#FAF3E6;font:700 12px var(--sans);cursor:pointer}
+.cart-receipt .receipt-actions button:last-child{background:transparent;color:#142E25}
+@media(max-width:640px){.cart-open{top:auto;bottom:80px;right:14px}.cart-panel{padding:20px}}
+
+/* Optional reservation pre-order bridge */
+.cart-reserve{background:#70472F;margin-top:8px}
+.mm-preorder{margin:14px 0;padding:16px;border:1px solid rgba(112,71,47,.3);border-radius:10px;background:#FAF3E6;color:#241711}
+.mm-preorder h3{font:450 20px/1.2 var(--serif);margin:0 0 10px}
+.mm-preorder-line{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:13px}
+.mm-preorder-total{border-top:1px solid rgba(112,71,47,.25);margin-top:8px;padding-top:10px;font-weight:700}
+.mm-preorder-note{font-size:12px;line-height:1.5;color:#70472F;margin-top:8px}
+
+/* Unified Visit & Order entry point; legacy launchers remain for existing JS but are visually hidden. */
+#misty-launcher,#cart-open{display:none!important}
+.visit-launch{position:fixed;right:18px;bottom:20px;z-index:76;min-height:50px;padding:12px 20px;border:1px solid #E6AD62;border-radius:999px;background:#241711;color:#FAF3E6;font:700 13px var(--sans);box-shadow:0 9px 30px #0005;cursor:pointer}
+.visit-launch:hover{background:#3d291d}
+.visit-sheet[hidden]{display:none!important}
+.visit-sheet{position:fixed;inset:0;z-index:440;background:rgba(16,20,17,.68);display:grid;place-items:center;padding:18px}
+.visit-card{width:min(440px,100%);background:#F4EBDD;color:#241711;border-radius:18px;padding:28px;box-shadow:0 20px 70px #0006}
+.visit-head{display:flex;justify-content:space-between;gap:12px;align-items:start}
+.visit-head h2{font:400 34px/1.1 var(--serif)}
+.visit-close{border:1px solid #70472F;background:transparent;border-radius:50%;width:44px;height:44px;font-size:22px;color:#241711}
+.visit-desc{font-size:14px;color:#70472F;margin:12px 0 20px}
+.visit-choice{display:block;width:100%;padding:16px;text-align:left;border:1px solid #c7ae92;background:#FAF3E6;border-radius:12px;margin:10px 0;color:#241711;cursor:pointer}
+.visit-choice:hover,.visit-choice:focus-visible{border-color:#142E25;background:#EADFCB}
+.visit-choice strong{display:block;font:600 17px var(--serif)}
+.visit-choice span{display:block;font-size:12px;margin-top:4px;color:#70472F}
+.visit-hint{font-size:12px;color:#70472F;margin-top:16px}
+@media(max-width:640px){.visit-launch{right:14px;bottom:14px}.visit-card{padding:22px}}
+</style>
+<style id="fx-styles">
+/* Isolated Flavor Explorer styles: remove this block and the matching section/script to revert. */
+.fx-section{background:#eadfcb;color:#241711;padding:clamp(70px,9vw,125px) 0;scroll-margin-top:80px}
+.fx-heading{max-width:720px;margin:0 auto 30px;text-align:center}
+.fx-heading h2{font-family:var(--serif,Georgia,serif);font-size:clamp(2.4rem,5vw,4.5rem);font-weight:350;line-height:1.05;margin:12px 0 14px}
+.fx-heading h2 em{color:#964a33}.fx-heading p{opacity:.8}
+.fx-shell{max-width:920px;margin:auto;padding:clamp(20px,4vw,40px);background:#faf3e6;border:1px solid rgba(36,23,17,.15);border-radius:12px;box-shadow:0 18px 45px -35px rgba(36,23,17,.5)}
+.fx-prompt{font-family:var(--serif,Georgia,serif);font-size:1.45rem;margin-bottom:18px}
+.fx-choices{display:flex;flex-wrap:wrap;gap:10px}
+.fx-choice{border:1px solid #70472f;background:transparent;color:#241711;border-radius:999px;padding:12px 17px;min-height:46px;font-size:.9rem;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.fx-choice:hover{transform:translateY(-2px)}.fx-choice[aria-pressed="true"]{background:#142e25;color:#faf3e6;border-color:#142e25}
+.fx-choice:focus-visible,.fx-view:focus-visible{outline:3px solid #b76a50;outline-offset:3px}
+.fx-results{margin-top:26px}.fx-empty{color:#70472f;font-style:italic}
+.fx-results-title{font-family:var(--serif,Georgia,serif);font-size:1.4rem;margin:0 0 15px}
+.fx-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.fx-card{min-width:0;padding:18px;border:1px solid rgba(36,23,17,.17);border-radius:9px;background:#fffdf7;display:flex;flex-direction:column;gap:9px}
+.fx-card h3{font-family:var(--serif,Georgia,serif);font-size:1.3rem;font-weight:450;line-height:1.12}
+.fx-card p{font-size:.85rem;line-height:1.5;opacity:.8;flex:1}
+.fx-card-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.fx-price{font-family:var(--serif,Georgia,serif);font-size:1.3rem;color:#964a33}
+.fx-view{background:transparent;color:#142e25;border:0;border-bottom:1px solid currentColor;padding:7px 0;font-size:.75rem;font-weight:700;cursor:pointer;text-decoration:none}
+.fx-disclaimer{text-align:center;font-size:.75rem;opacity:.7;margin-top:16px}
+@media(max-width:680px){.fx-cards{grid-template-columns:1fr}.fx-choice{flex:1 1 45%;font-size:.83rem}.fx-card{padding:16px}}
+@media(prefers-reduced-motion:reduce){.fx-choice{transition:none}.fx-choice:hover{transform:none}}
 </style>
 </head>
 <body>
@@ -1040,6 +1130,25 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
     <p data-reveal="rise">Cloud settles into the valleys, lifts by noon, and comes back by teatime. Everything on this menu was imagined for that rhythm: slow mornings, long conversations, something hot in your hands.</p>
   </div>
 </section>
+
+<!-- FLAVOR EXPLORER: isolated, removable feature -->
+<section id="flavor-explorer" aria-labelledby="flavor-title" class="fx-section">
+  <div class="wrap">
+    <div class="fx-heading"><span class="eyebrow">A little taste discovery</span><h2 id="flavor-title">Follow your <em>flavour.</em></h2><p>Pick the notes you love. We'll find a few drinks already on our menu — no quiz, no waiting.</p></div>
+    <div class="fx-shell">
+      <p class="fx-prompt">What sounds good right now?</p>
+      <div class="fx-choices" role="group" aria-label="Choose a flavour profile">
+        <button type="button" class="fx-choice" data-fx="bold" aria-pressed="false">☕ Bold & intense</button>
+        <button type="button" class="fx-choice" data-fx="creamy" aria-pressed="false">🥛 Smooth & creamy</button>
+        <button type="button" class="fx-choice" data-fx="sweet" aria-pressed="false">🍯 Sweet & comforting</button>
+        <button type="button" class="fx-choice" data-fx="fresh" aria-pressed="false">🍊 Bright & refreshing</button>
+      </div>
+      <div id="fx-results" class="fx-results" aria-live="polite" aria-atomic="true"><p class="fx-empty">Choose a flavour to see your matches.</p></div>
+    </div>
+    <p class="fx-disclaimer">A simple flavour-based menu explorer, not an AI recommendation. Menu information comes from the existing café dataset.</p>
+  </div>
+</section>
+<!-- END FLAVOR EXPLORER -->
 
 <section id="findmycup">
   <div class="wrap">
@@ -1322,6 +1431,35 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
     <div id="pp-body"></div>
   </div>
 </div>
+
+<!-- Smart Ordering Cart: separate from Misty reservations and existing features -->
+<button type="button" id="cart-open" class="cart-open" aria-haspopup="dialog" aria-controls="cart-overlay" aria-label="Open your order">Your order <span class="cart-count" id="cart-count">0</span></button>
+<button type="button" id="visit-launch" class="visit-launch" aria-haspopup="dialog" aria-controls="visit-sheet">☕ Visit &amp; Order <span id="visit-count" aria-live="polite"></span></button>
+<div class="visit-sheet" id="visit-sheet" role="dialog" aria-modal="true" aria-labelledby="visit-title" hidden>
+  <div class="visit-card">
+    <div class="visit-head"><h2 id="visit-title">Make it your visit.</h2><button type="button" class="visit-close" id="visit-close" aria-label="Close choices">×</button></div>
+    <p class="visit-desc">Choose how you'd like to enjoy Mist &amp; Mug.</p>
+    <button type="button" class="visit-choice" id="visit-cart"><strong>🛍 View my cart</strong><span>Review food, drinks and quantities, or place a demo order.</span></button>
+    <button type="button" class="visit-choice" id="visit-reserve"><strong>☁ Reserve a table only</strong><span>Book your corner without adding any food.</span></button>
+    <button type="button" class="visit-choice" id="visit-both"><strong>☕ Reserve &amp; pre-order</strong><span>Choose food first, then attach it to your reservation.</span></button>
+    <p class="visit-hint">Pre-ordering is optional. No online payment is required.</p>
+  </div>
+</div>
+<div class="cart-overlay" id="cart-overlay" role="dialog" aria-modal="true" aria-labelledby="cart-title" hidden>
+  <div class="cart-panel">
+    <div class="cart-head"><h2 id="cart-title">Your order</h2><button type="button" class="cart-x" id="cart-close" aria-label="Close order">×</button></div>
+    <div id="cart-receipt" class="cart-receipt" hidden tabindex="-1" role="status" aria-live="polite"></div>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-totals" id="cart-totals-wrap"><div class="cart-totalrow"><span>Subtotal</span><strong id="cart-subtotal">₹0</strong></div><div class="cart-totalrow"><span>Total (demo)</span><strong id="cart-total">₹0</strong></div>
+      <p class="cart-note">Illustrative prices from the menu. No taxes or service charges are calculated; this is not a payment or a real café order.</p>
+      <p id="cart-status" class="cart-status" role="status" aria-live="polite"></p>
+      <button type="button" id="cart-checkout" class="cart-primary">Place demo order</button>
+      <button type="button" id="cart-reserve" class="cart-primary cart-reserve">Reserve a table with this order</button>
+      <button type="button" id="cart-clear" class="cart-primary" style="background:transparent;color:#70472F;border:1px solid #70472F">Clear order</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -1365,6 +1503,18 @@ const MENU = [
 {id:'m29',name:'Classic Madeleines',category:'SWEET',description:'Shell-shaped, buttery, a little citrus zest.',price:170,ingredients:['flour','butter','egg','lemon zest'],vegetarian:true,vegan:false,allergens:['dairy','egg','gluten'],caffeine:'none',sweetness:'medium',temp:'room',taste:['sweet'],mood:['cozy','social'],featured:false,housePick:false},
 {id:'m30',name:'Walnut Banana Loaf',category:'SWEET',description:'Dense banana loaf, toasted walnut, a little brown sugar.',price:190,ingredients:['banana','walnut','flour','sugar'],vegetarian:true,vegan:true,allergens:['gluten','nuts'],caffeine:'none',sweetness:'medium',temp:'room',taste:['sweet','creamy'],mood:['cozy','focused'],featured:false,housePick:false}
 ];
+
+/* Read-only product snapshot for the optional cart. The original MENU remains authoritative. */
+window.MistMugCartMenu = MENU.map(function(item){return {
+  id:item.id,name:item.name,description:item.description,price:item.price,
+  category:item.category,vegetarian:item.vegetarian,vegan:item.vegan
+};});
+
+/* Read-only menu snapshot for the isolated Flavor Explorer. No menu rules are changed. */
+window.MistMugFlavorMenu = MENU.map(function(item){return {
+  id:item.id,name:item.name,category:item.category,description:item.description,
+  price:item.price,taste:Array.isArray(item.taste)?item.taste.slice():[]
+};});
 
 const SECRET_MENU = [
   {name:'Winterline Chocolate',price:260,description:'Hot chocolate, chili, orange oil — named for the band of color after sunset.'},
@@ -1869,6 +2019,7 @@ function menuItemRow(item){
       <span class="mi-leader" aria-hidden="true"></span>
       <span class="mi-price">₹${item.price}</span>
     </div>
+    <button type="button" class="cart-add" data-cart-add="${item.id}" aria-label="Add ${item.name} to order">+ Add to order</button>
     <p class="mi-desc">${item.description}</p>
     ${item.note?`<p class="mi-hand">"${item.note}"</p>`:''}
     <p class="mi-meta">${menuMeta(item)}</p>
@@ -1886,6 +2037,7 @@ function menuFeature(feature){
     <div class="mf-side">
       <div class="mf-price">₹${feature.price}</div>
       <p class="mf-desc">${feature.description}</p>
+      <button type="button" class="cart-add" data-cart-add="${feature.id}" aria-label="Add ${feature.name} to order">+ Add to order</button>
       <p class="mi-badges" style="margin-top:12px">${menuBadges(feature)}</p>
       <p class="mi-meta">${menuMeta(feature)}</p>
       ${feature.note?`<span class="mf-hand">"${feature.note}"</span>`:''}
@@ -3039,7 +3191,7 @@ const mmStore = createReservationStore(function(){ return window.localStorage; }
 const MM = {
   open:false, view:'chat', step:S_GUESTS, stack:[], editReturn:false,
   data:null, presetPref:null, presetCornerName:null,
-  savedRef:null, persisted:true, notice:'', token:0, opener:null,
+  savedRef:null, persisted:true, notice:'', token:0, opener:null, preorder:null,
   confirmCancel:null, expanded:null, live:''
 };
 function mmNow(){ return new Date(); }
@@ -3068,11 +3220,24 @@ function mmEl(tag, props){
   return el;
 }
 
+const MM_PREORDER_KEY='mistmug-reservation-preorders-v1';
+function mmPreorderMap(){try{const v=JSON.parse(localStorage.getItem(MM_PREORDER_KEY)||'{}');return v && typeof v==='object' && !Array.isArray(v)?v:{};}catch(e){return {};}}
+function mmSavePreorder(ref, order){try{const m=mmPreorderMap();m[ref]=order;localStorage.setItem(MM_PREORDER_KEY,JSON.stringify(m));}catch(e){console.warn('Could not persist optional pre-order',e);}}
+function mmLoadPreorder(ref){return mmPreorderMap()[ref]||null;}
+function mmDeletePreorder(ref){try{const m=mmPreorderMap();delete m[ref];localStorage.setItem(MM_PREORDER_KEY,JSON.stringify(m));}catch(e){}}
+function mmPreorderView(order){
+  const wrap=mmEl('section',{class:'mm-preorder','aria-label':'Optional food pre-order'});
+  wrap.appendChild(mmEl('h3',null,'Your optional pre-order'));
+  (order.items||[]).forEach(function(item){wrap.appendChild(mmEl('div',{class:'mm-preorder-line'},mmEl('span',null,item.quantity+' × '+item.name),mmEl('strong',null,'₹'+(item.price*item.quantity).toLocaleString('en-IN'))));});
+  wrap.appendChild(mmEl('div',{class:'mm-preorder-line mm-preorder-total'},mmEl('span',null,'Estimated food total'),mmEl('strong',null,'₹'+(order.total||0).toLocaleString('en-IN'))));
+  wrap.appendChild(mmEl('p',{class:'mm-preorder-note'},'Optional demo pre-order. No payment is taken and no order is sent to the café.'));
+  return wrap;
+}
 function mmFreshData(){ return {guests:null, date:'', time:'', pref:null, tableId:'', name:'', email:'', phone:'', request:'', altIndex:0}; }
 function mmReset(opts){
   MM.view = 'chat'; MM.step = S_GUESTS; MM.stack = []; MM.editReturn = false;
   MM.data = mmFreshData(); MM.savedRef = null; MM.notice = '';
-  MM.presetPref = null; MM.presetCornerName = null;
+  MM.presetPref = null; MM.presetCornerName = null; MM.preorder = null;
   if(opts && opts.cornerKey && CORNER_TO_PREF[opts.cornerKey]){
     MM.presetPref = CORNER_TO_PREF[opts.cornerKey];
     MM.data.pref = MM.presetPref;
@@ -3320,6 +3485,7 @@ function mmControlsReview(){
   ];
   fields.forEach(function(f){ summary.appendChild(mmSummaryRow(f[0], f[1], f[2])); });
   wrap.appendChild(summary);
+  if(MM.preorder) wrap.appendChild(mmPreorderView(MM.preorder));
   wrap.appendChild(mmEl('p', {class:'mm-note'}, 'Demo reservation: no live table availability check or café confirmation.'));
   const save = mmEl('button', {type:'button', class:'btn gold', 'data-autofocus':true,
     onclick:function(){
@@ -3347,6 +3513,7 @@ function mmSave(){
   const res = buildReservation(MM.data, mmNow(), existing.map(function(r){ return r.ref; }), Math.random);
   MM.lastSaved = res;
   MM.persisted = mmStore.add(res);
+  if(MM.preorder && MM.persisted){ mmSavePreorder(res.ref, MM.preorder); document.dispatchEvent(new CustomEvent('mistmug:preorder-saved')); }
   MM.savedRef = res.ref;
   mmGo(S_DONE);
 }
@@ -3421,6 +3588,8 @@ function mmControlsDone(){
   if(!r){ wrap.appendChild(mmEl('p', {class:'mm-err', role:'alert'}, "We couldn't find that reservation any more.")); return wrap; }
   if(!MM.persisted) wrap.appendChild(mmEl('p', {class:'mm-warn'}, "Your browser blocked saving, so this demo reservation will vanish when you close or refresh this tab. Use Download image or Copy details to keep it."));
   wrap.appendChild(mmReservationCard(r));
+  const preorder = mmLoadPreorder(r.ref);
+  if(preorder) wrap.appendChild(mmPreorderView(preorder));
   wrap.appendChild(mmCardActions(r));
   wrap.appendChild(mmEl('div', {class:'mm-actions'},
     mmEl('button', {type:'button', class:'btn ghost small', 'data-autofocus':true, onclick:function(){ mmReset(); mmRender({animate:true, typing:false}); }}, 'Start another reservation'),
@@ -3460,10 +3629,10 @@ function mmSavedView(){
     if(asking){
       item.appendChild(mmEl('div', {class:'mm-confirm-row', role:'alert'}, 'Cancel this demo reservation? This removes it from this browser.',
         mmEl('div', {class:'mm-actions'},
-          mmEl('button', {type:'button', class:'btn gold small', 'data-autofocus':true, onclick:function(){ mmStore.remove(r.ref); MM.confirmCancel = null; if(MM.expanded === r.ref) MM.expanded = null; toast('Demo reservation cancelled'); mmRender({animate:false, typing:false}); }}, 'Yes, cancel it'),
+          mmEl('button', {type:'button', class:'btn gold small', 'data-autofocus':true, onclick:function(){ mmStore.remove(r.ref); mmDeletePreorder(r.ref); MM.confirmCancel = null; if(MM.expanded === r.ref) MM.expanded = null; toast('Demo reservation cancelled'); mmRender({animate:false, typing:false}); }}, 'Yes, cancel it'),
           mmEl('button', {type:'button', class:'btn ghost small', onclick:function(){ MM.confirmCancel = null; mmRender({animate:false, typing:false}); }}, 'Keep it'))));
     }
-    if(open){ item.appendChild(mmReservationCard(r)); item.appendChild(mmCardActions(r)); }
+    if(open){ item.appendChild(mmReservationCard(r)); const preorder=mmLoadPreorder(r.ref); if(preorder)item.appendChild(mmPreorderView(preorder)); item.appendChild(mmCardActions(r)); }
     wrap.appendChild(item);
   });
   wrap.appendChild(mmEl('p', {class:'mm-note'}, 'Saved only in this browser. Not shared with the café, and never visible to other visitors.'));
@@ -3587,6 +3756,12 @@ function closeMisty(){
   if(o && document.body.contains(o) && o.focus) o.focus(); else mmId('misty-launcher').focus();
   MM.opener = null;
 }
+document.addEventListener('mistmug:reserve-with-order', function(e){
+  const order=e.detail;
+  if(!order || !Array.isArray(order.items) || !order.items.length)return;
+  mmReset(); MM.preorder=order;
+  openMisty({view:'chat'});
+});
 mmId('misty-launcher').addEventListener('click', function(){ openMisty(); });
 mmId('misty-close').addEventListener('click', closeMisty);
 mmId('misty-modal').addEventListener('click', function(e){ if(e.target === mmId('misty-modal')) closeMisty(); });
@@ -3716,5 +3891,215 @@ mmUpdateChrome();
   submit.addEventListener('click',function(e){e.preventDefault();submitFeedback(e);});
 })();
 </script>
+<script id="fx-script">
+/* Isolated Flavor Explorer: existing MENU, filters, and recommendation logic are never modified. */
+(function(){
+  'use strict';
+  var root=document.getElementById('flavor-explorer');
+  if(!root)return;
+  var result=root.querySelector('#fx-results');
+  var choices=Array.from(root.querySelectorAll('[data-fx]'));
+  var profiles={
+    bold:{title:'Bold & intense',tags:['strong'],words:['espresso','americano','cortado','cold brew']},
+    creamy:{title:'Smooth & creamy',tags:['creamy'],words:['latte','cappuccino','flat white','chocolate']},
+    sweet:{title:'Sweet & comforting',tags:['sweet'],words:['chai','chocolate','honey','milk']},
+    fresh:{title:'Bright & refreshing',tags:['refreshing'],words:['tonic','cold brew','kahwa','lemon']}
+  };
+  function el(tag,cls,txt){var n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;}
+  function show(key){
+    choices.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.fx===key));});
+    result.replaceChildren();
+    try{
+      var profile=profiles[key];
+      var source=Array.isArray(window.MistMugFlavorMenu)?window.MistMugFlavorMenu:[];
+      var drinks=source.filter(function(x){return x.category==='COFFEE'||x.category==='MOUNTAIN WARMERS';});
+      var scored=drinks.map(function(x){
+        var name=String(x.name||'').toLowerCase();
+        var tags=Array.isArray(x.taste)?x.taste:[];
+        var score=tags.reduce(function(sum,t){return sum+(profile.tags.includes(t)?3:0);},0);
+        profile.words.forEach(function(w){if(name.includes(w))score+=1;});
+        return {item:x,score:score};
+      }).filter(function(x){return x.score>0;}).sort(function(a,b){return b.score-a.score || a.item.price-b.item.price;}).slice(0,3);
+      if(!scored.length){result.appendChild(el('p','fx-empty','No matching drinks are available right now. Explore the full menu instead.'));return;}
+      result.appendChild(el('h3','fx-results-title','Your '+profile.title.toLowerCase()+' picks'));
+      var cards=el('div','fx-cards');
+      scored.forEach(function(entry){
+        var x=entry.item,card=el('article','fx-card');
+        card.appendChild(el('h3','',x.name));
+        card.appendChild(el('p','',x.description||''));
+        var footer=el('div','fx-card-footer');
+        footer.appendChild(el('span','fx-price','₹'+x.price));
+        var link=el('button','fx-view','Find in menu →');link.type='button';
+        link.addEventListener('click',function(){
+          var search=document.getElementById('menu-search');
+          var all=document.querySelector('[data-cat="ALL"]');
+          var reset=document.querySelector('[data-filter="all"]');
+          if(all && !all.classList.contains('active'))all.click();
+          if(reset && !reset.classList.contains('active'))reset.click();
+          if(search){search.value=x.name;search.dispatchEvent(new Event('input',{bubbles:true}));}
+          var menu=document.getElementById('menu');if(menu)menu.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+        });
+        footer.appendChild(link);card.appendChild(footer);cards.appendChild(card);
+      });
+      result.appendChild(cards);
+    }catch(err){console.error('Flavor Explorer:',err);result.replaceChildren(el('p','fx-empty','Please try again. The rest of the website is unaffected.'));}
+  }
+  choices.forEach(function(button){button.addEventListener('click',function(){show(button.dataset.fx);});});
+  show('bold');
+})();
+</script>
+<script>
+/* === Optional Smart Ordering Cart: isolated module, no payment or server calls === */
+(function(){
+  'use strict';
+  const catalog = Array.isArray(window.MistMugCartMenu) ? window.MistMugCartMenu : [];
+  const byId = new Map(catalog.map(p => [p.id,p]));
+  const storageKey='mistmug-demo-cart-v1';
+  let basket={};
+  try {
+    const saved=JSON.parse(localStorage.getItem(storageKey)||'{}');
+    if(saved && typeof saved==='object' && !Array.isArray(saved)) {
+      for(const [id,quantity] of Object.entries(saved)) {
+        if(byId.has(id) && Number.isInteger(quantity) && quantity>0 && quantity<=30) basket[id]=quantity;
+      }
+    }
+  } catch(e) { basket={}; }
+  const get=id=>document.getElementById(id);
+  const overlay=get('cart-overlay'),items=get('cart-items'),status=get('cart-status');
+  let previousFocus=null;
+  const receipt=get('cart-receipt');
+  function hideReceipt(){receipt.hidden=true;receipt.replaceChildren();items.hidden=false;get('cart-totals-wrap').hidden=false;}
+
+  const money=n=>'₹'+n.toLocaleString('en-IN');
+  const save=()=>{try{localStorage.setItem(storageKey,JSON.stringify(basket));}catch(e){/* cart still works in memory */}};
+  function render(){
+    items.replaceChildren();
+    let subtotal=0,count=0;
+    for(const [id,quantity] of Object.entries(basket)){
+      const p=byId.get(id);if(!p)continue;
+      subtotal+=p.price*quantity;count+=quantity;
+      const line=document.createElement('article');line.className='cart-line';
+      const info=document.createElement('div');
+      const name=document.createElement('h3');name.textContent=p.name;info.append(name);
+      const unit=document.createElement('small');unit.textContent=money(p.price)+' each';info.append(unit);
+      const controls=document.createElement('div');
+      const price=document.createElement('strong');price.textContent=money(p.price*quantity);controls.append(price);
+      const qty=document.createElement('div');qty.className='cart-qty';
+      for(const [action,symbol,aria] of [['decrease','−','Decrease'],['increase','+','Increase']]){
+        const btn=document.createElement('button');btn.type='button';btn.textContent=symbol;
+        btn.dataset.cartAction=action;btn.dataset.id=id;btn.setAttribute('aria-label',aria+' quantity of '+p.name);qty.append(btn);
+        if(action==='decrease'){
+          const number=document.createElement('span');number.textContent=String(quantity);qty.append(number);
+        }
+      }
+      controls.append(qty);line.append(info,controls);items.append(line);
+    }
+    if(!count){const p=document.createElement('p');p.textContent='Your order is empty. Explore the menu and add something you love.';items.append(p);}
+    get('cart-count').textContent=String(count);
+    get('cart-subtotal').textContent=money(subtotal);
+    get('cart-total').textContent=money(subtotal);
+    get('cart-checkout').disabled=!count;
+    get('cart-reserve').disabled=!count;
+    get('cart-clear').disabled=!count;
+  }
+  function change(id,delta){
+    if(!byId.has(id))return;
+    const next=Math.max(0,Math.min(30,(basket[id]||0)+delta));
+    if(next)basket[id]=next;else delete basket[id];
+    hideReceipt();status.textContent='';save();render();
+  }
+  function open(){previousFocus=document.activeElement;overlay.hidden=false;document.body.style.overflow='hidden';render();get('cart-close').focus();}
+  function close(){overlay.hidden=true;document.body.style.overflow='';if(previousFocus && previousFocus.isConnected)previousFocus.focus();}
+  get('cart-open').addEventListener('click',open);
+  get('cart-close').addEventListener('click',close);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)close();});
+  document.addEventListener('keydown',e=>{
+    if(overlay.hidden)return;
+    if(e.key==='Escape'){e.preventDefault();close();}
+    if(e.key==='Tab'){
+      const focusable=[...overlay.querySelectorAll('button:not(:disabled)')];
+      const first=focusable[0],last=focusable[focusable.length-1];
+      if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
+    }
+  });
+  // Delegation survives existing menu filter/search rerenders.
+  document.addEventListener('click',e=>{
+    const add=e.target.closest('[data-cart-add]');
+    if(add){change(add.dataset.cartAdd,1);add.textContent='✓ Added';setTimeout(()=>{if(add.isConnected)add.textContent='+ Add to order';},950);return;}
+    const adjust=e.target.closest('[data-cart-action]');
+    if(adjust)change(adjust.dataset.id,adjust.dataset.cartAction==='increase'?1:-1);
+  });
+  get('cart-clear').addEventListener('click',()=>{hideReceipt();basket={};save();render();status.textContent='Order cleared.';});
+  get('cart-reserve').addEventListener('click',()=>{
+    const chosen=Object.entries(basket).map(([id,quantity])=>{const p=byId.get(id);return p?{id:p.id,name:p.name,price:p.price,quantity}:null;}).filter(Boolean);
+    if(!chosen.length)return;
+    const order={items:chosen,total:chosen.reduce((sum,p)=>sum+p.price*p.quantity,0)};
+    close();
+    document.dispatchEvent(new CustomEvent('mistmug:reserve-with-order',{detail:order}));
+  });
+  document.addEventListener('mistmug:preorder-saved',()=>{basket={};save();render();});
+  get('cart-checkout').addEventListener('click',()=>{
+    const chosen=Object.entries(basket).map(([id,quantity])=>{const p=byId.get(id);return p?{name:p.name,price:p.price,quantity}:null;}).filter(Boolean);
+    if(!chosen.length)return;
+    const total=chosen.reduce((sum,p)=>sum+p.price*p.quantity,0);
+    // Preserve the receipt snapshot before clearing the cart.
+    const add=(tag,cls,content)=>{const n=document.createElement(tag);if(cls)n.className=cls;n.textContent=content;receipt.append(n);return n;};
+    receipt.replaceChildren();
+    add('span','receipt-kicker','Mist & Mug · Demo confirmation');
+    add('h3','','Your order is placed.');
+    add('p','','Here is a summary of your simulated order.');
+    chosen.forEach(p=>{const row=document.createElement('div');row.className='receipt-row';const name=document.createElement('span');name.textContent=p.quantity+' × '+p.name;const price=document.createElement('strong');price.textContent=money(p.price*p.quantity);row.append(name,price);receipt.append(row);});
+    const row=document.createElement('div');row.className='receipt-row receipt-total';const label=document.createElement('span');label.textContent='Total (demo)';const amount=document.createElement('strong');amount.textContent=money(total);row.append(label,amount);receipt.append(row);
+    add('p','','This is a demo only. No payment was taken or order sent to a café.');
+    const actions=document.createElement('div');actions.className='receipt-actions';
+    const again=document.createElement('button');again.type='button';again.textContent='Start new order';again.addEventListener('click',()=>{hideReceipt();status.textContent='';render();});
+    const done=document.createElement('button');done.type='button';done.textContent='Close';done.addEventListener('click',close);
+    actions.append(again,done);receipt.append(actions);
+    basket={};save();render();status.textContent='';
+    items.hidden=true;get('cart-totals-wrap').hidden=true;receipt.hidden=false;receipt.focus();
+  });
+  render();
+})();
+</script>
+<script>
+/* Unified entry point. Existing cart and reservation implementations remain unchanged. */
+(function(){
+  'use strict';
+  const byId=id=>document.getElementById(id);
+  const sheet=byId('visit-sheet'), launch=byId('visit-launch');
+  let previous=null;
+  function open(){previous=document.activeElement;sheet.hidden=false;byId('visit-close').focus();}
+  function close(){sheet.hidden=true;if(previous&&previous.isConnected)previous.focus();}
+  launch.addEventListener('click',open);
+  byId('visit-close').addEventListener('click',close);
+  sheet.addEventListener('click',e=>{if(e.target===sheet)close();});
+  sheet.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){e.preventDefault();close();}
+    if(e.key==='Tab'){
+      const buttons=[...sheet.querySelectorAll('button:not(:disabled)')];
+      if(e.shiftKey&&document.activeElement===buttons[0]){e.preventDefault();buttons[buttons.length-1].focus();}
+      if(!e.shiftKey&&document.activeElement===buttons[buttons.length-1]){e.preventDefault();buttons[0].focus();}
+    }
+  });
+  function cart(){close();byId('cart-open').click();}
+  byId('visit-cart').addEventListener('click',cart);
+  byId('visit-reserve').addEventListener('click',()=>{close();byId('misty-launcher').click();});
+  byId('visit-both').addEventListener('click',()=>{
+    close();byId('cart-open').click();
+    const msg=byId('cart-status');
+    if(msg)msg.textContent='Add items to your cart, then select “Reserve a table with this order” below.';
+  });
+  const count=byId('cart-count'),badge=byId('visit-count');
+  if(count&&badge){
+    const sync=()=>{const n=Number(count.textContent)||0;badge.textContent=n?'('+n+')':'';};
+    new MutationObserver(sync).observe(count,{childList:true,characterData:true,subtree:true});sync();
+  }
+})();
+</script>
 </body>
 </html>
+
+
+
+
