@@ -788,6 +788,62 @@ footer .hand{color:var(--gold)}
 .fmc-pairing .pair-photo{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:7px;margin:12px 0}
 .fmc-pairing .pair-note{font-size:11px;opacity:.7;margin-top:8px}
 
+
+/* Compact editorial food pairing — visual-only enhancement */
+.fmc-pairing{margin:26px auto 8px;max-width:550px;padding:18px;border:1px solid rgba(230,173,98,.48);border-radius:13px;background:#f4ebdd;color:#241711;text-align:left;box-shadow:0 14px 34px rgba(0,0,0,.13)}
+.fmc-pairing .pair-label{display:block;color:#964a33;font:700 10px/1.5 var(--sans);letter-spacing:.18em;text-transform:uppercase}
+.fmc-pairing .pair-intro{font:italic 15px/1.35 var(--serif);color:#70472f;margin:3px 0 14px}
+.fmc-pairing .pair-layout{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:start}
+.fmc-pairing .pair-photo{width:120px;height:132px;aspect-ratio:auto;object-fit:cover;object-position:center;border-radius:8px;margin:0;display:block}
+.fmc-pairing h3{font:400 clamp(19px,3vw,25px)/1.12 var(--serif);color:#241711;margin:0 0 6px}
+.fmc-pairing .pair-detail{font:400 12.5px/1.55 var(--sans);color:#59473a;opacity:1;margin:5px 0}
+.fmc-pairing .pair-price{color:#964a33;font:700 13px/1.4 var(--sans);margin:10px 0 0}
+.fmc-pairing .pair-note{color:#6b584a;opacity:1;font:400 11.5px/1.55 var(--sans);margin:9px 0 0}
+.fmc-pairing .pair-budget{border-top:1px solid rgba(112,71,47,.2);padding-top:10px;margin-top:13px}
+.fmc-pairing .pair-budget-over{color:#88422f}
+@media(max-width:430px){.fmc-pairing{padding:15px}.fmc-pairing .pair-layout{grid-template-columns:96px minmax(0,1fr);gap:12px}.fmc-pairing .pair-photo{width:96px;height:116px}.fmc-pairing h3{font-size:20px}}
+
+
+/* OPTIONAL CAFE MOOD SELECTOR — isolated visual layer */
+.mm-mood-launch{position:fixed;left:18px;bottom:18px;z-index:69;border:1px solid #e6ad62;border-radius:999px;background:#241711;color:#faf3e6;padding:12px 16px;font:600 13px/1.2 var(--sans,system-ui);box-shadow:0 8px 25px #0005;cursor:pointer;min-height:46px}
+.mm-mood-launch:hover{background:#3d291d}.mm-mood-launch:focus-visible,.mm-mood-choice:focus-visible,.mm-mood-close:focus-visible{outline:3px solid #e6ad62;outline-offset:3px}
+.mm-mood-panel{position:fixed;left:18px;bottom:76px;z-index:69;width:min(300px,calc(100vw - 36px));padding:17px;border-radius:15px;background:#faf3e6;color:#241711;box-shadow:0 15px 48px #0006;border:1px solid #c5aa88;font-family:var(--sans,system-ui)}
+.mm-mood-panel[hidden]{display:none!important}.mm-mood-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.mm-mood-head strong{font:500 23px/1.1 var(--serif,Georgia,serif)}.mm-mood-close{border:0;background:transparent;color:#241711;font-size:23px;cursor:pointer;min-width:36px;min-height:36px}
+.mm-mood-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mm-mood-choice{min-height:44px;border:1px solid #aa9077;border-radius:9px;background:#fffaf2;color:#241711;font:600 12px var(--sans,system-ui);cursor:pointer}.mm-mood-choice[aria-pressed="true"]{background:#142e25;color:#fff;border-color:#142e25}.mm-mood-note{font-size:12px;line-height:1.5;opacity:.75;margin-top:12px}
+/* Mood is a decorative tint only: no element is removed, moved or disabled. */
+.mm-mood-tint{position:fixed;inset:0;z-index:6;pointer-events:none;opacity:0;transition:opacity .45s ease;background:transparent}
+body[data-cafe-mood="cozy"] .mm-mood-tint{opacity:.17;background:linear-gradient(120deg,#ffca7d 0%,transparent 65%)}
+body[data-cafe-mood="rainy"] .mm-mood-tint{opacity:.20;background:linear-gradient(120deg,#8ba8b3 0%,#405d65 100%)}
+body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradient(125deg,#483452 0%,#bd7d53 100%)}
+@media(max-width:640px){.mm-mood-launch{left:12px;bottom:12px;padding:11px 13px}.mm-mood-panel{left:12px;bottom:68px}}
+@media(prefers-reduced-motion:reduce){.mm-mood-tint{transition:none}}
+
+/* Customer feedback: self-contained visual module */
+#cafe-feedback{background:var(--paper-2);color:var(--coffee)}
+.fb-shell{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,5vw,70px);align-items:start}
+.fb-card{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:clamp(22px,4vw,38px);box-shadow:0 14px 34px rgba(36,23,17,.07)}
+.fb-stars{display:flex;gap:8px;margin:12px 0 20px}
+.fb-star{font-size:30px;line-height:1;min-width:46px;min-height:46px;background:transparent;border:1px solid rgba(36,23,17,.22);border-radius:9px;color:#8c806f;transition:background .2s,color .2s,transform .2s}
+.fb-star[aria-checked="true"],.fb-star.active{background:var(--forest);color:var(--gold);border-color:var(--forest)}
+.fb-star:hover{transform:translateY(-2px)}
+.fb-label{display:block;font-weight:650;font-size:.85rem;margin:18px 0 8px}
+.fb-tags{display:flex;flex-wrap:wrap;gap:8px}
+.fb-tag{min-height:42px;border:1px solid rgba(36,23,17,.3);border-radius:999px;padding:8px 14px;background:transparent;color:var(--coffee);font-size:.8rem}
+.fb-tag[aria-pressed="true"]{background:var(--forest);color:var(--cream);border-color:var(--forest)}
+.fb-comment{display:block;width:100%;min-height:96px;resize:vertical;background:white;color:var(--coffee);border:1px solid rgba(36,23,17,.35);border-radius:8px;padding:12px;font:inherit}
+.fb-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:18px}
+.fb-status{font-size:.88rem;min-height:1.5em}
+.fb-hint{font-size:.8rem;opacity:.72;margin-top:12px}
+@media(max-width:760px){.fb-shell{grid-template-columns:1fr}.fb-stars{gap:5px}.fb-star{min-width:43px}}
+
+/* Explainable recommendations: presentation only; no scoring or filtering changes. */
+.fmc-explain{max-width:430px;margin:22px auto 8px;padding:18px 20px;text-align:left;border:1px solid rgba(244,235,221,.28);background:rgba(244,235,221,.07);border-radius:12px}
+.fmc-explain-title{font-family:var(--serif);font-size:1.35rem;color:var(--gold);margin:0 0 9px}
+.fmc-explain-copy{font-size:.9rem;line-height:1.65;color:var(--cream)}
+.fmc-explain-tags{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0}
+.fmc-explain-tags span{border:1px solid rgba(230,173,98,.5);border-radius:99px;padding:5px 9px;font-size:.7rem;color:var(--gold)}
+.fmc-explain-note{font-size:.76rem;line-height:1.55;color:var(--paper);opacity:.78}
+
 </style>
 </head>
 <body>
@@ -1114,6 +1170,38 @@ footer .hand{color:var(--gold)}
   </div>
 </section>
 
+<section id="cafe-feedback" aria-labelledby="fb-title">
+ <div class="wrap fb-shell">
+  <div class="sec-head" data-reveal="rise">
+   <span class="eyebrow">A note before you go</span>
+   <h2 id="fb-title">How was your <em>visit?</em></h2>
+   <p>Tell us what you enjoyed about this digital café experience. Your feedback helps us improve the prototype.</p>
+   <span class="margin-hand">every little note matters.</span>
+  </div>
+  <form id="fb-form" class="fb-card" novalidate>
+   <label class="fb-label" id="fb-rating-label">Your rating <span aria-hidden="true">*</span></label>
+   <div class="fb-stars" role="radiogroup" aria-labelledby="fb-rating-label">
+    <button type="button" class="fb-star" role="radio" aria-checked="false" aria-label="1 star" data-fb-star="1">★</button>
+    <button type="button" class="fb-star" role="radio" aria-checked="false" aria-label="2 stars" data-fb-star="2">★</button>
+    <button type="button" class="fb-star" role="radio" aria-checked="false" aria-label="3 stars" data-fb-star="3">★</button>
+    <button type="button" class="fb-star" role="radio" aria-checked="false" aria-label="4 stars" data-fb-star="4">★</button>
+    <button type="button" class="fb-star" role="radio" aria-checked="false" aria-label="5 stars" data-fb-star="5">★</button>
+   </div>
+   <span class="fb-label" id="fb-enjoy-label">What did you enjoy most? <span style="font-weight:400;opacity:.7">(optional)</span></span>
+   <div class="fb-tags" role="group" aria-labelledby="fb-enjoy-label">
+    <button type="button" class="fb-tag" aria-pressed="false" data-fb-tag="Design">Design</button>
+    <button type="button" class="fb-tag" aria-pressed="false" data-fb-tag="Find My Cup">Find My Cup</button>
+    <button type="button" class="fb-tag" aria-pressed="false" data-fb-tag="Menu">Menu</button>
+    <button type="button" class="fb-tag" aria-pressed="false" data-fb-tag="Games">Games</button>
+    <button type="button" class="fb-tag" aria-pressed="false" data-fb-tag="Reservations">Reservations</button>
+   </div>
+   <label class="fb-label" for="fb-comment">Leave a little note <span style="font-weight:400;opacity:.7">(optional)</span></label>
+   <textarea id="fb-comment" class="fb-comment" maxlength="300" placeholder="What should we keep or improve?"></textarea>
+   <div class="fb-actions"><button type="submit" id="fb-submit" class="btn gold">Send feedback <span aria-hidden="true">→</span></button><span class="fb-status" id="fb-status" role="status" aria-live="polite"></span></div>
+  </form>
+ </div>
+</section>
+
 <section id="ai">
   <div class="wrap">
     <div class="sec-head" data-reveal="rise">
@@ -1157,6 +1245,9 @@ footer .hand{color:var(--gold)}
     </div>
   </div>
 </section>
+
+
+
 
 <footer>
   <div class="wrap">
@@ -1902,8 +1993,14 @@ function fmcRender(){
         <button class="btn gold" id="fmc-next" ${fmcState.answers[s.key]?'':'disabled'}>${fmcState.step===FMC_STEPS.length-1?'Brew My Match':'Next'}</button>
       </div>
     `;
-    box.addEventListener('click', function(ev){ const btn=ev.target.closest('.fmc-opt'); if(!btn||!box.contains(btn)) return; fmcState.answers[btn.dataset.stepKey||s.key]=btn.dataset.val; fmcRender(); }, {capture:false});
-    box.addEventListener('touchend', function(ev){ const btn=ev.target.closest('.fmc-opt'); if(!btn||!box.contains(btn)) return; ev.preventDefault(); fmcState.answers[btn.dataset.stepKey||s.key]=btn.dataset.val; fmcRender(); }, {passive:false});
+    // Replace the previous handler on every render; never accumulate listeners.
+    // Native click also covers touch and keyboard activation.
+    box.onclick = function(ev){
+      const btn = ev.target.closest('.fmc-opt');
+      if(!btn || !box.contains(btn)) return;
+      fmcState.answers[btn.dataset.stepKey] = btn.dataset.val;
+      fmcRender();
+    };
     document.getElementById('fmc-back').addEventListener('click',()=>{
       if(fmcState.step>0){ fmcState.step--; fmcRender(); }
     });
@@ -2047,6 +2144,7 @@ async function callAIRecommendation(eligible, a){
 
 function fmcBrew(){
   const box = document.getElementById('fmc-box');
+  box.onclick = null;
   applyMoodAtmosphere(box);
   const a = fmcState.answers;
   const eligible = hardFilter(a);
@@ -2077,6 +2175,17 @@ function fmcBrew(){
     }else{
       const fb = deterministicPick(eligible,a);
       fmcRenderResult({source:'fallback', items:fb.items, price:fb.price, moodPct:fb.moodPct, tastePct:fb.tastePct, reasonText:null}, eligible, a);
+    }
+  }).catch(err=>{
+    clearInterval(iv);
+    console.error('Brew My Match failed:', err);
+    try {
+      const fb = deterministicPick(eligible,a);
+      fmcRenderResult({source:'fallback', items:fb.items, price:fb.price, moodPct:fb.moodPct, tastePct:fb.tastePct, reasonText:null}, eligible, a);
+    } catch(e) {
+      console.error('Recommendation fallback failed:',e);
+      box.innerHTML = '<p role="alert">We could not complete your match. Please try again.</p><button class="btn gold" id="fmc-retry">Try again</button>';
+      document.getElementById('fmc-retry').onclick = ()=>{ fmcState={step:0,answers:{}}; fmcRender(); };
     }
   });
 }
@@ -2115,14 +2224,21 @@ function pairingMarkup(items,answers){
     const food=match.food;
     const photo=productPhoto(food.id);
     return `<section class="fmc-pairing" aria-label="Suggested food pairing">
-      <span class="pair-label">Your food pairing · House rules</span>
-      <h3>${escapeHTML(food.name)}</h3>
-      ${photo?`<img class="pair-photo" src="${photo}" alt="${escapeHTML(food.name)}" loading="lazy" decoding="async" onerror="this.style.display='none'">`:''}
-      <p class="pair-detail">${escapeHTML(food.description)}</p>
-      <p class="pair-detail">Suggested alongside ${escapeHTML(match.drink.name)} based on your selections and the existing menu.</p>
-      <p class="pair-price">Food ₹${food.price} · Combined ₹${match.total}</p>
-      ${match.withinBudget?'<p class="pair-note">Within your selected budget.</p>':`<p class="pair-note" role="status">Optional pairing: the combined price exceeds your selected budget by ₹${match.total-match.budgetMax}. Your original drink recommendation still respects your budget.</p>`}
-      <p class="pair-note">Rule-based suggestion, not an additional AI prediction. Menu allergen information is fictional.</p>
+      <span class="pair-label">Your perfect pairing · House rules</span>
+      <p class="pair-intro">A little something to go with your cup.</p>
+      <div class="pair-layout">
+        ${photo?`<img class="pair-photo" src="${photo}" alt="${escapeHTML(food.name)}" loading="lazy" decoding="async" onerror="this.style.display='none'">`:''}
+        <div class="pair-copy">
+          <h3>${escapeHTML(food.name)}</h3>
+          <p class="pair-detail">${escapeHTML(food.description)}</p>
+          <p class="pair-detail">Pairs with ${escapeHTML(match.drink.name)} based on your preferences.</p>
+          <p class="pair-price">Food ₹${food.price} · Together ₹${match.total}</p>
+        </div>
+      </div>
+      <div class="pair-budget">
+        ${match.withinBudget?'<p class="pair-note">Within your selected budget.</p>':`<p class="pair-note pair-budget-over" role="status">Optional upgrade · ₹${match.total-match.budgetMax} above your selected budget. Your drink recommendation stays within budget.</p>`}
+        <p class="pair-note">Rule-based pairing, not an additional AI prediction. Menu allergen details are fictional.</p>
+      </div>
     </section>`;
   } catch(err) {
     console.error('Food pairing could not be displayed:',err);
@@ -2167,13 +2283,22 @@ function fmcRenderResult(result, eligible, a){
     ${aiReasonBlock}
     ${fallbackNotice}
 
-    <button class="btn ghost small" id="fmc-why-toggle" style="margin-top:22px;border-color:var(--cream);color:var(--cream)">WHY ${overallPct}%?</button>
+    <button class="btn ghost small" id="fmc-why-toggle" style="margin-top:22px;border-color:var(--cream);color:var(--cream)">WHY THIS MATCH?</button>
     <div class="why-breakdown" id="fmc-why-box" style="display:none">
       ${moodPct!==null ? `<div class="why-row"><span class="wl">Mood</span><span class="wbar"><span style="width:${moodPct}%"></span></span><span class="wv">${moodPct}%</span></div>` : `<div class="why-row"><span class="wl">Mood</span><span class="wbar"><span style="width:100%"></span></span><span class="wv">any</span></div>`}
       ${tastePct!==null ? `<div class="why-row"><span class="wl">Taste</span><span class="wbar"><span style="width:${tastePct}%"></span></span><span class="wv">${tastePct}%</span></div>` : `<div class="why-row"><span class="wl">Taste</span><span class="wbar"><span style="width:100%"></span></span><span class="wv">any</span></div>`}
       <div class="why-row"><span class="wl">Budget</span><span class="wbar"><span style="width:100%"></span></span><span class="wv">✓</span></div>
       <div class="why-row"><span class="wl">Dietary</span><span class="wbar"><span style="width:100%"></span></span><span class="wv">✓</span></div>
     </div>
+
+      <div class="fmc-explain" aria-label="Why this drink was recommended">
+        <p class="fmc-explain-title">Why this cup suits you</p>
+        <p class="fmc-explain-copy">${escapeHTML(items[0].name)} was selected from menu items that satisfy your chosen budget and dietary rules. ${a.mood==='Surprise Me'?'You left the mood open.':`Your mood preference was ${escapeHTML(a.mood)}.`} ${a.taste==='Surprise Me'?'You left the taste open.':`Your taste preference was ${escapeHTML(a.taste)}.`}</p>
+        <div class="fmc-explain-tags"><span>Budget checked</span><span>Diet checked</span><span>${result.source==='ai'?'AI-ranked eligible items':'House-rule ranking'}</span></div>
+        <p class="fmc-explain-note">The match percentage is a simple preference heuristic, not an AI confidence score. Food pairing uses separate house rules. Menu dietary and allergen data are fictional.</p>
+      </div>
+
+    <div id="fmc-pairing-slot" aria-live="polite"></div>
 
     <div class="verified-box">
       <div class="vb-tag">Verified menu facts — from structured data, not generated</div>
@@ -2186,7 +2311,6 @@ function fmcRenderResult(result, eligible, a){
       </dl>
     </div>
 
-    ${pairingMarkup(items,a)}
 
     <div class="ask-house-btn">
       <span class="eyebrow" style="color:var(--paper);opacity:.7">Not feeling it?</span><br>
@@ -2207,6 +2331,15 @@ function fmcRenderResult(result, eligible, a){
       <button class="btn ghost" id="fmc-restart2" style="border-color:var(--cream);color:var(--cream)">CHANGE MY ANSWERS</button>
     </div>
   </div>`;
+  // Render independently from the result template so the pairing is not lost.
+  const pairingSlot = document.getElementById('fmc-pairing-slot');
+  if(pairingSlot){
+    try { pairingSlot.innerHTML = pairingMarkup(items,a); }
+    catch(error){
+      console.error('Pairing display error',error);
+      pairingSlot.innerHTML = '<section class="fmc-pairing"><span class="pair-label">Your food pairing</span><p class="pair-detail">Pairing unavailable for this selection. Your drink recommendation is unaffected.</p></section>';
+    }
+  }
   document.getElementById('fmc-why-toggle').addEventListener('click',()=>{
     const el = document.getElementById('fmc-why-box');
     el.style.display = el.style.display==='none' ? 'block' : 'none';
@@ -3479,6 +3612,108 @@ document.addEventListener('keydown', function(e){
 });
 mmUpdateChrome();
 
+})();
+</script>
+
+<!-- Optional Cafe Mood Selector: independent from reservations, weather and Winterline -->
+<div class="mm-mood-tint" aria-hidden="true"></div>
+<button type="button" class="mm-mood-launch" id="mm-mood-launch" aria-controls="mm-mood-panel" aria-expanded="false">☕ Café Mood</button>
+<div class="mm-mood-panel" id="mm-mood-panel" hidden role="group" aria-label="Café mood settings">
+  <div class="mm-mood-head"><strong>Set the atmosphere</strong><button type="button" class="mm-mood-close" id="mm-mood-close" aria-label="Close mood selector">×</button></div>
+  <div class="mm-mood-options">
+    <button type="button" class="mm-mood-choice" data-mood-choice="default" aria-pressed="true">✦ Original</button>
+    <button type="button" class="mm-mood-choice" data-mood-choice="cozy" aria-pressed="false">☕ Cozy</button>
+    <button type="button" class="mm-mood-choice" data-mood-choice="rainy" aria-pressed="false">☁ Rainy</button>
+    <button type="button" class="mm-mood-choice" data-mood-choice="evening" aria-pressed="false">☾ Evening</button>
+  </div>
+  <p class="mm-mood-note">A visual atmosphere only. Original restores the normal look.</p>
+</div>
+<script>
+(function(){
+  'use strict';
+  var launch=document.getElementById('mm-mood-launch');
+  var panel=document.getElementById('mm-mood-panel');
+  var close=document.getElementById('mm-mood-close');
+  if(!launch||!panel||!close)return;
+  function setOpen(open){panel.hidden=!open;launch.setAttribute('aria-expanded',String(open));}
+  function choose(value){
+    if(!['default','cozy','rainy','evening'].includes(value))return;
+    if(value==='default')document.body.removeAttribute('data-cafe-mood');
+    else document.body.setAttribute('data-cafe-mood',value);
+    panel.querySelectorAll('[data-mood-choice]').forEach(function(btn){btn.setAttribute('aria-pressed',String(btn.getAttribute('data-mood-choice')===value));});
+  }
+  launch.addEventListener('click',function(){setOpen(panel.hidden);});
+  close.addEventListener('click',function(){setOpen(false);launch.focus();});
+  panel.addEventListener('click',function(e){var b=e.target.closest('[data-mood-choice]');if(b)choose(b.getAttribute('data-mood-choice'));});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden){setOpen(false);launch.focus();}});
+  document.addEventListener('pointerdown',function(e){if(!panel.hidden&&!panel.contains(e.target)&&!launch.contains(e.target))setOpen(false);});
+  choose('default');
+})();
+</script>
+
+<script>
+/* Isolated feedback handler. Works without any other site module. */
+(function(){
+  'use strict';
+  var form=document.getElementById('fb-form');
+  if(!form)return;
+  var stars=Array.from(form.querySelectorAll('[data-fb-star]'));
+  var tags=Array.from(form.querySelectorAll('[data-fb-tag]'));
+  var status=document.getElementById('fb-status');
+  var submit=document.getElementById('fb-submit');
+  var rating=0;
+  function message(value){status.textContent=value;}
+  function selectRating(n){
+    rating=n;
+    stars.forEach(function(b,i){
+      b.classList.toggle('active',i<n);
+      b.setAttribute('aria-checked',String(i===n-1));
+      b.tabIndex=i===n-1?0:-1;
+    });
+    message('');
+  }
+  stars.forEach(function(b,i){
+    b.tabIndex=i===0?0:-1;
+    b.addEventListener('click',function(){selectRating(Number(b.getAttribute('data-fb-star')));});
+    b.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+        e.preventDefault();
+        var n=Math.max(1,Math.min(5,(rating||1)+(e.key==='ArrowRight'?1:-1)));
+        selectRating(n);stars[n-1].focus();
+      }
+    });
+  });
+  tags.forEach(function(b){
+    b.addEventListener('click',function(){
+      b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));
+    });
+  });
+  function submitFeedback(e){
+    if(e)e.preventDefault();
+    if(!rating){message('Please select a star rating before sending.');stars[0].focus();return;}
+    var entry={
+      rating:rating,
+      enjoyed:tags.filter(function(b){return b.getAttribute('aria-pressed')==='true';}).map(function(b){return b.getAttribute('data-fb-tag');}),
+      comment:document.getElementById('fb-comment').value.trim().slice(0,300),
+      createdAt:new Date().toISOString()
+    };
+    try{
+      var key='mist-mug-feedback-v1';
+      var existing=JSON.parse(localStorage.getItem(key)||'[]');
+      if(!Array.isArray(existing))existing=[];
+      existing.push(entry);
+      localStorage.setItem(key,JSON.stringify(existing.slice(-30)));
+      message('Thank you! Your feedback was saved on this device.');
+    }catch(err){
+      message('Thank you! Feedback recorded for this session. Browser storage is unavailable.');
+    }
+    form.reset();rating=0;
+    stars.forEach(function(b,i){b.classList.remove('active');b.setAttribute('aria-checked','false');b.tabIndex=i===0?0:-1;});
+    tags.forEach(function(b){b.setAttribute('aria-pressed','false');});
+  }
+  form.addEventListener('submit',submitFeedback);
+  // Explicit click handling also works when the browser's form-submit behavior is intercepted.
+  submit.addEventListener('click',function(e){e.preventDefault();submitFeedback(e);});
 })();
 </script>
 </body>
