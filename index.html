@@ -1,3 +1,9 @@
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -777,6 +783,17 @@ body{overflow-x:clip}
 #passport .eyebrow,#coins .eyebrow,#paths .eyebrow{color:#F6D9A8}
 footer .hand{color:var(--gold)}
 .foot-bottom{opacity:.72}
+.mi-photo{width:100%;aspect-ratio:5/3;object-fit:cover;border-radius:5px;margin:8px 0 12px;display:block}.menu-list-grid{gap:24px clamp(28px,5vw,80px)}.menu-item{min-width:0}.mi-top{flex-wrap:wrap}
+
+/* Food pairing: isolated visual enhancement inside Find My Cup */
+.fmc-pairing{margin:24px auto 4px;max-width:440px;padding:20px;border:1px solid rgba(230,173,98,.55);border-radius:12px;background:rgba(10,20,17,.36);text-align:left}
+.fmc-pairing h3{font-size:clamp(21px,3vw,28px);line-height:1.2;color:var(--cream);margin:7px 0}
+.fmc-pairing .pair-label{font:700 11px/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.fmc-pairing .pair-detail{font-size:13px;color:var(--paper);opacity:.9;margin:8px 0}
+.fmc-pairing .pair-price{font-size:14px;color:var(--gold);font-weight:700;margin-top:8px}
+.fmc-pairing .pair-photo{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:7px;margin:12px 0}
+.fmc-pairing .pair-note{font-size:11px;opacity:.7;margin-top:8px}
+
 </style>
 </head>
 <body>
@@ -1088,14 +1105,7 @@ footer .hand{color:var(--gold)}
 
 <section id="winterline-sec">
   <div class="wl-photo-fallback" aria-hidden="true"></div>
-  <img class="wl-photo" id="wl-photo"
-    src="https://images.unsplash.com/photo-1759434188733-03ff6f0d8cc5?auto=format&fit=crop&w=1400&q=60"
-    srcset="https://images.unsplash.com/photo-1759434188733-03ff6f0d8cc5?auto=format&fit=crop&w=900&q=60 900w,
-            https://images.unsplash.com/photo-1759434188733-03ff6f0d8cc5?auto=format&fit=crop&w=1400&q=60 1400w"
-    sizes="100vw" width="1400" height="700"
-    alt="Fictional atmospheric hazy mountain sunset concept imagery, evoking Mussoorie's winterline"
-    loading="lazy" decoding="async"
-    onerror="this.style.display='none';document.querySelector('.wl-photo-fallback').style.display='block'">
+  <img class="wl-photo" id="wl-photo" src="images/mussoorie/winterline-artistic.webp" alt="Artist-created illustration of a Himalayan mountain sunset; not an authentic photograph of Mussoorie's winterline" loading="lazy" decoding="async">
   <svg class="wl-mtn" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
     <polygon points="0,300 0,180 200,90 380,170 600,60 820,160 1000,80 1200,150 1200,300" fill="#1a1010" opacity=".55"/>
     <polygon points="0,300 0,220 240,140 460,210 700,120 940,200 1200,150 1200,300" fill="#120a0a"/>
@@ -1282,7 +1292,7 @@ const CATEGORIES = ['COFFEE','MOUNTAIN WARMERS','BREAKFAST','SMALL PLATES','SWEE
 const CAT_LABELS = {'COFFEE':'Coffee','MOUNTAIN WARMERS':'Chai & Warmers','BREAKFAST':'Breakfast','SMALL PLATES':'Small Plates','SWEET':'Dessert'};
 /* Licensed food photography goes here (item id -> image path). Empty on purpose: until real photos are supplied the
    menu is pure typography instead of gradient placeholders. Example: PRODUCT_PHOTOS['m01'] = 'images/menu/landour-latte.webp'; */
-const PRODUCT_PHOTOS = {};
+const PRODUCT_PHOTOS = {"m01": "images/menu/m01.webp", "m02": "images/menu/m02.webp", "m03": "images/menu/m03.webp", "m04": "images/menu/m04.webp", "m05": "images/menu/m05.webp", "m06": "images/menu/m06.webp", "m07": "images/menu/m07.webp", "m08": "images/menu/m08.webp", "m09": "images/menu/m09.webp", "m10": "images/menu/m10.webp", "m11": "images/menu/m11.webp", "m12": "images/menu/m12.webp", "m13": "images/menu/m13.webp", "m14": "images/menu/m14.webp", "m15": "images/menu/m15.webp", "m16": "images/menu/m16.webp", "m17": "images/menu/m17.webp", "m18": "images/menu/m18.webp", "m19": "images/menu/m19.webp", "m20": "images/menu/m20.webp", "m21": "images/menu/m21.webp", "m22": "images/menu/m22.webp", "m23": "images/menu/m23.webp", "m24": "images/menu/m24.webp", "m25": "images/menu/m25.webp", "m26": "images/menu/m26.webp", "m27": "images/menu/m27.webp", "m28": "images/menu/m28.webp", "m29": "images/menu/m29.webp", "m30": "images/menu/m30.webp"};
 function productPhoto(id){ return PRODUCT_PHOTOS[id] || null; }
 const STAMP_ICONS = {
   'FIRST SIP':'<svg viewBox="0 0 40 40"><path d="M10 16h20v10a10 10 0 0 1-20 0z" fill="currentColor"/></svg>',
@@ -1599,13 +1609,12 @@ function ppOpen(id, opener){
   if(!item) return;
   const cap = function(s){ return s.charAt(0).toUpperCase() + s.slice(1); };
   const row = function(k, v){ return mmEl('div', null, mmEl('dt', null, k), mmEl('dd', null, v)); };
-  const photo = productPhoto(item.id) ? mmEl('img', {class:'pp-photo', src:productPhoto(item.id), alt:item.name, width:'1600', height:'900'}) : null;
+  // Product detail intentionally text-only; food photography stays in menu and galleries.
   const body = sxId('pp-body'); body.replaceChildren(
     mmEl('p', {class:'pp-cat'}, CAT_LABELS[item.category]),
     mmEl('h2', {id:'pp-title'}, item.name),
     mmEl('p', {class:'pp-price'}, '₹' + item.price),
     mmEl('p', {class:'pp-desc'}, item.description),
-    photo,
     mmEl('dl', {class:'pp-dl'},
       row('Ingredients', item.ingredients.join(', ')),
       row('Dietary', item.vegan ? 'Vegan' : (item.vegetarian ? 'Vegetarian' : 'Contains non-vegetarian ingredients')),
@@ -1768,6 +1777,7 @@ function menuMeta(item){ return `${item.temp.toUpperCase()} · ${item.caffeine.t
 function menuBadges(item){ return `${item.vegan?'<span class="badge">VEGAN</span>':(item.vegetarian?'<span class="badge">VEG</span>':'')}${item.housePick?'<span class="badge">☕ HOUSE</span>':''}`; }
 function menuItemRow(item){
   return `<div class="menu-item">
+    <img class="mi-photo" src="${productPhoto(item.id)}" alt="Illustrative image of ${item.name}" loading="lazy" decoding="async">
     <div class="mi-top">
       <button type="button" class="mi-name" data-product="${item.id}" aria-label="${item.name}: details">${item.name}</button>
       <span class="mi-badges">${menuBadges(item)}</span>
@@ -2077,6 +2087,55 @@ function fmcBrew(){
   });
 }
 
+
+/* Food pairing is rule-based, using existing menu facts only; no extra network request. */
+function chooseFoodPairing(items, answers){
+  const drink = items.find(i=>i.category==='COFFEE'||i.category==='MOUNTAIN WARMERS');
+  if(!drink) return null;
+  const currentTotal = items.reduce((sum,i)=>sum+i.price,0);
+  const budgetMax = budgetRange(answers.budget)[1];
+  const food = MENU.filter(i=>['BREAKFAST','SMALL PLATES','SWEET'].includes(i.category))
+    .filter(i=>answers.diet!=='Vegan'||i.vegan)
+    .filter(i=>answers.diet!=='Vegetarian'||i.vegetarian);
+  if(!food.length) return null;
+  const taste = String(answers.taste||'').toLowerCase();
+  const mood = MOOD_MAP[answers.mood]||null;
+  const ranked = food.map(i=>{
+    let score=0;
+    if(mood&&i.mood.includes(mood)) score+=4;
+    if(taste!=='surprise me'&&i.taste.includes(taste)) score+=3;
+    if(drink.taste.includes('strong')&&i.category==='SWEET') score+=3;
+    if(drink.taste.includes('sweet')&&i.category==='SMALL PLATES') score+=3;
+    if(drink.temp==='cold'&&i.category==='SMALL PLATES') score+=2;
+    if(drink.temp==='hot'&&i.category==='BREAKFAST') score+=2;
+    if(i.housePick) score+=1;
+    return {item:i,score,withinBudget:currentTotal+i.price<=budgetMax};
+  }).sort((a,b)=>Number(b.withinBudget)-Number(a.withinBudget)||b.score-a.score||a.item.price-b.item.price||a.item.id.localeCompare(b.item.id));
+  const selected=ranked[0].item;
+  return {drink,food:selected,total:currentTotal+selected.price,budgetMax,withinBudget:currentTotal+selected.price<=budgetMax};
+}
+function pairingMarkup(items,answers){
+  try {
+    const match=chooseFoodPairing(items,answers);
+    if(!match) return `<section class="fmc-pairing" aria-label="Suggested food pairing"><span class="pair-label">Your food pairing</span><p class="pair-detail">No suitable food pairing is available for your dietary selection.</p></section>`;
+    const food=match.food;
+    const photo=productPhoto(food.id);
+    return `<section class="fmc-pairing" aria-label="Suggested food pairing">
+      <span class="pair-label">Your food pairing · House rules</span>
+      <h3>${escapeHTML(food.name)}</h3>
+      ${photo?`<img class="pair-photo" src="${photo}" alt="${escapeHTML(food.name)}" loading="lazy" decoding="async" onerror="this.style.display='none'">`:''}
+      <p class="pair-detail">${escapeHTML(food.description)}</p>
+      <p class="pair-detail">Suggested alongside ${escapeHTML(match.drink.name)} based on your selections and the existing menu.</p>
+      <p class="pair-price">Food ₹${food.price} · Combined ₹${match.total}</p>
+      ${match.withinBudget?'<p class="pair-note">Within your selected budget.</p>':`<p class="pair-note" role="status">Optional pairing: the combined price exceeds your selected budget by ₹${match.total-match.budgetMax}. Your original drink recommendation still respects your budget.</p>`}
+      <p class="pair-note">Rule-based suggestion, not an additional AI prediction. Menu allergen information is fictional.</p>
+    </section>`;
+  } catch(err) {
+    console.error('Food pairing could not be displayed:',err);
+    return `<section class="fmc-pairing" aria-label="Suggested food pairing"><span class="pair-label">Your food pairing</span><p class="pair-detail">A food pairing is temporarily unavailable. Your drink recommendation is unaffected.</p></section>`;
+  }
+}
+
 function fmcRenderResult(result, eligible, a){
   const box = document.getElementById('fmc-box');
   applyMoodAtmosphere(box);
@@ -2132,6 +2191,8 @@ function fmcRenderResult(result, eligible, a){
         <dt>Allergens</dt><dd>${allAllergens.length ? escapeHTML(allAllergens.join(', ')) : 'None listed'}</dd>
       </dl>
     </div>
+
+    ${pairingMarkup(items,a)}
 
     <div class="ask-house-btn">
       <span class="eyebrow" style="color:var(--paper);opacity:.7">Not feeling it?</span><br>
@@ -2405,15 +2466,14 @@ document.getElementById('secret-close').addEventListener('click',()=>secretModal
 secretModal.addEventListener('click',(e)=>{ if(e.target===secretModal) secretModal.classList.remove('open'); });
 
 /* ============ POSTCARD ============ */
-/* Photo scenes use the supplied Mussoorie photographs. Scenes marked "artistic" have no authentic photograph
-   (no real sunset / night-lights image was supplied), so they stay clearly-labelled illustrations. */
+/* Four original Mussoorie photographs plus two newly created, clearly labelled artistic scenes. */
 const PC_SCENES = [
   {key:'fog7', label:'Fog at 7AM', img:'images/mussoorie/hero-mussoorie.webp', fx:.55, fy:.5, alt:'misty green valleys'},
   {key:'town', label:'Above the Town', img:'images/mussoorie/weather-mountains.webp', fx:.5, fy:.62, alt:'Mussoorie town above the clouds'},
   {key:'ridges', label:'Blue Ridges', img:'images/mussoorie/clear-sky.webp', fx:.5, fy:.5, alt:'layered blue ridges'},
   {key:'sky', label:'Open Sky', img:'images/mussoorie/mussoorie-story.webp', fx:.5, fy:.45, alt:'open sky over the foothills'},
-  {key:'winterline', label:'Winterline (artistic)', c1:'#f0c491', c2:'#a6533f'},
-  {key:'lights', label:'Lights Over the Valley (artistic)', c1:'#2a3540', c2:'#0d1216'}
+  {key:'winterline', label:'Winterline (artistic)', img:'images/mussoorie/winterline-artistic.webp', fx:.5, fy:.5, alt:'an artistic Himalayan sunset'},
+  {key:'lights', label:'Lights Over the Valley (artistic)', img:'images/mussoorie/valley-lights-artistic.webp', fx:.5, fy:.5, alt:'an artistic blue-hour valley with hillside lights'}
 ];
 let pcThemeUnlocked = false;
 let pcActiveScene = PC_SCENES[0];
@@ -2920,7 +2980,7 @@ function mmGo(step, opts){
   MM.step = step;
   if(step === S_REVIEW || step === S_DONE) MM.editReturn = false;
   MM.notice = opts.notice || '';
-  mmRender({animate:true, typing: opts.typing !== false});
+  mmRender({animate:true, typing: step === S_REVIEW ? false : opts.typing !== false});
 }
 function mmComplete(s){ mmGo(mmNextAfter(s)); }
 function mmBack(){
@@ -3014,7 +3074,7 @@ function mmControlsDate(){
     const v = validateDate(val, mmNow());
     if(!v.ok) return fail(v.error);
     if(!slotsForDate(val, mmNow()).length) return fail("We've taken our last seating for that day. Try tomorrow.");
-    if(MM.data.date !== val){ MM.data.date = val; MM.data.altIndex = 0; }
+    if(MM.data.date !== val){ MM.data.date = val; MM.data.altIndex = 0; if(MM.data.time && !validateTime(val, MM.data.time, mmNow()).ok) MM.data.time = ''; }
     mmComplete(S_DATE);
   }
   const quick = function(label, iso){ return mmEl('button', {type:'button', class:'chip', onclick:function(){ input.value = iso; submit(iso); }}, label); };
@@ -3088,6 +3148,7 @@ function mmControlsInfo(){
   const reqI = mmEl('textarea', {id:'mm-request', class:'mm-input', maxlength:'200', rows:'3'}); reqI.value = d.request || '';
   const fn = field('mm-name', 'Name', false, nameI), fe = field('mm-email', 'Email', false, emailI),
         fp = field('mm-phone', 'Phone number', true, phoneI), fr = field('mm-request', 'Special request', true, reqI);
+  [ [nameI,'name'], [emailI,'email'], [phoneI,'phone'], [reqI,'request'] ].forEach(function(pair){ pair[0].addEventListener('input', function(){ d[pair[1]] = pair[0].value; }); });
   const count = mmEl('p', {class:'mm-count', 'aria-hidden':'true'}, (reqI.value.length)+'/200');
   reqI.addEventListener('input', function(){ count.textContent = reqI.value.length+'/200'; });
   function submit(){
@@ -3103,33 +3164,48 @@ function mmControlsInfo(){
   }
   return mmEl('form', {class:'mm-controls', novalidate:true, onsubmit:function(e){ e.preventDefault(); submit(); }},
     fn.row, fe.row, fp.row, fr.row, count,
-    mmEl('p', {class:'mm-note'}, 'Kept only in this browser (localStorage). Nothing is sent to the café or anywhere else.'),
-    mmEl('div', {class:'mm-actions'}, mmEl('button', {type:'submit', class:'btn gold'}, 'Review →')));
+    
+    mmEl('div', {class:'mm-actions'}, mmEl('button', {type:'button', class:'btn gold', onclick:function(e){ e.preventDefault(); submit(); }}, 'Review →')));
 }
 function mmSummaryRow(label, value, step){
   return mmEl('div', {class:'mm-sum-row'}, mmEl('dt', null, label), mmEl('dd', null, value || '—'),
     mmEl('button', {type:'button', class:'mm-edit', 'aria-label':'Edit '+label.toLowerCase(), onclick:function(){ mmEdit(step); }}, 'Edit'));
 }
 function mmControlsReview(){
-  const d = MM.data, info = mmEntry();
-  if(info) d.tableId = info.entry.table.id;
-  const p = prefById(d.pref), t = tableById(d.tableId);
-  const dup = mmStore.list().some(function(r){ return r.date === d.date && r.time === d.time; });
+  // Construct the summary from the existing draft, without ranking or storage calls.
+  // Neither external dependencies nor conversation history should block this screen.
+  const d = MM.data || {};
   const wrap = mmEl('div', {class:'mm-controls'});
+  const p = prefById(d.pref);
+  const t = tableById(d.tableId);
   if(MM.notice) wrap.appendChild(mmEl('p', {class:'mm-err', role:'alert'}, MM.notice));
-  wrap.appendChild(mmEl('dl', {class:'mm-summary'},
-    mmSummaryRow('Guests', String(d.guests), S_GUESTS),
-    mmSummaryRow('Date', formatDateLong(d.date), S_DATE),
-    mmSummaryRow('Time', formatTime12(timeStrToMinutes(d.time) || 0), S_TIME),
-    mmSummaryRow('Atmosphere', p ? p.label : '', S_PREF),
-    mmSummaryRow('Corner', t ? t.name : '', S_TABLE),
-    mmSummaryRow('Name', d.name, S_INFO),
-    mmSummaryRow('Email', d.email, S_INFO),
-    mmSummaryRow('Phone', d.phone || 'Not provided', S_INFO),
-    mmSummaryRow('Request', d.request || 'None', S_INFO)));
-  if(dup) wrap.appendChild(mmEl('p', {class:'mm-warn'}, 'You already have a demo reservation saved for this date and time in this browser.'));
-  wrap.appendChild(mmEl('p', {class:'mm-note'}, 'Demo only: table availability is not checked, and nothing is sent to the café.'));
-  const save = mmEl('button', {type:'button', class:'btn gold', 'data-autofocus':true, onclick:function(){ save.disabled = true; mmSave(); }}, 'Save demo reservation');
+  const summary = mmEl('dl', {class:'mm-summary'});
+  const fields = [
+    ['Guests', d.guests == null ? '' : String(d.guests), S_GUESTS],
+    ['Date', d.date ? formatDateLong(d.date) : '', S_DATE],
+    ['Time', d.time ? formatTime12(timeStrToMinutes(d.time)) : '', S_TIME],
+    ['Atmosphere', p ? p.label : '', S_PREF],
+    ['Corner', t ? t.name : '', S_TABLE],
+    ['Name', d.name || '', S_INFO],
+    ['Email', d.email || '', S_INFO],
+    ['Phone', d.phone || 'Not provided', S_INFO],
+    ['Request', d.request || 'None', S_INFO]
+  ];
+  fields.forEach(function(f){ summary.appendChild(mmSummaryRow(f[0], f[1], f[2])); });
+  wrap.appendChild(summary);
+  wrap.appendChild(mmEl('p', {class:'mm-note'}, 'Demo reservation: no live table availability check or café confirmation.'));
+  const save = mmEl('button', {type:'button', class:'btn gold', 'data-autofocus':true,
+    onclick:function(){
+      if(save.disabled) return;
+      save.disabled = true;
+      try { mmSave(); }
+      catch(err){
+        console.error('Reservation save failed:', err);
+        MM.notice = 'Could not save the reservation. Please try again.';
+        mmRender({animate:false, typing:false});
+      } finally { if(save.isConnected && MM.step === S_REVIEW) save.disabled = false; }
+    }
+  }, 'Reserve — save demo booking');
   wrap.appendChild(mmEl('div', {class:'mm-actions'}, save));
   return wrap;
 }
@@ -3313,8 +3389,34 @@ function mmRender(o){
     mmAfterRender(true);
     return;
   }
-  const typing = !!o.typing && !mmReduced();
-  const rows = mmBuildTranscript(typing);
+  const typing = !!o.typing && !mmReduced() && MM.step !== S_REVIEW;
+  let rows;
+  try {
+    if(MM.step === S_REVIEW && !typing){
+      chat.appendChild(mmBubble('bot', mmQuestionText(S_REVIEW)));
+      chat.appendChild(mmControlsReview());
+      MM.live = mmQuestionText(S_REVIEW);
+      mmAfterRender(false);
+      return;
+    }
+    rows = mmBuildTranscript(typing);
+  }
+  catch(err) {
+    console.error('Misty transcript render failed:', err);
+    if(MM.step === S_REVIEW) {
+      try {
+        chat.appendChild(mmBubble('bot', mmQuestionText(S_REVIEW)));
+        chat.appendChild(mmControlsReview());
+      } catch(reviewErr) {
+        console.error('Misty review render failed:', reviewErr);
+        chat.appendChild(mmEl('p', {class:'mm-err', role:'alert'}, 'Unable to display the reservation summary. Please go back and review your details.'));
+      }
+    } else {
+      chat.appendChild(mmEl('p', {class:'mm-err', role:'alert'}, 'This step could not load. Please use Back or Restart.'));
+    }
+    mmAfterRender(false);
+    return;
+  }
   if(o.animate) rows.slice(-3).forEach(function(r){ r.classList.add('fresh'); });
   rows.forEach(function(r){ chat.appendChild(r); });
   if(typing){
@@ -3387,3 +3489,7 @@ mmUpdateChrome();
 </script>
 </body>
 </html>
+
+
+
+
