@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -821,6 +818,20 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
 @media(max-width:640px){.mm-mood-launch{left:12px;bottom:12px;padding:11px 13px}.mm-mood-panel{left:12px;bottom:68px}}
 @media(prefers-reduced-motion:reduce){.mm-mood-tint{transition:none}}
 
+
+/* Ambience Studio: isolated within the existing Café Mood panel */
+.mm-ambience{border-top:1px solid #d7c5ad;margin-top:15px;padding-top:13px}
+.mm-ambience-title{font:600 12px/1.4 var(--sans,system-ui);letter-spacing:.11em;text-transform:uppercase;color:#70472f;margin:0 0 9px}
+.mm-ambience-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.mm-ambience-btn{border:1px solid #aa9077;border-radius:9px;background:#fffaf2;color:#241711;padding:9px 4px;font:600 11px/1.4 var(--sans,system-ui);cursor:pointer;min-height:46px}
+.mm-ambience-btn[aria-pressed="true"]{background:#142e25;color:#fff;border-color:#142e25}
+.mm-ambience-btn:focus-visible,.mm-ambience-stop:focus-visible,.mm-ambience-range:focus-visible{outline:3px solid #e6ad62;outline-offset:2px}
+.mm-ambience-bottom{display:flex;gap:10px;align-items:center;margin-top:10px}
+.mm-ambience-bottom label{font:500 12px var(--sans,system-ui);white-space:nowrap}
+.mm-ambience-range{flex:1;min-width:0;accent-color:#142e25}
+.mm-ambience-stop{border:1px solid #aa9077;border-radius:7px;padding:7px 10px;background:#fffaf2;color:#241711;font:600 11px var(--sans,system-ui);cursor:pointer}
+.mm-ambience-status{font-size:11px;line-height:1.4;color:#70472f;margin:9px 0 0}
+
 /* Customer feedback: self-contained visual module */
 #cafe-feedback{background:var(--paper-2);color:var(--coffee)}
 .fb-shell{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,5vw,70px);align-items:start}
@@ -848,6 +859,25 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
 .fmc-explain-note{font-size:.76rem;line-height:1.55;color:var(--paper);opacity:.78}
 
 
+/* Personal Brew — isolated, responsive */
+.brew-invite{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;padding:25px;margin:20px 0 26px;background:#F4EBDD;color:#241711;border:1px solid #CDBBA3;border-radius:14px}
+.brew-kicker{display:block;font:700 10px var(--sans);letter-spacing:.16em;color:#A05C37;text-transform:uppercase}
+.brew-invite h3{font:450 clamp(27px,4vw,40px) var(--serif);margin:6px 0}.brew-invite p{font-size:13px;color:#70472F}
+.brew-open,#brew-add{border:0;border-radius:999px;background:#142E25;color:#F4EBDD;padding:14px 22px;min-height:46px;cursor:pointer;font:700 12px var(--sans)}
+.brew-overlay[hidden]{display:none!important}.brew-overlay{position:fixed;inset:0;z-index:550;background:#17110Dbd;display:grid;place-items:center;padding:14px}
+.brew-panel{width:min(900px,100%);max-height:min(94vh,920px);overflow:auto;background:#F4EBDD;color:#241711;border-radius:17px;box-shadow:0 20px 80px #0006}
+.brew-head{padding:25px 30px;background:#142E25;color:#F4EBDD;display:flex;justify-content:space-between;gap:16px}.brew-head h2{font:450 clamp(30px,5vw,48px) var(--serif);margin:8px 0}.brew-head p{font-size:13px;color:#D8C9B4}
+#brew-close{flex-shrink:0;width:44px;height:44px;border:1px solid #E6AD62;border-radius:50%;background:transparent;color:#F4EBDD;font-size:25px;cursor:pointer}
+.brew-body{padding:26px 30px;display:grid;grid-template-columns:1fr 1fr;gap:30px}.brew-fields{display:grid;gap:18px;align-content:start}.brew-fields>[hidden]{display:none!important}.brew-fields>label{display:grid;gap:7px;font:650 13px var(--sans)}
+.brew-fields select{width:100%;min-height:46px;border:1px solid #B9A78E;border-radius:8px;padding:9px;background:#FFFAF2;color:#241711;font:14px var(--sans)}
+.brew-fields fieldset{border:1px solid #B9A78E;border-radius:9px;padding:12px}.brew-fields legend{font:650 13px var(--sans);padding:0 6px}.brew-fields fieldset label{margin-right:18px;font:14px var(--sans)}
+.brew-summary{background:#E9DDCA;border:1px solid #D5C1A4;border-radius:12px;padding:24px;align-self:start}.brew-summary h3{font:450 29px var(--serif);margin:12px 0}.brew-summary p{font:13px/1.6 var(--sans);color:#70472F;margin:7px 0}
+.brew-cup{text-align:center;font-size:75px;line-height:1.1;padding:15px 0}.brew-steam{font-size:22px;color:#A05C37;animation:brewFloat 2s ease-in-out infinite alternate}@keyframes brewFloat{to{transform:translateY(-7px);opacity:.5}}
+.brew-total{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #B9A78E;padding:15px 0;margin-top:14px}.brew-total strong{font:650 26px var(--serif);color:#964A33}
+#brew-add{width:100%}.brew-summary small{display:block;margin-top:10px;font:11px/1.5 var(--sans);color:#70472F}
+.brew-open:focus-visible,#brew-add:focus-visible,#brew-close:focus-visible,.brew-fields select:focus-visible{outline:3px solid #E6AD62;outline-offset:3px}
+@media(max-width:650px){.brew-body{grid-template-columns:1fr;padding:18px}.brew-head{padding:20px}.brew-cup{font-size:52px;padding:4px}}
+@media(prefers-reduced-motion:reduce){.brew-steam{animation:none}}
 /* === Optional Smart Ordering Cart: isolated styling === */
 .cart-open{position:fixed;right:clamp(12px,3vw,30px);top:90px;z-index:75;border:1px solid #E6AD62;background:#241711;color:#FAF3E6;border-radius:999px;padding:11px 17px;min-height:44px;font:600 12px/1.2 var(--sans);letter-spacing:.04em;box-shadow:0 8px 24px #24171138}
 .cart-open:hover,.cart-add:hover{filter:brightness(1.1)}
@@ -934,6 +964,37 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
 .fx-disclaimer{text-align:center;font-size:.75rem;opacity:.7;margin-top:16px}
 @media(max-width:680px){.fx-cards{grid-template-columns:1fr}.fx-choice{flex:1 1 45%;font-size:.83rem}.fx-card{padding:16px}}
 @media(prefers-reduced-motion:reduce){.fx-choice{transition:none}.fx-choice:hover{transform:none}}
+</style>
+<style>
+/* Order Journey: isolated from cart, reservations, and menu styling */
+.mmj-overlay[hidden]{display:none!important}.mmj-overlay{position:fixed;inset:0;z-index:10020;background:rgba(20,28,24,.75);display:flex;align-items:center;justify-content:center;padding:18px}
+.mmj-panel{position:relative;background:#f4ebdd;color:#241711;width:min(100%,490px);max-height:90vh;overflow:auto;border-radius:16px;padding:28px;box-shadow:0 22px 70px #0005;font-family:inherit}
+.mmj-panel h2{font-size:clamp(25px,4vw,36px);margin:8px 0 6px}.mmj-kicker{color:#70472f;text-transform:uppercase;letter-spacing:.15em;font-size:11px;font-weight:700}
+.mmj-close{position:absolute;right:14px;top:12px;background:transparent;border:1px solid #b9a58c;color:#241711;border-radius:50%;width:36px;height:36px;cursor:pointer}
+.mmj-meta{font-size:13px;color:#70472f;margin:0 0 18px}.mmj-steps{list-style:none;padding:0;margin:18px 0}.mmj-steps li{display:flex;gap:13px;padding:10px 0;opacity:.55}.mmj-steps li.mmj-done,.mmj-steps li.mmj-current{opacity:1}.mmj-dot{flex:none;display:grid;place-items:center;width:29px;height:29px;border-radius:50%;border:1px solid #81948a;color:#142e25;font-weight:700}.mmj-done .mmj-dot,.mmj-current .mmj-dot{background:#142e25;color:#f4ebdd}.mmj-steps strong{display:block}.mmj-steps small{display:block;color:#70472f;margin-top:3px}.mmj-lines{border-top:1px solid #cbbca8;padding-top:12px}.mmj-line{display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:14px}.mmj-total{font-weight:700;border-top:1px solid #cbbca8;margin-top:8px;padding-top:12px}.mmj-note{font-size:12px;color:#70472f;line-height:1.5;margin:16px 0}.mmj-action{background:#142e25;color:#f4ebdd;border:0;border-radius:8px;padding:12px 18px;cursor:pointer;width:100%;font:inherit}.mmj-action:focus-visible,.mmj-close:focus-visible{outline:3px solid #e6ad62;outline-offset:3px}
+@media(max-width:500px){.mmj-panel{padding:22px 18px}}
+
+/* Premium order journey: isolated presentation layer */
+.mmj-panel{width:min(100%,560px);border:1px solid #d7c3a4;background:linear-gradient(145deg,#fbf3e7,#f4ebdd);padding:clamp(20px,4vw,34px)}
+.mmj-panel h2{font-family:Georgia,serif;font-size:clamp(32px,5vw,46px);font-weight:500;letter-spacing:-.035em}
+.mmj-showcase{height:158px;position:relative;overflow:hidden;border-radius:14px;background:radial-gradient(ellipse at 50% 90%,#476251 0%,#1b3b30 62%,#10291f 100%);margin:18px 0 16px}
+.mmj-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 80%,#e6ad6240,transparent 45%)}
+.mmj-cup{position:absolute;left:calc(50% - 49px);bottom:26px;width:98px;height:80px;border:5px solid #f6e9d4;border-top:6px solid #fff4de;border-radius:5px 5px 26px 26px;overflow:hidden;z-index:2;background:#efe0c922}
+.mmj-fill{position:absolute;bottom:0;left:0;right:0;height:12%;background:linear-gradient(#e3b37c,#8a4b2d);transition:height .8s ease}
+.mmj-handle{position:absolute;left:calc(50% + 45px);bottom:55px;width:30px;height:44px;border:7px solid #f6e9d4;border-radius:50%;z-index:1}
+.mmj-saucer{position:absolute;bottom:17px;left:calc(50% - 69px);width:138px;height:13px;background:#f6e9d4;border-radius:50%}
+.mmj-steam{position:absolute;bottom:111px;left:50%;display:flex;gap:12px;transform:translateX(-50%);opacity:0;transition:opacity .5s}
+.mmj-steam i{width:8px;height:32px;border-left:3px solid #f7e9d7a0;border-radius:50%;animation:mmj-rise 2.3s ease-in-out infinite}
+.mmj-steam i:nth-child(2){animation-delay:.45s}.mmj-steam i:nth-child(3){animation-delay:.9s}
+.mmj-overlay[data-stage="1"] .mmj-steam,.mmj-overlay[data-stage="2"] .mmj-steam{opacity:1}
+.mmj-overlay[data-stage="2"] .mmj-showcase{box-shadow:inset 0 0 0 2px #e6ad6266}
+@keyframes mmj-rise{0%{transform:translateY(8px);opacity:.3}50%{opacity:1}100%{transform:translateY(-13px);opacity:.2}}
+.mmj-progress-head{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin:8px 0}.mmj-progress-head span{color:#70472f;font-variant-numeric:tabular-nums}
+.mmj-progress{height:9px;background:#dfd0ba;border-radius:20px;overflow:hidden}.mmj-progress>div{height:100%;width:0;background:linear-gradient(90deg,#70472f,#e6ad62);border-radius:20px;transition:width .7s linear}
+.mmj-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:22px 0}.mmj-steps li{display:block;text-align:center;padding:8px 3px}.mmj-dot{margin:0 auto 9px}.mmj-steps strong{font-size:12px;line-height:1.25}.mmj-steps small{font-size:11px;line-height:1.3}
+.mmj-receipt-heading{display:flex;justify-content:space-between;align-items:center;font-family:Georgia,serif;font-size:21px;margin:16px 0 8px}.mmj-receipt-heading span{font-family:inherit;font-size:12px;color:#70472f}
+@media(max-width:450px){.mmj-showcase{height:140px}.mmj-steps{gap:3px}.mmj-steps strong{font-size:11px}.mmj-steps small{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.mmj-steam i{animation:none}.mmj-fill,.mmj-progress>div{transition:none}}
 </style>
 </head>
 <body>
@@ -1432,6 +1493,22 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
   </div>
 </div>
 
+<!-- Personal Brew: isolated coffee customizer; menu and recommendations are unchanged -->
+<div id="brew-overlay" class="brew-overlay" role="dialog" aria-modal="true" aria-labelledby="brew-title" hidden>
+ <div class="brew-panel">
+  <div class="brew-head"><div><span class="brew-kicker">MIST &amp; MUG · PERSONAL BREW</span><h2 id="brew-title">Build your perfect cup.</h2><p>A little of you, in every sip.</p></div><button type="button" id="brew-close" aria-label="Close coffee customizer">×</button></div>
+  <div class="brew-body">
+   <div class="brew-fields">
+    <label>01 — Your coffee<select id="brew-base"><option value="m01">Landour Latte</option><option value="m02">Classic Cappuccino</option><option value="m03">Flat White</option><option value="m08">Americano</option></select></label>
+    <label id="brew-milk-row">02 — Your milk<select id="brew-milk"><option value="regular">Regular milk · included</option><option value="oat">Oat milk · +₹40</option><option value="almond">Almond milk · +₹40</option></select></label>
+    <label>03 — Coffee strength<select id="brew-strength"><option value="regular">Regular strength</option><option value="extra">Extra espresso shot · +₹60</option></select></label>
+    <label>04 — A little sweetness<select id="brew-syrup"><option value="none">No added syrup</option><option value="vanilla">Vanilla · +₹30</option><option value="caramel">Caramel · +₹30</option></select></label>
+    <fieldset><legend>05 — Serving temperature</legend><label><input type="radio" name="brew-temp" value="hot" checked> Hot</label><label><input type="radio" name="brew-temp" value="iced"> Iced</label></fieldset>
+   </div>
+   <div class="brew-summary"><div class="brew-cup" aria-hidden="true"><div class="brew-steam">〰 〰</div>☕</div><span class="brew-kicker">YOUR PERSONAL BREW</span><h3 id="brew-name">Landour Latte</h3><p id="brew-details"></p><p id="brew-allergens"></p><div class="brew-total"><span>Estimated total</span><strong id="brew-price">₹220</strong></div><button type="button" id="brew-add">Add custom coffee to order →</button><p id="brew-message" role="status" aria-live="polite"></p><small>Customization prices are illustrative. No payment or café order is sent.</small></div>
+  </div>
+ </div>
+</div>
 <!-- Smart Ordering Cart: separate from Misty reservations and existing features -->
 <button type="button" id="cart-open" class="cart-open" aria-haspopup="dialog" aria-controls="cart-overlay" aria-label="Open your order">Your order <span class="cart-count" id="cart-count">0</span></button>
 <button type="button" id="visit-launch" class="visit-launch" aria-haspopup="dialog" aria-controls="visit-sheet">☕ Visit &amp; Order <span id="visit-count" aria-live="polite"></span></button>
@@ -1442,6 +1519,7 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
     <button type="button" class="visit-choice" id="visit-cart"><strong>🛍 View my cart</strong><span>Review food, drinks and quantities, or place a demo order.</span></button>
     <button type="button" class="visit-choice" id="visit-reserve"><strong>☁ Reserve a table only</strong><span>Book your corner without adding any food.</span></button>
     <button type="button" class="visit-choice" id="visit-both"><strong>☕ Reserve &amp; pre-order</strong><span>Choose food first, then attach it to your reservation.</span></button>
+    <button type="button" class="visit-choice" id="visit-track" hidden><strong>◷ Track last order</strong><span>Reopen your latest simulated order journey.</span></button>
     <p class="visit-hint">Pre-ordering is optional. No online payment is required.</p>
   </div>
 </div>
@@ -2058,6 +2136,7 @@ function renderMenu(){
     const rest = items.filter(i=>i!==feature);
     html += `<div class="menu-cat-block" data-reveal="mask"><div class="mx-cat-head"><span class="mx-num">0${CATEGORIES.indexOf(cat)+1}</span><h3 class="menu-cat-title">${CAT_LABELS[cat]}</h3><span class="mx-count">${items.length} ${items.length===1?'item':'items'}</span></div>`;
     if(cat==='SWEET') html += `<p class="mx-cat-note">calories struggle at this altitude.</p>`;
+    if(cat==='COFFEE') html += `<div class="brew-invite"><div><span class="brew-kicker">THE PERSONAL BREW</span><h3>Make it yours.</h3><p>Milk, strength, sweetness, temperature — your cup, your way.</p></div><button type="button" id="brew-open" class="brew-open">Build my coffee →</button></div>`;
     if(feature) html += menuFeature(feature);
     if(rest.length) html += `<div class="menu-list-grid">${rest.map(menuItemRow).join('')}</div>`;
     html += `</div>`;
@@ -3228,7 +3307,7 @@ function mmDeletePreorder(ref){try{const m=mmPreorderMap();delete m[ref];localSt
 function mmPreorderView(order){
   const wrap=mmEl('section',{class:'mm-preorder','aria-label':'Optional food pre-order'});
   wrap.appendChild(mmEl('h3',null,'Your optional pre-order'));
-  (order.items||[]).forEach(function(item){wrap.appendChild(mmEl('div',{class:'mm-preorder-line'},mmEl('span',null,item.quantity+' × '+item.name),mmEl('strong',null,'₹'+(item.price*item.quantity).toLocaleString('en-IN'))));});
+  (order.items||[]).forEach(function(item){wrap.appendChild(mmEl('div',{class:'mm-preorder-line'},mmEl('span',null,item.quantity+' × '+item.name+(item.details?' — '+item.details:'')),mmEl('strong',null,'₹'+(item.price*item.quantity).toLocaleString('en-IN'))));});
   wrap.appendChild(mmEl('div',{class:'mm-preorder-line mm-preorder-total'},mmEl('span',null,'Estimated food total'),mmEl('strong',null,'₹'+(order.total||0).toLocaleString('en-IN'))));
   wrap.appendChild(mmEl('p',{class:'mm-preorder-note'},'Optional demo pre-order. No payment is taken and no order is sent to the café.'));
   return wrap;
@@ -3802,6 +3881,20 @@ mmUpdateChrome();
     <button type="button" class="mm-mood-choice" data-mood-choice="evening" aria-pressed="false">☾ Evening</button>
   </div>
   <p class="mm-mood-note">A visual atmosphere only. Original restores the normal look.</p>
+  <section class="mm-ambience" aria-label="Café Ambience Studio">
+    <p class="mm-ambience-title">♪ Café Music Studio</p>
+    <div class="mm-ambience-options" role="group" aria-label="Choose original instrumental music">
+      <button type="button" class="mm-ambience-btn" data-ambience="piano" aria-pressed="false">♫ Soft Piano</button>
+      <button type="button" class="mm-ambience-btn" data-ambience="lofi" aria-pressed="false">☕ Lo-fi</button>
+      <button type="button" class="mm-ambience-btn" data-ambience="dream" aria-pressed="false">✧ Dreamy</button>
+    </div>
+    <div class="mm-ambience-bottom">
+      <label for="mm-ambience-volume">Volume</label>
+      <input id="mm-ambience-volume" class="mm-ambience-range" type="range" min="0" max="100" value="25" aria-label="Ambience volume">
+      <button type="button" class="mm-ambience-stop" id="mm-ambience-stop">Stop</button>
+    </div>
+    <p class="mm-ambience-status" id="mm-ambience-status" role="status" aria-live="polite">Music is off. Choose a melody to play.</p>
+  </section>
 </div>
 <script>
 (function(){
@@ -3822,6 +3915,107 @@ mmUpdateChrome();
   panel.addEventListener('click',function(e){var b=e.target.closest('[data-mood-choice]');if(b)choose(b.getAttribute('data-mood-choice'));});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden){setOpen(false);launch.focus();}});
   document.addEventListener('pointerdown',function(e){if(!panel.hidden&&!panel.contains(e.target)&&!launch.contains(e.target))setOpen(false);});
+  // Original instrumental melodies, synthesized locally with Web Audio. No external tracks.
+  (function(){
+    var buttons=Array.from(panel.querySelectorAll('[data-ambience]'));
+    var stopButton=document.getElementById('mm-ambience-stop');
+    var slider=document.getElementById('mm-ambience-volume');
+    var status=document.getElementById('mm-ambience-status');
+    var AudioCtor=window.AudioContext||window.webkitAudioContext;
+    var ctx=null,source=null,gain=null,mode='';
+    // Three distinctly composed, original soundscapes.
+    var melodies={
+      piano:{name:'Soft Piano',notes:[72,76,79,76,74,72,69,67,69,72,76,72],chords:[[48,52,55],[45,48,52],[41,45,48],[43,47,50]],wave:'piano'},
+      lofi:{name:'Lo-fi Coffee',notes:[60,63,67,70,67,63,58,62,65,69,65,62],chords:[[48,51,55,58],[46,50,53,57],[43,46,50,53],[45,48,52,55]],wave:'lofi'},
+      dream:{name:'Dreamy Evening',notes:[79,84,81,76,74,79],chords:[[48,55,59,64],[45,52,57,60],[41,48,52,57],[43,50,55,59]],wave:'dream'}
+    };
+    function mark(){buttons.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.ambience===mode));});}
+    function stop(){
+      if(source){try{source.stop();}catch(e){}try{source.disconnect();}catch(e){}source=null;}
+      if(gain){try{gain.disconnect();}catch(e){}gain=null;}
+      mode='';mark();status.textContent='Music is off. Choose a melody to play.';
+    }
+    function midi(n){return 440*Math.pow(2,(n-69)/12);}
+    function build(which){
+      var tune=melodies[which],rate=ctx.sampleRate,tempo=which==='lofi'?.56:which==='piano'?.62:.67,duration=24*tempo,length=Math.round(rate*duration);
+      var buffer=ctx.createBuffer(2,length,rate),left=buffer.getChannelData(0),right=buffer.getChannelData(1);
+      function tone(pitch,start,hold,amp,pan,kind){
+        start*=tempo;hold*=tempo;
+        var hz=midi(pitch),first=Math.floor(start*rate),end=Math.min(length,Math.floor((start+hold)*rate));
+        for(var i=first;i<end;i++){
+          var t=(i-first)/rate,remaining=hold-t;
+          var attack=Math.min(1,t/(kind==='pad'?1.3:.015));
+          var release=Math.min(1,remaining/(kind==='pad'?1.5:.22));
+          var decay=kind==='piano'?Math.exp(-t*2.1):kind==='bass'?Math.exp(-t*1.7):kind==='pluck'?Math.exp(-t*1.15):1;
+          var v=0;
+          if(kind==='piano')v=(Math.sin(2*Math.PI*hz*t)+.32*Math.sin(2*Math.PI*hz*2*t)+.12*Math.sin(2*Math.PI*hz*3*t))*decay;
+          else if(kind==='bass')v=(Math.sin(2*Math.PI*hz*t)+.13*Math.sin(2*Math.PI*hz*2*t))*decay;
+          else if(kind==='pluck')v=(Math.sin(2*Math.PI*hz*t)+.22*Math.sin(2*Math.PI*hz*2*t))*decay;
+          else v=(Math.sin(2*Math.PI*hz*t)+.28*Math.sin(2*Math.PI*(hz*1.003)*t)+.08*Math.sin(2*Math.PI*hz*2*t))/1.36;
+          var value=v*attack*release*amp;
+          left[i]+=value*(1-pan*.25);right[i]+=value*(1+pan*.25);
+        }
+      }
+      function drum(at,kind,amp){
+        at*=tempo;
+        var first=Math.floor(at*rate),end=Math.min(length,first+Math.floor(rate*(kind==='kick'?.25:.13)));
+        for(var i=first;i<end;i++){
+          var t=(i-first)/rate,env=Math.exp(-t*(kind==='kick'?25:42));
+          var v=kind==='kick'?Math.sin(2*Math.PI*(85-45*Math.min(t/.25,1))*t):((Math.sin(i*12.9898)*43758.5453)%1);
+          left[i]+=v*env*amp;right[i]+=v*env*amp;
+        }
+      }
+      if(which==='piano'){
+        // Brisk, light piano phrases with a gentle waltz-like movement.
+        for(var b=0;b<4;b++){
+          var chord=tune.chords[b];
+          chord.forEach(function(n,j){tone(n,b*6+j*.36,2.8,.025,j%2?.4:-.4,'piano');});
+        }
+        tune.notes.forEach(function(n,i){tone(n,i*2,1.75,.16,i%2?.3:-.3,'piano');});
+      }else if(which==='lofi'){
+        // A rhythmic, syncopated groove with bass, offbeat chords and soft drums.
+        for(var b=0;b<4;b++){
+          var chord=tune.chords[b];
+          tone(chord[0]-12,b*6,1.3,.15,0,'bass');
+          tone(chord[0]-12,b*6+3,1.15,.12,0,'bass');
+          [1.5,4.5].forEach(function(offset){chord.slice(1).forEach(function(n,j){tone(n,b*6+offset,.85,.045,j%2?.5:-.5,'pluck');});});
+          for(var beat=0;beat<6;beat+=1.5){drum(b*6+beat,'kick',.07);}
+          drum(b*6+1.5,'hat',.018);drum(b*6+4.5,'hat',.018);
+        }
+        tune.notes.forEach(function(n,i){tone(n,i*2+.75,.55,.07,i%2?.4:-.4,'pluck');});
+      }else{
+        // Flowing evening pads with more frequent bell-like accents.
+        for(var b=0;b<4;b++){
+          tune.chords[b].forEach(function(n,j){tone(n,b*6,6,.018,j%2?.65:-.65,'pad');});
+        }
+        tune.notes.forEach(function(n,i){tone(n,1+i*4,3.5,.07,i%2?.7:-.7,'pluck');tone(n-12,2.4+i*4,1.5,.032,i%2?-.4:.4,'pluck');});
+      }
+      for(var i=0;i<Math.min(5000,length);i++){
+        var fade=i/5000;
+        left[i]*=fade;right[i]*=fade;
+        left[length-1-i]*=fade;right[length-1-i]*=fade;
+      }
+      return buffer;
+    }
+    function start(which){
+      if(mode===which){stop();return;}
+      stop();
+      if(!AudioCtor||!melodies[which]){status.textContent='Music is unavailable in this browser.';return;}
+      try{
+        if(!ctx)ctx=new AudioCtor();
+        if(ctx.state==='suspended')ctx.resume().catch(function(){status.textContent='Tap again to enable audio.';});
+        source=ctx.createBufferSource();source.buffer=build(which);source.loop=true;
+        gain=ctx.createGain();gain.gain.value=Number(slider.value)/100*.45;
+        source.connect(gain);gain.connect(ctx.destination);source.start();
+        mode=which;mark();status.textContent=melodies[which].name+' playing. Tap again or Stop to turn it off.';
+      }catch(e){stop();status.textContent='Music could not start in this browser.';}
+    }
+    buttons.forEach(function(b){b.addEventListener('click',function(){start(b.dataset.ambience);});});
+    stopButton.addEventListener('click',stop);
+    slider.addEventListener('input',function(){if(gain&&ctx)gain.gain.setTargetAtTime(Number(slider.value)/100*.45,ctx.currentTime,.04);});
+    document.addEventListener('visibilitychange',function(){if(document.hidden&&mode)stop();});
+    window.addEventListener('pagehide',stop);
+  })();
   choose('default');
 })();
 </script>
@@ -3954,6 +4148,20 @@ mmUpdateChrome();
   'use strict';
   const catalog = Array.isArray(window.MistMugCartMenu) ? window.MistMugCartMenu : [];
   const byId = new Map(catalog.map(p => [p.id,p]));
+  const customKey='mistmug-custom-drinks-v1';
+  const customCatalog={};
+  try {
+    const saved=JSON.parse(localStorage.getItem(customKey)||'{}');
+    if(saved && typeof saved==='object' && !Array.isArray(saved)){
+      Object.entries(saved).slice(0,100).forEach(([id,p])=>{
+        if(/^custom:m0[1238]:[a-z0-9:]+$/.test(id) && p && typeof p.name==='string' && p.name.length<180 && Number.isInteger(p.price) && p.price>=100 && p.price<=1000 && typeof p.details==='string' && p.details.length<240){
+          customCatalog[id]={id,name:p.name,price:p.price,details:p.details,category:'COFFEE'};
+          byId.set(id,customCatalog[id]);
+        }
+      });
+    }
+  }catch(e){}
+  function persistCustom(){try{localStorage.setItem(customKey,JSON.stringify(customCatalog));}catch(e){}}
   const storageKey='mistmug-demo-cart-v1';
   let basket={};
   try {
@@ -3981,7 +4189,7 @@ mmUpdateChrome();
       const line=document.createElement('article');line.className='cart-line';
       const info=document.createElement('div');
       const name=document.createElement('h3');name.textContent=p.name;info.append(name);
-      const unit=document.createElement('small');unit.textContent=money(p.price)+' each';info.append(unit);
+      const unit=document.createElement('small');unit.textContent=money(p.price)+' each';info.append(unit);if(p.details){const detail=document.createElement('small');detail.textContent=p.details;info.append(detail);}
       const controls=document.createElement('div');
       const price=document.createElement('strong');price.textContent=money(p.price*quantity);controls.append(price);
       const qty=document.createElement('div');qty.className='cart-qty';
@@ -4002,6 +4210,12 @@ mmUpdateChrome();
     get('cart-reserve').disabled=!count;
     get('cart-clear').disabled=!count;
   }
+  document.addEventListener('mistmug:add-custom-coffee',e=>{
+    const p=e.detail;
+    if(!p || !/^custom:m0[1238]:[a-z0-9:]+$/.test(p.id) || typeof p.name!=='string' || typeof p.details!=='string' || !Number.isInteger(p.price) || p.price<100 || p.price>1000)return;
+    customCatalog[p.id]={id:p.id,name:p.name.slice(0,180),price:p.price,details:p.details.slice(0,240),category:'COFFEE'};
+    byId.set(p.id,customCatalog[p.id]);persistCustom();change(p.id,1);
+  });
   function change(id,delta){
     if(!byId.has(id))return;
     const next=Math.max(0,Math.min(30,(basket[id]||0)+delta));
@@ -4032,7 +4246,7 @@ mmUpdateChrome();
   });
   get('cart-clear').addEventListener('click',()=>{hideReceipt();basket={};save();render();status.textContent='Order cleared.';});
   get('cart-reserve').addEventListener('click',()=>{
-    const chosen=Object.entries(basket).map(([id,quantity])=>{const p=byId.get(id);return p?{id:p.id,name:p.name,price:p.price,quantity}:null;}).filter(Boolean);
+    const chosen=Object.entries(basket).map(([id,quantity])=>{const p=byId.get(id);return p?{id:p.id,name:p.name,price:p.price,quantity,details:p.details||''}:null;}).filter(Boolean);
     if(!chosen.length)return;
     const order={items:chosen,total:chosen.reduce((sum,p)=>sum+p.price*p.quantity,0)};
     close();
@@ -4040,7 +4254,7 @@ mmUpdateChrome();
   });
   document.addEventListener('mistmug:preorder-saved',()=>{basket={};save();render();});
   get('cart-checkout').addEventListener('click',()=>{
-    const chosen=Object.entries(basket).map(([id,quantity])=>{const p=byId.get(id);return p?{name:p.name,price:p.price,quantity}:null;}).filter(Boolean);
+    const chosen=Object.entries(basket).map(([id,quantity])=>{const p=byId.get(id);return p?{name:p.name,price:p.price,quantity,details:p.details||''}:null;}).filter(Boolean);
     if(!chosen.length)return;
     const total=chosen.reduce((sum,p)=>sum+p.price*p.quantity,0);
     // Preserve the receipt snapshot before clearing the cart.
@@ -4049,19 +4263,178 @@ mmUpdateChrome();
     add('span','receipt-kicker','Mist & Mug · Demo confirmation');
     add('h3','','Your order is placed.');
     add('p','','Here is a summary of your simulated order.');
-    chosen.forEach(p=>{const row=document.createElement('div');row.className='receipt-row';const name=document.createElement('span');name.textContent=p.quantity+' × '+p.name;const price=document.createElement('strong');price.textContent=money(p.price*p.quantity);row.append(name,price);receipt.append(row);});
+    chosen.forEach(p=>{const row=document.createElement('div');row.className='receipt-row';const name=document.createElement('span');name.textContent=p.quantity+' × '+p.name+(p.details?' — '+p.details:'');const price=document.createElement('strong');price.textContent=money(p.price*p.quantity);row.append(name,price);receipt.append(row);});
     const row=document.createElement('div');row.className='receipt-row receipt-total';const label=document.createElement('span');label.textContent='Total (demo)';const amount=document.createElement('strong');amount.textContent=money(total);row.append(label,amount);receipt.append(row);
     add('p','','This is a demo only. No payment was taken or order sent to a café.');
     const actions=document.createElement('div');actions.className='receipt-actions';
     const again=document.createElement('button');again.type='button';again.textContent='Start new order';again.addEventListener('click',()=>{hideReceipt();status.textContent='';render();});
     const done=document.createElement('button');done.type='button';done.textContent='Close';done.addEventListener('click',close);
-    actions.append(again,done);receipt.append(actions);
+    const track=document.createElement('button');track.type='button';track.textContent='Track my order';
+    track.addEventListener('click',()=>{close();document.dispatchEvent(new CustomEvent('mistmug:track-last-order'));});
+    actions.append(track,again,done);receipt.append(actions);
+    document.dispatchEvent(new CustomEvent('mistmug:demo-order-placed',{detail:{
+      id:'MM-'+Date.now().toString(36).toUpperCase(),
+      placedAt:Date.now(),items:chosen.map(p=>({...p})),total:total
+    }}));
     basket={};save();render();status.textContent='';
     items.hidden=true;get('cart-totals-wrap').hidden=true;receipt.hidden=false;receipt.focus();
   });
   render();
 })();
 </script>
+
+<script>
+/* Personal Brew — isolated customization UI and event bridge to existing cart. */
+(function(){
+ 'use strict';
+ const overlay=document.getElementById('brew-overlay');
+ const el=id=>document.getElementById(id);
+ const bases=Object.fromEntries((window.MistMugCartMenu||[]).filter(p=>['m01','m02','m03','m08'].includes(p.id)).map(p=>[p.id,p]));
+ const milkCost={regular:0,oat:40,almond:40},strengthCost={regular:0,extra:60},syrupCost={none:0,vanilla:30,caramel:30};
+ const milkLabel={regular:'Regular milk',oat:'Oat milk',almond:'Almond milk'},strengthLabel={regular:'Regular strength',extra:'Extra espresso shot'},syrupLabel={none:'No added syrup',vanilla:'Vanilla syrup',caramel:'Caramel syrup'};
+ let opener=null;
+ function getChoice(){
+   const base=bases[el('brew-base').value]||bases.m01;
+   const black=base.id==='m08';
+   const milk=black?'none':el('brew-milk').value;
+   const strength=el('brew-strength').value,syrup=el('brew-syrup').value;
+   const temp=document.querySelector('input[name="brew-temp"]:checked').value;
+   const price=base.price+(milkCost[milk]||0)+(strengthCost[strength]||0)+(syrupCost[syrup]||0);
+   const details=[temp==='iced'?'Iced':'Hot',black?'No milk':milkLabel[milk],strengthLabel[strength],syrupLabel[syrup]].join(' · ');
+   const id='custom:'+base.id+':'+milk+':'+strength+':'+syrup+':'+temp;
+   return {id,name:base.name+' · Custom',price,details};
+ }
+ function update(){
+   const black=el('brew-base').value==='m08';
+   el('brew-milk-row').hidden=black;
+   const p=getChoice();
+   el('brew-name').textContent=p.name;
+   el('brew-details').textContent=p.details;
+   el('brew-allergens').textContent=black?'Milk-free base; check syrup ingredients for allergens.':el('brew-milk').value==='almond'?'Contains almonds; verify syrup ingredients.':el('brew-milk').value==='regular'?'Contains dairy; verify syrup ingredients.':'Check oat milk and syrup ingredients for allergens.';
+   el('brew-price').textContent='₹'+p.price.toLocaleString('en-IN');
+   el('brew-message').textContent='';
+ }
+ function open(){opener=document.activeElement;overlay.hidden=false;document.body.style.overflow='hidden';update();el('brew-base').focus();}
+ function close(){overlay.hidden=true;document.body.style.overflow='';if(opener&&opener.isConnected)opener.focus();}
+ document.addEventListener('click',e=>{if(e.target.closest('#brew-open'))open();});
+ el('brew-close').addEventListener('click',close);
+ overlay.addEventListener('click',e=>{if(e.target===overlay)close();});
+ overlay.addEventListener('keydown',e=>{
+   if(e.key==='Escape'){e.preventDefault();close();}
+   if(e.key==='Tab'){
+     const nodes=[...overlay.querySelectorAll('button:not(:disabled),select:not(:disabled),input:not(:disabled)')].filter(x=>x.getClientRects().length);
+     if(!nodes.length)return;
+     if(e.shiftKey&&document.activeElement===nodes[0]){e.preventDefault();nodes[nodes.length-1].focus();}
+     else if(!e.shiftKey&&document.activeElement===nodes[nodes.length-1]){e.preventDefault();nodes[0].focus();}
+   }
+ });
+ ['brew-base','brew-milk','brew-strength','brew-syrup'].forEach(id=>el(id).addEventListener('change',update));
+ document.querySelectorAll('input[name="brew-temp"]').forEach(r=>r.addEventListener('change',update));
+ el('brew-add').addEventListener('click',()=>{
+   const p=getChoice();
+   document.dispatchEvent(new CustomEvent('mistmug:add-custom-coffee',{detail:p}));
+   el('brew-message').textContent='Added to your order! Open Visit & Order to review your cart.';
+ });
+ update();
+})();
+</script>
+<!-- Simulated Order Journey: opens only after a completed demo cart order -->
+<div id="mmj-overlay" class="mmj-overlay" role="dialog" aria-modal="true" aria-labelledby="mmj-title" hidden>
+  <section class="mmj-panel" tabindex="-1" id="mmj-panel">
+    <button type="button" id="mmj-close" class="mmj-close" aria-label="Close order journey">×</button>
+    <div class="mmj-kicker">Mist &amp; Mug · Order journey</div>
+    <h2 id="mmj-title">Your order journey.</h2>
+    <p id="mmj-meta" class="mmj-meta"></p>
+    <div class="mmj-showcase" aria-hidden="true"><div class="mmj-glow"></div><div class="mmj-steam"><i></i><i></i><i></i></div><div class="mmj-cup"><div class="mmj-fill" id="mmj-fill"></div></div><div class="mmj-handle"></div><div class="mmj-saucer"></div></div>
+    <div class="mmj-progress-head"><strong id="mmj-state">Order received</strong><span id="mmj-countdown">Preparing your journey</span></div>
+    <div class="mmj-progress" role="progressbar" aria-label="Simulated order preparation" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="mmj-progress"><div id="mmj-progress-fill"></div></div>
+    <ol class="mmj-steps" id="mmj-steps" aria-live="polite"></ol>
+    <div class="mmj-receipt-heading">Your receipt <span>Order summary</span></div>
+    <div class="mmj-lines" id="mmj-lines"></div>
+    <p class="mmj-note">Prototype experience: preparation progress is simulated, not updated by café staff. No payment is taken and no order is transmitted.</p>
+    <button type="button" id="mmj-done" class="mmj-action">Back to café</button>
+  </section>
+</div>
+<script id="mmj-script">
+(function(){
+  'use strict';
+  const key='mistmug-demo-order-journey-v1';
+  const overlay=document.getElementById('mmj-overlay');
+  const closeBtn=document.getElementById('mmj-close');
+  const panel=document.getElementById('mmj-panel');
+  const steps=document.getElementById('mmj-steps');
+  const lines=document.getElementById('mmj-lines');
+  const meta=document.getElementById('mmj-meta');
+  const progress=document.getElementById('mmj-progress'),fill=document.getElementById('mmj-progress-fill'),cupFill=document.getElementById('mmj-fill'),countdown=document.getElementById('mmj-countdown'),state=document.getElementById('mmj-state');
+  let latest=null, previousFocus=null, ticker=null, lastStage=-1;
+  const money=n=>'₹'+Number(n).toLocaleString('en-IN');
+  function valid(x){return x&&typeof x.id==='string'&&Number.isFinite(x.placedAt)&&Array.isArray(x.items)&&x.items.length>0&&Number.isFinite(x.total);}
+  try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(valid(saved))latest=saved;}catch(e){}
+  const stages=[['Order received','Your order has been recorded.'],['Brewing your favourites','Your favourites are being prepared in this simulation.'],['Ready to serve','Your simulated order is ready to enjoy.']];
+  function current(){const seconds=Math.max(0,(Date.now()-latest.placedAt)/1000);return seconds<7?0:seconds<30?1:2;}
+  function render(){
+    if(!latest)return;
+    const stage=current();
+    if(stage!==lastStage){
+      steps.replaceChildren();
+      stages.forEach(([title,detail],i)=>{
+        const li=document.createElement('li');li.className=i<stage?'mmj-done':i===stage?'mmj-current':'';
+        const dot=document.createElement('span');dot.className='mmj-dot';dot.textContent=i<stage?'✓':String(i+1);
+        const body=document.createElement('div'),strong=document.createElement('strong'),small=document.createElement('small');
+        strong.textContent=title;small.textContent=detail;body.append(strong,small);li.append(dot,body);steps.append(li);
+      });
+      lastStage=stage;
+    }
+    const seconds=Math.max(0,Math.floor((Date.now()-latest.placedAt)/1000));
+    const pct=Math.min(100,Math.round(seconds/30*100));
+    fill.style.width=pct+'%';cupFill.style.height=(12+pct*.72)+'%';progress.setAttribute('aria-valuenow',String(pct));
+    state.textContent=stages[stage][0];
+    countdown.textContent=stage===2?'Ready to enjoy':Math.max(0,30-seconds)+'s remaining';
+    overlay.dataset.stage=String(stage);
+    meta.textContent='Order '+latest.id+' · '+(stage===2?'Ready':stage===1?'Brewing':'Received')+' · Simulated progress';
+  }
+  function open(){
+    if(!latest)return;
+    previousFocus=document.activeElement;
+    lines.replaceChildren();
+    latest.items.forEach(p=>{
+      const row=document.createElement('div');row.className='mmj-line';
+      const name=document.createElement('span');name.textContent=p.quantity+' × '+p.name;
+      const amount=document.createElement('strong');amount.textContent=money(p.price*p.quantity);
+      row.append(name,amount);lines.append(row);
+    });
+    const total=document.createElement('div');total.className='mmj-line mmj-total';
+    const label=document.createElement('span');label.textContent='Order total';
+    const amount=document.createElement('strong');amount.textContent=money(latest.total);
+    total.append(label,amount);lines.append(total);
+    lastStage=-1;overlay.hidden=false;render();
+    if(ticker)clearInterval(ticker);
+    ticker=setInterval(render,1000);
+    closeBtn.focus();
+  }
+  function close(){overlay.hidden=true;if(ticker)clearInterval(ticker);ticker=null;if(previousFocus&&previousFocus.isConnected)previousFocus.focus();}
+  document.addEventListener('mistmug:demo-order-placed',e=>{
+    if(!valid(e.detail))return;
+    latest=e.detail;
+    try{localStorage.setItem(key,JSON.stringify(latest));}catch(err){}
+  });
+  document.addEventListener('mistmug:track-last-order',open);
+  closeBtn.addEventListener('click',close);
+  document.getElementById('mmj-done').addEventListener('click',close);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)close();});
+  overlay.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){e.preventDefault();close();}
+    if(e.key==='Tab'){
+      const nodes=[...overlay.querySelectorAll('button:not(:disabled)')];
+      if(e.shiftKey&&document.activeElement===nodes[0]){e.preventDefault();nodes[nodes.length-1].focus();}
+      else if(!e.shiftKey&&document.activeElement===nodes[nodes.length-1]){e.preventDefault();nodes[0].focus();}
+    }
+  });
+  // Expose tracking of the last simulated order without adding a floating button.
+  document.addEventListener('mistmug:open-last-demo-order',open);
+})();
+</script>
+
 <script>
 /* Unified entry point. Existing cart and reservation implementations remain unchanged. */
 (function(){
@@ -4084,6 +4457,11 @@ mmUpdateChrome();
   });
   function cart(){close();byId('cart-open').click();}
   byId('visit-cart').addEventListener('click',cart);
+  const trackChoice=byId('visit-track');
+  function syncTrack(){try{const o=JSON.parse(localStorage.getItem('mistmug-demo-order-journey-v1')||'null');trackChoice.hidden=!(o&&o.id&&Array.isArray(o.items)&&o.items.length);}catch(e){trackChoice.hidden=true;}}
+  syncTrack();
+  document.addEventListener('mistmug:demo-order-placed',syncTrack);
+  trackChoice.addEventListener('click',()=>{close();document.dispatchEvent(new CustomEvent('mistmug:open-last-demo-order'));});
   byId('visit-reserve').addEventListener('click',()=>{close();byId('misty-launcher').click();});
   byId('visit-both').addEventListener('click',()=>{
     close();byId('cart-open').click();
@@ -4099,7 +4477,3 @@ mmUpdateChrome();
 </script>
 </body>
 </html>
-
-
-
-
