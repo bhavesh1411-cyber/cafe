@@ -954,6 +954,12 @@ a[href="#findmycup"], button[data-target="findmycup"] { display:none !important;
   .passport-stamp, .stamp, [class*="stamp-card"] { max-width:100%; min-width:0; box-sizing:border-box; overflow-wrap:anywhere; }
   .sx-drawer { padding-bottom:85px; }
 }
+
+/* Admin dashboard: navigation link only; no embedded dashboard or changes to existing features. */
+.sx-admin-link{display:inline-flex;align-items:center;gap:.35em;min-height:40px;padding:0 10px;color:inherit;text-decoration:none;font:600 .72rem/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;white-space:nowrap;border:1px solid currentColor;border-radius:999px;transition:background-color .2s}
+.sx-admin-link:hover,.sx-admin-link:focus-visible{background:rgba(190,155,97,.18)}
+.sx-admin-link:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(max-width:1050px){.sx-admin-link{display:none}}
 </style>
 <style id="fx-styles">
 /* Isolated Flavor Explorer styles: remove this block and the matching section/script to revert. */
@@ -1029,6 +1035,35 @@ a[href="#findmycup"], button[data-target="findmycup"] { display:none !important;
   .window-photo{object-position:48% 56%}
 }
 </style>
+
+<style id="admin-login-styles">
+/* Standalone admin entry interface; no authentication credentials are handled here. */
+#admin-login-modal{position:fixed;inset:0;z-index:2147483000;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(9,24,19,.82);backdrop-filter:blur(8px)}
+#admin-login-modal.is-open{display:flex}
+#admin-login-modal .admin-card{position:relative;box-sizing:border-box;width:min(100%,440px);max-height:calc(100dvh - 44px);overflow:auto;background:#f4ebdd;color:#241711;border:1px solid #d4b68b;border-radius:22px;padding:clamp(24px,5vw,42px);box-shadow:0 24px 85px #0006;font-family:system-ui,sans-serif}
+#admin-login-modal .admin-eyebrow{color:#965f3b;letter-spacing:.18em;font-size:11px;font-weight:700;margin-bottom:12px}
+#admin-login-modal h2{font:normal clamp(30px,5vw,42px)/1.15 Georgia,serif;margin:0 0 10px;color:#142e25}
+#admin-login-modal p{font-size:14px;line-height:1.65;margin:0 0 20px;color:#624c3e}
+#admin-login-modal .admin-note{padding:14px;border:1px solid #d4b68b;border-radius:12px;background:#e9ddc9;font-size:13px;line-height:1.55;margin-bottom:20px}
+#admin-login-modal .admin-enter{display:block;box-sizing:border-box;width:100%;text-align:center;background:#142e25;color:#fff5e8;padding:15px;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px}
+#admin-login-modal .admin-enter:hover{background:#28503e}
+#admin-login-modal .admin-close{position:absolute;right:15px;top:12px;background:transparent;border:0;color:#142e25;font-size:27px;cursor:pointer;width:42px;height:42px}
+#admin-login-modal .admin-close:focus-visible,#admin-login-modal .admin-enter:focus-visible{outline:3px solid #aa713f;outline-offset:3px}
+body.admin-modal-open{overflow:hidden}
+
+#admin-login-modal .admin-field{display:block;font-size:12px;font-weight:700;margin:12px 0 5px;color:#142e25}
+#admin-login-modal .admin-input{display:block;box-sizing:border-box;width:100%;border:1px solid #cbb99e;background:#fffaf1;color:#142e25;border-radius:10px;padding:12px;font-size:15px}
+#admin-login-modal .admin-input:focus-visible{outline:2px solid #a57545;outline-offset:2px}
+#admin-login-modal .admin-enter{border:0;cursor:pointer;margin-top:16px}
+#admin-login-modal .admin-error{color:#9b342d;font-size:12px;min-height:17px;margin-top:8px}
+#admin-login-modal .admin-demo-label{font-size:12px;color:#705e4d;line-height:1.55;margin-top:10px}
+#admin-login-modal .admin-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
+#admin-login-modal .admin-metric{border:1px solid #d8c9b4;background:#fffaf0;border-radius:12px;padding:13px}
+#admin-login-modal .admin-metric strong{display:block;font-size:22px;color:#142e25}
+#admin-login-modal .admin-metric span{font-size:11px;color:#705e4d}
+#admin-login-modal .admin-secondary{background:transparent;border:1px solid #a68d70;border-radius:10px;padding:10px 14px;color:#142e25;cursor:pointer;margin-top:10px}
+#admin-login-modal .admin-card[hidden],#admin-login-modal [hidden]{display:none!important}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#welcome">Skip to content</a>
@@ -1058,6 +1093,7 @@ a[href="#findmycup"], button[data-target="findmycup"] { display:none !important;
       <a href="#ai" data-nav="ai">About AI</a>
     </div>
     <div class="sx-right">
+      <a class="sx-admin-link" href="#admin-login" data-admin-open aria-label="Open admin login">Admin <span aria-hidden="true">↗</span></a>
       <span class="coins-pill" aria-live="polite" aria-label="Cloud Coins balance"><span class="coin-badge" aria-hidden="true">M&amp;M</span> <span id="coin-count">0</span></span>
       <button type="button" class="sx-burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
     </div>
@@ -1069,6 +1105,7 @@ a[href="#findmycup"], button[data-target="findmycup"] { display:none !important;
     <a href="#beandrop" data-nav="explore" style="--i:3">Play</a>
     <a href="#passport" data-nav="passport" style="--i:4">Passport</a>
     <a href="#ai" data-nav="ai" style="--i:5">About AI</a>
+    <a href="#admin-login" data-admin-open style="--i:6" aria-label="Open admin login">Admin login ↗</a>
     <div class="sx-drawer-sub">
       <a href="#weather" data-nav="explore" style="--i:6">Weather window</a>
       <a href="#postcard" data-nav="explore" style="--i:7">Postcards</a>
@@ -2387,7 +2424,7 @@ async function callAIRecommendation(eligible, a){
     debug.rawItemId = parsed && parsed.recommendedItemId;
     const idOk = typeof parsed.recommendedItemId === 'string' && eligible.some(i=>i.id===parsed.recommendedItemId);
     const pm = parsed.preferenceMatches || {};
-    const numsOk = Number.isFinite(pm.mood) && Number.isFinite(pm.taste);
+    const numsOk = Number.isInteger(pm.mood) && pm.mood>=0 && pm.mood<=100 && Number.isInteger(pm.taste) && pm.taste>=0 && pm.taste<=100;
     const reasonOk = typeof parsed.reason === 'string' && parsed.reason.length>0 && parsed.reason.length<300;
     if(!idOk || !numsOk || !reasonOk){ debug.errorStage = 'validation_failed'; debug.fallbackTriggered = true; fmcLastDebug = debug; return {ok:false}; }
 
@@ -2544,8 +2581,8 @@ function fmcRenderResult(result, eligible, a){
     <div class="eyebrow" style="color:var(--gold)">Your Cup ✦</div>
     <div style="margin-top:8px">${sourceTag}</div>
     <div class="match-pct" style="font-size:15px;margin-top:10px">${overallPct}% MATCH</div>
-    ${productPhoto(items[0].id)?`<img class="fmc-photo" src="${productPhoto(items[0].id)}" alt="${items[0].name}" loading="lazy">`:''}
-    <div class="match-title">${items.map(i=>i.name).join(' + ')}</div>
+    ${productPhoto(items[0].id)?`<img class="fmc-photo" src="${productPhoto(items[0].id)}" alt="${escapeHTML(items[0].name)}" loading="lazy">`:''}
+    <div class="match-title">${items.map(i=>escapeHTML(i.name)).join(' + ')}</div>
     <div class="match-price">₹${result.price}</div>
     ${aiReasonBlock}
     ${fallbackNotice}
@@ -2831,7 +2868,8 @@ function renderRewards(){
   grid.querySelectorAll('button[data-action]').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const cost = parseInt(btn.dataset.cost,10);
-      if(state.coins < cost) return;
+      if(!Number.isInteger(cost) || cost<=0 || state.coins < cost) return;
+      if(btn.dataset.action==='theme' && state.postcardWinterlineUnlocked) return;
       state.coins -= cost; saveState(); renderCoins(); renderRewards();
       const action = btn.dataset.action;
       if(action==='secret'){ openSecret(); }
@@ -4260,7 +4298,6 @@ mmUpdateChrome();
   }
   function open(){previousFocus=document.activeElement;overlay.hidden=false;document.body.style.overflow='hidden';render();get('cart-close').focus();}
   function close(){overlay.hidden=true;document.body.style.overflow='';if(previousFocus && previousFocus.isConnected)previousFocus.focus();}
-  document.addEventListener('mistmug:voice-add-items',e=>{const entries=e.detail&&e.detail.items;if(!Array.isArray(entries))return;entries.forEach(p=>{if(byId.has(p.id)&&Number.isInteger(p.quantity)&&p.quantity>0){basket[p.id]=Math.min(30,(basket[p.id]||0)+p.quantity);}});hideReceipt();status.textContent='';save();render();open();});
   get('cart-open').addEventListener('click',open);
   get('cart-close').addEventListener('click',close);
   overlay.addEventListener('click',e=>{if(e.target===overlay)close();});
@@ -4515,5 +4552,75 @@ mmUpdateChrome();
 <script>document.addEventListener('DOMContentLoaded',function(){
  document.querySelectorAll('a[href="#findmycup"]').forEach(function(a){a.remove();});
 });</script>
+
+<div id="admin-login-modal" role="dialog" aria-modal="true" aria-labelledby="admin-login-title" aria-hidden="true">
+  <div class="admin-card">
+    <button class="admin-close" type="button" aria-label="Close admin portal">&times;</button>
+    <div class="admin-eyebrow">MIST &amp; MUG · STAFF ACCESS</div>
+    <section id="admin-demo-login">
+      <h2 id="admin-login-title">Welcome back.</h2>
+      <p>Your café, at a glance.</p>
+      <form id="admin-demo-form">
+        <label class="admin-field" for="admin-demo-email">Email address</label>
+        <input class="admin-input" id="admin-demo-email" type="text" inputmode="email" autocomplete="off" placeholder="admin@example.com">
+        <label class="admin-field" for="admin-demo-password">Password</label>
+        <input class="admin-input" id="admin-demo-password" type="password" autocomplete="off" placeholder="Enter any password">
+        <div id="admin-demo-error" class="admin-error" role="status" aria-live="polite"></div>
+        <button class="admin-enter" type="submit">Sign in to Dashboard &rarr;</button>
+      </form>
+      <p class="admin-demo-label">Demo only: any valid email and nonempty password will open a sample dashboard preview. Nothing is authenticated, transmitted, or saved.</p>
+    </section>
+    <section id="admin-demo-dashboard" hidden>
+      <h2>Dashboard preview</h2>
+      <p>Welcome to Mist &amp; Mug management.</p>
+      <div class="admin-metrics" aria-label="Illustrative dashboard metrics">
+        <div class="admin-metric"><strong>24</strong><span>Sample orders</span></div>
+        <div class="admin-metric"><strong>₹8,450</strong><span>Sample revenue</span></div>
+        <div class="admin-metric"><strong>12</strong><span>Sample reservations</span></div>
+        <div class="admin-metric"><strong>4.8/5</strong><span>Sample feedback score</span></div>
+      </div>
+      <p class="admin-demo-label">Illustrative statistics only. Your real dashboard is a separate website.</p>
+      <a class="admin-enter" href="https://mist-mug-dashboard.onrender.com/" target="_blank" rel="noopener noreferrer">Open Actual Dashboard &rarr;</a>
+      <button class="admin-secondary" id="admin-demo-signout" type="button">Back to demo login</button>
+    </section>
+  </div>
+</div>
+<script id="admin-login-script">
+(function(){
+  'use strict';
+  var modal=document.getElementById('admin-login-modal');
+  var close=modal.querySelector('.admin-close');
+  var form=document.getElementById('admin-demo-form');
+  var login=document.getElementById('admin-demo-login');
+  var dashboard=document.getElementById('admin-demo-dashboard');
+  var email=document.getElementById('admin-demo-email');
+  var password=document.getElementById('admin-demo-password');
+  var error=document.getElementById('admin-demo-error');
+  var previous=null;
+  function reset(){login.hidden=false;dashboard.hidden=true;form.reset();error.textContent='';}
+  function hide(){modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('admin-modal-open');reset();if(previous&&previous.isConnected)previous.focus();}
+  function show(trigger){previous=trigger;reset();modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.classList.add('admin-modal-open');var drawer=document.getElementById('mobile-menu');if(drawer&&drawer.getAttribute('aria-hidden')==='false'){var burger=document.getElementById('burger');if(burger)burger.click();}email.focus();}
+  document.querySelectorAll('[data-admin-open]').forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();show(el);});});
+  function enterDemo(){
+    var mail=email.value.trim(), pass=password.value.trim();
+    if(!mail || !pass){error.textContent='Enter an email and password to continue.';return;}
+    error.textContent='';
+    password.value='';
+    // Demo-only form: opens the public dashboard, without authenticating.
+    // Run directly in the user's click/submit event to avoid popup blockers.
+    var destination='https://mist-mug-dashboard.onrender.com/';
+    var opened=window.open(destination,'_blank','noopener,noreferrer');
+    if(!opened){ window.location.assign(destination); }
+  }
+  form.noValidate=true;
+  form.addEventListener('submit',function(e){e.preventDefault();enterDemo();});
+  var signIn=form.querySelector('button[type="submit"]');
+  if(signIn)signIn.addEventListener('click',function(e){e.preventDefault();enterDemo();});
+  document.getElementById('admin-demo-signout').addEventListener('click',function(){reset();email.focus();});
+  close.addEventListener('click',hide);
+  modal.addEventListener('click',function(e){if(e.target===modal)hide();});
+  document.addEventListener('keydown',function(e){if(!modal.classList.contains('is-open'))return;if(e.key==='Escape'){hide();return;}if(e.key==='Tab'){var elements=[...modal.querySelectorAll('button:not([hidden]),input:not([hidden]),a[href]')].filter(function(el){return el.getClientRects().length>0;});var i=elements.indexOf(document.activeElement);if(e.shiftKey&&i===0){e.preventDefault();elements[elements.length-1].focus();}else if(!e.shiftKey&&i===elements.length-1){e.preventDefault();elements[0].focus();}}});
+})();
+</script>
 </body>
 </html>
