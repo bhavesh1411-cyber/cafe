@@ -1,194 +1,219 @@
 <div align="center">
 
-# MIST & MUG
-### *A little altitude. A lot of atmosphere.*
+# MIST <span style="color:#A66A47">&</span> MUG
 
-**A Mussoorie-inspired digital café experience**  
-*Designed to feel like a place, not just a webpage.*
+### *Come in. It's cold outside.*
 
-[![Live café](https://img.shields.io/badge/EXPLORE-THE_CAFÉ-16372B?style=for-the-badge)](https://mist-and-mug.onrender.com/)
-[![Dashboard](https://img.shields.io/badge/VIEW-ANALYTICS_DASHBOARD-A86E45?style=for-the-badge)](https://mist-mug-dashboard.onrender.com/)
-![Frontend](https://img.shields.io/badge/FRONTEND-HTML_·_CSS_·_JS-E9D9C4?style=for-the-badge&labelColor=16372B)
-![Status](https://img.shields.io/badge/PROJECT-EDUCATIONAL_PROTOTYPE-DFB67D?style=for-the-badge&labelColor=16372B)
+**A digital café above the ordinary.**  
+A Mussoorie-inspired experience where coffee, weather, personalisation, and playful discovery meet.
 
-**[Enter the café](https://mist-and-mug.onrender.com/) · [Explore the dashboard](https://mist-mug-dashboard.onrender.com/)**
+[**ENTER THE CAFÉ**](https://mist-and-mug.onrender.com/) &nbsp; · &nbsp; [**EXPLORE THE DASHBOARD**](https://mist-mug-dashboard.onrender.com/)
+
+![HTML](https://img.shields.io/badge/HTML5-frontend-17372B?style=flat-square) ![CSS](https://img.shields.io/badge/CSS3-responsive-A66A47?style=flat-square) ![JavaScript](https://img.shields.io/badge/JavaScript-interactive-17372B?style=flat-square) ![Status](https://img.shields.io/badge/status-educational%20prototype-D7AD74?style=flat-square) ![Theme](https://img.shields.io/badge/inspired%20by-Mussoorie-547665?style=flat-square)
+
+*Not just a menu. A place to get lost for a moment.*
 
 </div>
 
 ---
 
-> **“We saved you the window seat.”**
->
-> Mist & Mug is a fictional café concept inspired by Mussoorie's clouds, quiet corners, mountain views and slow coffee rituals. The goal was never to build another generic restaurant landing page. It was to build an experience visitors want to explore.
+## 00 — The window seat is yours
 
-## 01 / The idea
+> **What if a café website could make you feel the mountains before your first sip?**
 
-Most café websites answer three questions: *What's on the menu? Where are you? How do I order?*
+Most café sites begin with a list of products. **Mist & Mug begins with a feeling**: mist on a window, an unhurried afternoon, a favourite drink waiting somewhere between the hills and the clouds.
 
-Mist & Mug asks one more: **How do you want to feel when you get here?**
+We built a fictional, interactive café concept inspired by Mussoorie. The challenge wasn't simply making an attractive interface. It was building a **working digital artefact**, testing AI-assisted code, finding what broke, and learning to fix it.
 
-That question shaped the design: a cinematic mountain opening, a considered menu, small discoveries, personal coffee customization, an optional reservation flow, and playful moments that reward exploration.
+<table><tr><td><b>01 / Atmosphere</b><br/>A mountain-led visual identity and café moods.</td><td><b>02 / Choice</b><br/>A browsable menu and personalised coffee builder.</td><td><b>03 / Journey</b><br/>Cart, optional reservations, and simulated order progress.</td></tr><tr><td><b>04 / Discovery</b><br/>Passport, postcards, games, and rewards.</td><td><b>05 / Reflection</b><br/>Documented defects, corrections, and limitations.</td><td><b>06 / Insight</b><br/>A separately deployed analytics dashboard.</td></tr></table>
 
-**This is an AI-assisted student project.** The important engineering work includes testing generated code, correcting defects, understanding the limits of browser-only storage, and distinguishing genuine AI calls from deterministic recommendations.
+## 01 — Explore the café
 
-## 02 / The experience, in one glance
+| Experience | Why it's there |
+| --- | --- |
+| **Mountain hero & Weather Window** | Establish a strong sense of place, with selectable atmospheric modes. |
+| **The Menu** | Let visitors discover drinks and food with product details and filters. |
+| **Build Your Own Coffee** | Choose a coffee base, milk, strength, sweetness, and serving temperature. |
+| **Smart Cart** | Collect items, adjust quantities, and create a prototype order. |
+| **Visit & Order** | Keep ordering and table reservations together without crowding the interface. |
+| **30-second Order Journey** | Illustrate Received → Brewing → Ready as a *simulation*. |
+| **Café Mood Studio** | Optional visual moods and browser-generated instrumental ambience. |
+| **Cloud Passport & Postcards** | Give visitors small reasons to explore and return. |
+| **Bean Drop & Cloud Coins** | Lightweight gamification using browser-local progress. |
+| **Admin entry** | Open the separately hosted dashboard via a demo-only access flow. |
 
-| The moment | What visitors can do |
-|:--|:--|
-| **Arrive** | Explore the mountain-inspired homepage and café story. |
-| **Discover** | Browse the menu, filters, item information and coffee flavour experiences. |
-| **Personalize** | Build a coffee with selectable base, milk, strength, sweetness and temperature. |
-| **Order** | Add items to the Smart Cart, adjust quantities and place a **prototype order**. |
-| **Plan a visit** | Use the Misty reservation flow, optionally attaching a pre-order. |
-| **Follow along** | Watch a **simulated 30-second** order journey. |
-| **Stay a little** | Explore postcards, Cloud Passport, Cloud Coins, Bean Drop and Café Mood music. |
-| **Look behind the counter** | Open the separate analytics dashboard from the Admin entry. |
+**Explore live:** [mist-and-mug.onrender.com](https://mist-and-mug.onrender.com/)
 
-The experience deliberately keeps ordering, reservation and playful exploration in a coherent visual language rather than treating each feature as a disconnected demo.
+<details>
+<summary><b>What about the AI recommendation quiz and voice ordering?</b></summary>
 
-## 03 / A few signature details
+These were explored during development but deliberately removed from the visible visitor experience in the later standalone build. Some underlying recommendation/fallback code may remain for compatibility. We do not present hidden or retired features as active functionality.
 
-### ☕ Your coffee, your call
-The **Build Your Own Coffee** experience lets a visitor choose a drink and personalize it. The selected options and price become a distinct cart item, so two differently configured coffees can be kept separate.
+</details>
 
-### 🪟 The window seat
-The mountain atmosphere is part of the interface, not just a decorative header. The existing Weather Window and visual modes contribute to the café's sense of place.
-
-### ✉️ A postcard from the hills
-The postcard experience gives visitors a small creative souvenir. Cloud Coins and Passport elements add a lightweight progression system. These rewards are browser-local and are not redeemable monetary value.
-
-### 🎵 Stay for the ambience
-Café Mood offers visual themes and browser-generated instrumental ambience. Playback is optional and controlled by the visitor.
-
-### 🧾 From cart to cup
-The order journey presents **Received → Brewing → Ready** on a 30-second *simulation*. It is a presentation of the customer experience, **not** a real kitchen-status feed.
-
-## 04 / How it works
+## 02 — A visitor's journey
 
 ```mermaid
-flowchart TD
-    A[Visitor opens Mist & Mug] --> B[Explore menu and experiences]
-    B --> C[Smart Cart]
-    B --> D[Build Your Own Coffee]
-    D --> C
-    C --> E{Choose visit type}
-    E --> F[Prototype order]
-    E --> G[Reservation only]
-    E --> H[Reservation + pre-order]
-    F --> I[Simulated order journey]
-    G --> J[Browser-local confirmation]
-    H --> J
-    B --> K[Games, Passport and Postcards]
-    K --> L[Browser-local state]
-    A --> M[Admin demo entry]
-    M --> N[Separate public dashboard]
+flowchart LR
+    A[Arrive in Mussoorie] --> B[Explore the menu]
+    B --> C{Choose your experience}
+    C --> D[Build a coffee]
+    C --> E[Add menu items]
+    D --> F[Smart Cart]
+    E --> F
+    F --> G{Visit & Order}
+    G --> H[Prototype order]
+    G --> I[Table reservation]
+    G --> J[Reservation + pre-order]
+    H --> K[30-second simulated journey]
+    I --> L[Browser-local confirmation]
+    J --> L
 ```
 
-**Current architecture:** a standalone frontend built primarily with HTML, CSS and JavaScript, with embedded image assets and browser `localStorage` for several demo features. The analytics dashboard is a **separate deployed application**; the café website does not automatically synchronize its local orders with dashboard sales data.
+The intention is **one coherent customer experience**, not a collection of unrelated feature demos.
 
-### AI: what is real, and what is fallback?
+## 03 — Under the hood
 
-The project has experimented with LLM-based recommendations and rule-based matching. In the standalone version, direct browser-side LLM calls can fail due to provider/network restrictions, so a **deterministic fallback** is retained. The current user-facing quiz is hidden in this version.
+```mermaid
+flowchart TB
+    UI[Standalone HTML + CSS + JavaScript] --> MENU[Structured menu data]
+    UI --> STATE[Browser localStorage]
+    UI --> VIEWS[Interactive views and modals]
+    MENU --> CART[Cart and custom drinks]
+    STATE --> REWARDS[Passport, coins, demo orders]
+    VIEWS --> DEMO[Reservation and order simulations]
+    UI -. public navigation .-> DASH[Separate Render dashboard]
+    AI[Optional browser AI request] -. unavailable / blocked .-> FALLBACK[Rule-based fallback]
+```
 
-**We do not claim that all recommendations are generated by a live LLM.** Product prices, allergens and menu facts should come from structured menu data, not model improvisation.
+| Layer | Implementation | Important boundary |
+| --- | --- | --- |
+| Interface | HTML, CSS, JavaScript | Responsive behavior must be tested in browsers. |
+| Images | Embedded and linked assets | Sharpness is limited by source resolution. |
+| State | `localStorage` for several experiences | Visitor can edit or clear browser-local data. |
+| Ordering | Frontend prototype | No real payment or kitchen dispatch. |
+| Reservations | Frontend demonstration | Not a shared live booking system. |
+| AI | Experimental LLM requests with deterministic fallback | A successful live model call is **not guaranteed** in the standalone build. |
+| Dashboard | Separate deployed application | No automatic shared-data synchronization is claimed. |
 
-## 05 / Run it locally
+### The engineering rule we kept returning to
 
-This version is intentionally simple to inspect.
+**A model may suggest. Structured application data must decide.**
 
-1. Save the latest standalone website file as **`index.html`**.
-2. Open it in a modern browser, or serve it locally for more consistent browser behavior:
+Menu facts such as prices, ingredient tags and allergens should not be invented by generative AI. Recommendations should be checked against the catalogue, and a fallback should keep the interface usable if an external AI service is unavailable.
+
+## 04 — Built with AI. Improved with debugging.
+
+This project follows the School of Computer Science's **Build → Launch → Critique** approach. Generating the first version was only the beginning. We treated broken behavior as evidence to investigate, not something to hide.
+
+### Five lessons from actual development
+
+| Symptom | Why it mattered | Response / learning |
+| --- | --- | --- |
+| **Blank reservation Review step** | A visually complete form can still fail at the last interaction. | Review state and step transitions must be tested end to end. |
+| **Images missing after Render deployment** | Local previews don't prove deployed asset paths work. | Check asset references and production loading; embedded images reduce path dependencies but can increase file size. |
+| **Order confirmation displayed inside an empty cart** | State was cleared before the final experience was presented correctly. | Capture a receipt snapshot before resetting the cart. |
+| **Weather suggestions unavailable** | Network-dependent features can fail in restricted previews and production. | Provide transparent fallbacks; the live weather suggestion feature was later removed by choice. |
+| **Admin sign-in looked secure but wasn't** | A frontend demo form does not authenticate users. | Clearly label the demo and distinguish navigation from server-side access control. |
+
+**Additional responsive issues investigated:** navigation drawer layering, floating pills overlapping captions, product badges above drawers, and Passport stamp overflow at intermediate tablet widths.
+
+> **Evidence matters:** This table records development history, not a claim that every issue is verified fixed on every device. For a formal assessment, attach before/after screenshots, console output, and regression test results.
+
+## 05 — Demo day: the four-minute tour
+
+| Time | Show | Explain |
+| --- | --- | --- |
+| **0:00** | Hero & Weather Window | Why the visual identity is inspired by Mussoorie. |
+| **0:30** | Menu and product details | How structured data supports consistent information. |
+| **1:00** | Build Your Own Coffee | How selections update a distinct cart item and price. |
+| **1:40** | Smart Cart + Visit & Order | How the main customer flows connect. |
+| **2:20** | Order Journey | Why the 30-second timeline is clearly a simulation. |
+| **2:45** | Passport, postcard or Bean Drop | How playful features support engagement. |
+| **3:15** | One real bug and its fix | Demonstrate critical thinking, not just polished UI. |
+| **3:45** | Limitations & future scope | Show what would need a backend for real-world use. |
+
+### Three questions we expect from judges
+
+<details><summary><b>“Did you write all this yourself?”</b></summary>
+
+The project was developed with AI assistance. The student contribution includes concept direction, feature choices, integration, debugging, testing, and explaining how the system works. We do not claim every line was handwritten.
+
+</details>
+
+<details><summary><b>“Is this actually AI-powered?”</b></summary>
+
+AI-assisted development and runtime AI are different things. The standalone site has explored LLM-based ranking, but provider/browser restrictions can cause requests to fail, so a rule-based fallback remains. A secure server-side proxy would be needed for reliable authenticated live model calls.
+
+</details>
+
+<details><summary><b>“Can customers really pay and reserve a table?”</b></summary>
+
+No. The ordering and reservation experiences are interactive educational prototypes. They do not collect payment or create staff-confirmed reservations.
+
+</details>
+
+## 06 — Try it yourself
+
+For the **standalone café website**:
 
 ```bash
+# Place the standalone file in a folder as index.html
 python -m http.server 8000
 ```
 
-3. Visit `http://localhost:8000`.
+Open **http://localhost:8000**. The site can also be opened directly as an HTML file, although some browser features behave differently under `file://`.
 
-No `npm install` is required for the standalone café page. The **separate dashboard repository** has its own dependencies and setup.
+The analytics dashboard is a **different project** with its own installation and deployment steps.
 
-> Some browser capabilities and external requests may behave differently in local files, embedded previews and Render. Always verify the deployed version separately.
+### Suggested manual regression checklist
 
-## 06 / What we learned by breaking it
+- [ ] Homepage loads at the hero without jumping.
+- [ ] Menu images load and item drawers open/close correctly.
+- [ ] Build Your Own Coffee creates the intended cart item.
+- [ ] Quantities and totals update consistently.
+- [ ] Demo order displays a receipt and simulated journey.
+- [ ] Reservation-only and reservation-with-pre-order paths complete.
+- [ ] Passport and postcard unlock states behave as described.
+- [ ] Café Mood controls can start and stop audio.
+- [ ] Admin entry is clearly presented as a **demo**, not secure authentication.
+- [ ] No horizontal overflow at 390px, 768px, 862px, 1366px and 1920px.
 
-The project followed a **build → test → critique → repair** loop. Several concrete issues appeared during development:
+## 07 — Responsible prototype boundaries
 
-| What went wrong | What we learned / changed |
-|:--|:--|
-| Reservation Review sometimes appeared blank or failed to advance. | Multi-step UI state must be validated end-to-end, not just by checking syntax. |
-| Embedded images looked soft or loaded incorrectly after deployment. | Asset paths, original resolution and responsive cropping all matter. |
-| Cart confirmation appeared in an empty-cart view. | Order confirmation must capture items before cart state resets. |
-| Weather-based suggestions failed when a live request was unavailable. | External APIs need honest fallback states; the feature was later removed at the creator's request. |
-| Admin navigation appeared to require login but merely redirected. | A demo form is **not authentication**. Access control belongs to the dashboard/server, not a public HTML form. |
-| Tablet-width overlays, badges and floating controls competed for space. | Responsive QA must cover awkward intermediate widths, not only mobile and desktop presets. |
+| What visitors see | What the system actually does |
+| --- | --- |
+| Order confirmation | Saves a browser-local demo order. |
+| “Brewing” status | Advances on a timer; no real barista receives it. |
+| Table reservation | Demonstrates a booking flow, not live table inventory. |
+| Cloud Coins | Browser-local points, not secure or redeemable currency. |
+| Admin login | A presentation-only form; **any nonempty credentials may continue**. Never enter a real password. |
+| Dashboard link | Opens a separate deployed dashboard. |
 
-**Important:** These are documented development problems and remediation directions, not a claim that every browser-level regression has been fully verified.
+The aim is to **show a convincing customer experience while being precise about what is simulated**.
 
-## 07 / Demo route for judges
+## 08 — What we'd build next (only if needed)
 
-A short walkthrough that demonstrates both product thinking and engineering:
+1. **Accessibility first:** keyboard navigation, focus traps, reduced-motion checks and contrast.
+2. **Reliable real AI:** a small server-side proxy with secret storage, validation, limits and fallback.
+3. **Real commerce:** authoritative prices, verified payments, order persistence and inventory.
+4. **Real reservations:** shared availability, confirmations and staff workflows.
+5. **Better evidence:** repeatable browser tests and screenshots of AI-generated mistakes and corrections.
 
-**00:00 — First impression.** Open the homepage and explain the Mussoorie-inspired design language.
-
-**00:30 — Product discovery.** Browse the menu and show the item information.
-
-**01:00 — Personalization.** Customize a coffee, add it to the cart and explain how the options affect the item.
-
-**01:45 — Customer flow.** Demonstrate Visit & Order and the reservation/pre-order choices.
-
-**02:30 — Beyond checkout.** Show the simulated Order Journey, Passport or Postcard.
-
-**03:00 — Engineering critique.** Explain one bug you found, its root cause, the fix, and how you tested it.
-
-**03:45 — Boundaries.** Clearly distinguish browser-local prototypes from real payments, staff bookings, authenticated admin access and live AI.
-
-*Tip: a well-explained limitation is stronger than an unverified feature claim.*
-
-## 08 / What this project is — and isn't
-
-| Included in this prototype | Not claimed |
-|:--|:--|
-| Interactive café frontend | A production commerce platform |
-| Browser-local cart and reservations | Orders delivered to café staff |
-| Simulated order tracking | Live kitchen integration |
-| Browser-local rewards | Fraud-resistant loyalty currency |
-| Demo Admin entry | Secure administrator authentication |
-| Rule-based fallback for recommendations | Guaranteed live LLM inference |
-| Separate analytics dashboard link | Automatically synchronized business data |
-
-The demo Admin form accepts nonempty fields to continue; it **does not validate credentials**. Do not enter a real password. If the dashboard ever contains private data, enforce authentication in the dashboard application itself.
-
-## 09 / Design and engineering principles
-
-**Atmosphere without friction.** Keep the mountain photography and typography central; don't add effects that block reading or navigation.
-
-**One journey, not ten popups.** Reuse the existing Visit & Order and Café Mood entry points rather than scattering controls across the viewport.
-
-**Graceful failure.** A failed API call should not destroy the page or silently fabricate a live result.
-
-**Truthful prototypes.** A demo order is a demo order; a local reward is not secure currency; a public dashboard link is not an admin session.
-
-**Reversible improvements.** Make focused changes, preserve backups, and regression-test the flows most likely to break.
-
-## 10 / What's next
-
-- Complete responsive and accessibility regression testing.
-- Verify the live deployment's image quality, keyboard navigation and interactions.
-- Document and test the separate dashboard independently.
-- Add genuine server-side AI only if the project needs it, with secret management and clear trust boundaries.
-- Move orders, reservations and rewards to trusted storage **before** using them for a real business.
+We deliberately chose not to add every possible feature. A focused, understandable prototype is more valuable than a fragile showcase.
 
 ---
 
 <div align="center">
 
-### Made for the mountains. Built to be questioned.
+### The best projects aren't the ones that never break.
+### They're the ones whose builders know *why* they broke.
 
 **MIST & MUG**  
-*A student-built, AI-assisted café experience inspired by Mussoorie.*
+*Made for the mountains. Built to be questioned.*
 
-[**Visit the café**](https://mist-and-mug.onrender.com/) · [**Open the dashboard**](https://mist-mug-dashboard.onrender.com/)
+[**Visit the café**](https://mist-and-mug.onrender.com/) · [**Explore the separate dashboard**](https://mist-mug-dashboard.onrender.com/)
 
-<sub>Concept café · Educational prototype · Not a real ordering or reservation service</sub>
+<sub>Mussoorie-inspired concept café · AI-assisted student project · Educational demonstration</sub>
 
 </div>
