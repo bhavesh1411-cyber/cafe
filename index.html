@@ -254,8 +254,10 @@ section{padding:clamp(72px,10vw,140px) 0;scroll-margin-top:72px}
 .window-scene.mist .window-fog{opacity:.7}
 .window-rain{position:absolute;inset:0;opacity:0;transition:opacity .4s ease;overflow:hidden}
 .window-scene.rain .window-rain{opacity:1}
-.window-rain span{position:absolute;top:-20%;width:1.5px;height:40px;background:linear-gradient(rgba(200,220,220,.8),transparent);animation:rdrop .9s linear infinite}
-@keyframes rdrop{to{transform:translateY(140%)}}
+.window-rain{pointer-events:none;z-index:2}
+.window-rain span{position:absolute;top:-15%;width:2px;height:var(--drop-length,18px);border-radius:55% 55% 65% 65%;background:linear-gradient(180deg,rgba(235,247,248,.9),rgba(208,229,234,.38) 55%,rgba(220,239,242,.05));box-shadow:0 0 2px rgba(241,250,251,.26);animation:rdrop var(--drop-duration,2.5s) linear infinite;will-change:transform}
+@keyframes rdrop{from{transform:translateY(0)}to{transform:translateY(var(--rain-travel,520px))}}
+@media (prefers-reduced-motion:reduce){.window-rain span{animation:none!important;top:var(--static-top,30%)!important;opacity:.7}}
 .weather-controls{display:flex;justify-content:center;gap:10px;margin-top:26px}
 .chai-note{text-align:center;font-family:var(--hand);font-size:20px;color:var(--gold);margin-top:14px;height:26px;opacity:0;transition:opacity .5s ease}
 .chai-note.show{opacity:1}
@@ -935,13 +937,23 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
 @media(max-width:640px){.visit-launch{right:14px;bottom:14px}.visit-card{padding:22px}}
 
 
-/* Voice Ordering: isolated from cart and reservation layout */
-.voice-overlay[hidden]{display:none!important}.voice-overlay{position:fixed;inset:0;z-index:520;background:#14100bcc;display:flex;align-items:center;justify-content:center;padding:16px}
-.voice-panel{background:#f4ebdd;color:#241711;border-radius:18px;padding:clamp(18px,4vw,32px);width:min(600px,100%);max-height:90vh;overflow:auto;box-shadow:0 24px 70px #0006;font-family:var(--sans)}
-.voice-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.voice-head h2{font-family:var(--serif);font-size:clamp(28px,5vw,42px);margin:0}.voice-panel p{margin:12px 0;line-height:1.5}
-.voice-panel button{cursor:pointer;border-radius:22px;padding:11px 18px;border:1px solid #70472f;background:#142e25;color:#fff;font:600 13px var(--sans);margin:7px 7px 7px 0}.voice-panel button:disabled{opacity:.45;cursor:not-allowed}.voice-panel #voice-close{background:transparent;color:#241711;font-size:24px;border-radius:50%;padding:4px 12px;margin:0}
-.voice-panel label{display:block;margin-top:12px;font-weight:600}.voice-panel textarea{width:100%;box-sizing:border-box;background:#fffaf3;color:#241711;border:1px solid #c8ad91;border-radius:12px;padding:12px;font:15px var(--sans)}
-.voice-line{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #dacbb8}.voice-line label{margin:0;display:flex;align-items:center;gap:10px}.voice-note{font-size:12px;color:#70472f}
+/* Mist & Mug: targeted UI corrections; quiz intentionally hidden by owner request. */
+#findmycup { display:none !important; }
+a[href="#findmycup"], button[data-target="findmycup"] { display:none !important; }
+.sx-drawer.open { z-index: 1100 !important; }
+#burger { position:relative; z-index:1101 !important; }
+/* Keep item-detail overlays above underlying menu badges. */
+[role="dialog"]:not([aria-hidden="true"]) { isolation:isolate; }
+@media (min-width: 700px) and (max-width: 950px) {
+  .sx-drawer { padding-top:90px; }
+  .sx-drawer a { font-size:clamp(1.75rem,5.8vw,2.8rem); }
+  /* Make space for floating controls at the bottom of the page. */
+  footer { padding-bottom:max(110px,env(safe-area-inset-bottom)) !important; }
+}
+@media (max-width: 950px) {
+  .passport-stamp, .stamp, [class*="stamp-card"] { max-width:100%; min-width:0; box-sizing:border-box; overflow-wrap:anywhere; }
+  .sx-drawer { padding-bottom:85px; }
+}
 </style>
 <style id="fx-styles">
 /* Isolated Flavor Explorer styles: remove this block and the matching section/script to revert. */
@@ -1158,11 +1170,11 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
       <span class="go">→ open the menu</span>
       <span class="pencil-note">turn the page</span>
     </a>
-    <a href="#findmycup" class="mystery-card">
+    <a href="#menu" class="mystery-card">
       <span class="eyebrow" style="color:var(--gold)">Not sure?</span>
-      <h3>Let Us Pick ✦</h3>
-      <p>Tell us the mood, we'll narrow the clouds. A short, honest prototype of assisted discovery.</p>
-      <span class="go">→ five quick questions</span>
+      <h3>Explore More ✦</h3>
+      <p>Browse the full menu and choose your next favourite.</p>
+      <span class="go">→ explore the menu</span>
     </a>
   </div></div>
 </section>
@@ -1538,23 +1550,8 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
     <button type="button" class="visit-choice" id="visit-cart"><strong>🛍 View my cart</strong><span>Review food, drinks and quantities, or place a demo order.</span></button>
     <button type="button" class="visit-choice" id="visit-reserve"><strong>☁ Reserve a table only</strong><span>Book your corner without adding any food.</span></button>
     <button type="button" class="visit-choice" id="visit-both"><strong>☕ Reserve &amp; pre-order</strong><span>Choose food first, then attach it to your reservation.</span></button>
-    <button type="button" class="visit-choice" id="visit-voice"><strong>🎙 Voice ordering</strong><span>Speak your order, review matches, then add to cart.</span></button>
     <button type="button" class="visit-choice" id="visit-track" hidden><strong>◷ Track last order</strong><span>Reopen your latest simulated order journey.</span></button>
     <p class="visit-hint">Pre-ordering is optional. No online payment is required.</p>
-  </div>
-</div>
-<div id="voice-overlay" class="voice-overlay" role="dialog" aria-modal="true" aria-labelledby="voice-title" hidden>
-  <div class="voice-panel">
-    <div class="voice-head"><h2 id="voice-title">Tell Misty your order.</h2><button type="button" id="voice-close" aria-label="Close voice ordering">×</button></div>
-    <p>Try “two cappuccinos and one butter croissant.” Review your selections before anything enters your cart.</p>
-    <button type="button" id="voice-listen">🎙 Start listening</button>
-    <label for="voice-text">Recognized order (you can edit it)</label>
-    <textarea id="voice-text" rows="3" placeholder="Two cappuccinos and one butter croissant"></textarea>
-    <button type="button" id="voice-parse">Find menu items</button>
-    <p id="voice-status" role="status" aria-live="polite"></p>
-    <div id="voice-results"></div>
-    <button type="button" id="voice-confirm" hidden>Add selected items to cart</button>
-    <p class="voice-note">Speech recognition requires browser support and microphone permission. Nothing is added without confirmation.</p>
   </div>
 </div>
 <div class="cart-overlay" id="cart-overlay" role="dialog" aria-modal="true" aria-labelledby="cart-title" hidden>
@@ -2073,11 +2070,16 @@ document.querySelectorAll('#weather .chip').forEach(btn=>{
         for(let i=0;i<22;i++){
           const s = document.createElement('span');
           s.style.left = (Math.random()*100)+'%';
-          s.style.animationDelay = (Math.random()*0.9)+'s';
+          s.style.setProperty('--drop-length', (9+Math.random()*23).toFixed(1)+'px');
+          s.style.setProperty('--drop-duration', (1.7+Math.random()*2.2).toFixed(2)+'s');
+          s.style.setProperty('--rain-travel', (rw.clientHeight+110)+'px');
+          s.style.setProperty('--static-top', (8+Math.random()*82).toFixed(1)+'%');
+          s.style.animationDelay = (-Math.random()*4)+'s';
           rw.appendChild(s);
         }
         rw.dataset.built = '1';
       }
+      rw.querySelectorAll('span').forEach(drop=>drop.style.setProperty('--rain-travel',(rw.clientHeight+110)+'px'));
       unlockStamp('FOG WALKER','Fog Walker');
       const note = document.getElementById('chai-note');
       note.classList.add('show');
@@ -4510,76 +4512,8 @@ mmUpdateChrome();
   }
 })();
 </script>
-<script>
-/* Optional Voice Ordering: browser speech recognition + deterministic menu matching. */
-(function(){
- 'use strict';
- const el=id=>document.getElementById(id),overlay=el('voice-overlay'),status=el('voice-status');
- const catalog=Array.isArray(window.MistMugCartMenu)?window.MistMugCartMenu:[];
- const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
- let recognition=null,proposed=[],previousFocus=null;
- const aliases={
-   'cappuccino':'classic cappuccino','cappuccinos':'classic cappuccino',
-   'latte':'landour latte','lattes':'landour latte',
-   'chai':'pahadi masala chai','masala chai':'pahadi masala chai',
-   'croissant':'butter croissant','croissants':'butter croissant',
-   'espresso tonic':'orange espresso tonic','hot chocolate':'himalayan hot chocolate'
- };
- function norm(s){return s.toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();}
- function qty(prefix){const words={a:1,an:1,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10};const m=prefix.match(/(?:^|\s)(10|[1-9]|a|an|one|two|three|four|five|six|seven|eight|nine|ten)\s*$/);return m?(words[m[1]]||Number(m[1])):1;}
- function parse(text){
-   const normalized=' '+norm(text)+' ';
-   const candidates=[];
-   catalog.forEach(p=>{const n=norm(p.name);candidates.push({phrase:n,item:p});if(n.endsWith('s'))candidates.push({phrase:n.slice(0,-1),item:p});else candidates.push({phrase:n+'s',item:p});});
-   Object.entries(aliases).forEach(([alias,name])=>{const p=catalog.find(x=>norm(x.name)===name);if(p)candidates.push({phrase:alias,item:p});});
-   candidates.sort((a,b)=>b.phrase.length-a.phrase.length);
-   const matches=[];const occupied=[];
-   for(const c of candidates){
-     const escaped=c.phrase.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-     const rx=new RegExp('(?:^|\\s)'+escaped+'(?=\\s|$)','g');let m;
-     while((m=rx.exec(normalized))!==null){
-       const start=m.index+(m[0].startsWith(' ')?1:0),end=start+c.phrase.length;
-       if(occupied.some(r=>start<r.end&&end>r.start))continue;
-       occupied.push({start,end});
-       const pre=normalized.slice(Math.max(0,start-20),start).replace(/(?:and|plus|add|order|want|please|i|would|like|of|the|some)\s*$/g,'');
-       const amount=qty(pre);
-       const existing=matches.find(x=>x.id===c.item.id);
-       if(existing)existing.quantity=Math.min(30,existing.quantity+amount);
-       else matches.push({id:c.item.id,name:c.item.name,price:c.item.price,quantity:amount});
-     }
-   }
-   return matches;
- }
- function showMatches(){
-   proposed=parse(el('voice-text').value);const result=el('voice-results');result.replaceChildren();
-   if(!proposed.length){status.textContent='No exact menu match found. Try a full menu name, such as “Classic Cappuccino”.';el('voice-confirm').hidden=true;return;}
-   status.textContent='Review the items below before adding them.';
-   proposed.forEach((p,i)=>{const row=document.createElement('div');row.className='voice-line';const label=document.createElement('label');const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=true;checkbox.dataset.index=String(i);label.append(checkbox,document.createTextNode(p.quantity+' × '+p.name));const price=document.createElement('strong');price.textContent='₹'+(p.price*p.quantity);row.append(label,price);result.append(row);});
-   el('voice-confirm').hidden=false;
- }
- function open(){previousFocus=document.activeElement;overlay.hidden=false;el('voice-text').focus();if(!SpeechRecognition){el('voice-listen').disabled=true;status.textContent='Speech recognition is unavailable in this browser. Type your order instead.';}}
- function close(){if(recognition){try{recognition.abort();}catch(e){}recognition=null;}overlay.hidden=true;if(previousFocus&&previousFocus.isConnected)previousFocus.focus();}
- el('visit-voice').addEventListener('click',()=>{el('visit-close').click();open();});
- el('voice-close').addEventListener('click',close);
- overlay.addEventListener('click',e=>{if(e.target===overlay)close();});
- document.addEventListener('keydown',e=>{if(!overlay.hidden&&e.key==='Escape'){e.preventDefault();close();}});
- el('voice-listen').addEventListener('click',()=>{
-   if(!SpeechRecognition){status.textContent='Please type your order instead.';return;}
-   if(recognition){try{recognition.abort();}catch(e){}}
-   recognition=new SpeechRecognition();recognition.lang='en-IN';recognition.interimResults=false;recognition.maxAlternatives=1;
-   recognition.onresult=e=>{el('voice-text').value=e.results[0][0].transcript;showMatches();};
-   recognition.onerror=e=>{status.textContent='Microphone recognition failed ('+e.error+'). You can type your order instead.';};
-   recognition.onend=()=>{el('voice-listen').disabled=false;recognition=null;};
-   el('voice-listen').disabled=true;status.textContent='Listening…';
-   try{recognition.start();}catch(e){el('voice-listen').disabled=false;status.textContent='Could not start microphone. Type your order instead.';}
- });
- el('voice-parse').addEventListener('click',showMatches);
- el('voice-confirm').addEventListener('click',()=>{
-   const checked=[...el('voice-results').querySelectorAll('input[type=checkbox]:checked')].map(x=>proposed[Number(x.dataset.index)]).filter(Boolean);
-   if(!checked.length){status.textContent='Select at least one item.';return;}
-   close();document.dispatchEvent(new CustomEvent('mistmug:voice-add-items',{detail:{items:checked}}));
- });
-})();
-</script>
+<script>document.addEventListener('DOMContentLoaded',function(){
+ document.querySelectorAll('a[href="#findmycup"]').forEach(function(a){a.remove();});
+});</script>
 </body>
 </html>
