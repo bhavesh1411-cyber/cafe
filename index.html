@@ -255,7 +255,7 @@ section{padding:clamp(72px,10vw,140px) 0;scroll-margin-top:72px}
 .window-rain{position:absolute;inset:0;opacity:0;transition:opacity .4s ease;overflow:hidden}
 .window-scene.rain .window-rain{opacity:1}
 .window-rain{pointer-events:none;z-index:2}
-.window-rain span{position:absolute;top:-15%;width:2px;height:var(--drop-length,18px);border-radius:55% 55% 65% 65%;background:linear-gradient(180deg,rgba(245,252,253,.98),rgba(214,239,246,.70) 55%,rgba(220,239,242,.12));box-shadow:0 0 3px rgba(241,250,251,.48);animation:rdrop var(--drop-duration,2.5s) linear infinite;will-change:transform}
+.window-rain span{position:absolute;top:-15%;width:2px;height:var(--drop-length,18px);border-radius:55% 55% 65% 65%;background:linear-gradient(180deg,rgba(235,247,248,.9),rgba(208,229,234,.38) 55%,rgba(220,239,242,.05));box-shadow:0 0 2px rgba(241,250,251,.26);animation:rdrop var(--drop-duration,2.5s) linear infinite;will-change:transform}
 @keyframes rdrop{from{transform:translateY(0)}to{transform:translateY(var(--rain-travel,520px))}}
 @media (prefers-reduced-motion:reduce){.window-rain span{animation:none!important;top:var(--static-top,30%)!important;opacity:.7}}
 .weather-controls{display:flex;justify-content:center;gap:10px;margin-top:26px}
@@ -3967,6 +3967,39 @@ mmUpdateChrome();
 })();
 </script>
 
+<style>
+/* Desktop-first radio controls, scoped to the existing Cafe Mood panel. */
+.mm-mood-panel .mm-radio-controls{display:flex;justify-content:center;align-items:center;gap:12px;margin:12px 0 8px}
+.mm-mood-panel .mm-radio-controls button{min-width:68px;min-height:40px;border:1px solid rgba(117,84,49,.3);border-radius:999px;background:#fffaf0;color:#17372b;cursor:pointer}
+.mm-mood-panel #mm-radio-toggle{min-width:110px;background:#17372b;color:#fffaf0}
+.mm-mood-panel .mm-radio-progress{display:flex;align-items:center;gap:10px;font-size:11px}
+.mm-mood-panel .mm-radio-progress input{flex:1;min-width:70px;accent-color:#17372b}
+.mm-mood-panel .mm-radio-atmosphere{margin:10px 0;padding:10px;border:1px solid rgba(117,84,49,.25);border-radius:12px}
+.mm-mood-panel .mm-radio-atmosphere summary{cursor:pointer;font-weight:600}
+.mm-mood-panel .mm-radio-atmosphere label{display:flex;align-items:center;gap:8px;margin:9px 0;font-size:12px}
+.mm-mood-panel #mm-radio-rain-volume{width:100%;accent-color:#17372b}
+.mm-mood-panel .mm-radio-hint{font-size:11px;opacity:.75;margin:6px 0}
+.mm-mood-panel .mm-radio-controls button:focus-visible,.mm-mood-panel .mm-radio-atmosphere summary:focus-visible{outline:3px solid #a87543;outline-offset:2px}
+@media(max-width:600px){.mm-mood-panel .mm-radio-controls{gap:6px}.mm-mood-panel .mm-radio-controls button{min-width:54px}}
+</style>
+<style>
+/* Mood panel scrolling: keep the theme buttons reachable above the radio on shorter desktops. */
+.mm-mood-panel{
+  width:min(360px,calc(100vw - 36px));
+  max-height:calc(100vh - 105px);
+  max-height:calc(100dvh - 105px);
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#9d8566 #f4ebdd;
+}
+.mm-mood-panel::-webkit-scrollbar{width:9px}
+.mm-mood-panel::-webkit-scrollbar-track{background:#f4ebdd;border-radius:10px}
+.mm-mood-panel::-webkit-scrollbar-thumb{background:#9d8566;border-radius:10px;border:2px solid #f4ebdd}
+.mm-mood-panel .mm-radio-progress input{width:100%;}
+@media(max-width:640px){.mm-mood-panel{max-height:calc(100dvh - 90px);}}
+</style>
 <!-- Optional Cafe Mood Selector: independent from reservations, weather and Winterline -->
 <div class="mm-mood-tint" aria-hidden="true"></div>
 <button type="button" class="mm-mood-launch" id="mm-mood-launch" aria-controls="mm-mood-panel" aria-expanded="false">☕ Café Mood</button>
@@ -3980,12 +4013,25 @@ mmUpdateChrome();
   </div>
   <p class="mm-mood-note">A visual atmosphere only. Original restores the normal look.</p>
   <section class="mm-ambience" aria-label="Café Ambience Studio">
-    <p class="mm-ambience-title">♪ Café Music Studio</p>
+    <p class="mm-ambience-title">♪ MIST &amp; MUG RADIO <small style="display:block;font-weight:400;letter-spacing:.04em">Sounds better above the clouds.</small></p>
     <div class="mm-ambience-options" role="group" aria-label="Choose original instrumental music">
       <button type="button" class="mm-ambience-btn" data-ambience="piano" aria-pressed="false">♫ Soft Piano</button>
       <button type="button" class="mm-ambience-btn" data-ambience="lofi" aria-pressed="false">☕ Lo-fi</button>
       <button type="button" class="mm-ambience-btn" data-ambience="dream" aria-pressed="false">✧ Dreamy</button>
     </div>
+    <div class="mm-radio-controls" role="group" aria-label="Music playback controls">
+      <button type="button" id="mm-radio-prev" aria-label="Previous track">◀◀</button>
+      <button type="button" id="mm-radio-toggle" aria-label="Pause or resume music">▶ Play</button>
+      <button type="button" id="mm-radio-next" aria-label="Next track">▶▶</button>
+    </div>
+    <div class="mm-radio-progress"><input id="mm-radio-seek" type="range" min="0" max="100" value="0" aria-label="Music position"></div>
+    <details class="mm-radio-atmosphere">
+      <summary>Atmosphere mixer</summary>
+      <label class="mm-radio-rain"><input type="checkbox" id="mm-radio-rain"> Rain on the window</label>
+      <label for="mm-radio-rain-volume">Rain volume</label>
+      <input type="range" id="mm-radio-rain-volume" min="0" max="100" value="18">
+      <p class="mm-radio-hint">Original synthesized rainfall. Optional, no automatic playback.</p>
+    </details>
     <div class="mm-ambience-bottom">
       <label for="mm-ambience-volume">Volume</label>
       <input id="mm-ambience-volume" class="mm-ambience-range" type="range" min="0" max="100" value="25" aria-label="Ambience volume">
@@ -4020,7 +4066,43 @@ mmUpdateChrome();
     var slider=document.getElementById('mm-ambience-volume');
     var status=document.getElementById('mm-ambience-status');
     var AudioCtor=window.AudioContext||window.webkitAudioContext;
-    var ctx=null,source=null,gain=null,mode='';
+    var ctx=null,source=null,gain=null,mode='',paused=false,startedAt=0,pausedAt=0;
+    var sequence=['piano','lofi','dream'];
+    var toggle=document.getElementById('mm-radio-toggle'),seek=document.getElementById('mm-radio-seek');
+    var rainCheck=document.getElementById('mm-radio-rain'),rainVolume=document.getElementById('mm-radio-rain-volume');
+    var rainSource=null,rainGain=null,clock=null;
+    function fmt(sec){sec=Math.max(0,Math.floor(sec||0));return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');}
+    function updateRadio(){
+      toggle.textContent=mode?(paused?'▶ Resume':'Ⅱ Pause'):'▶ Play';
+      if(source&&ctx&&mode){
+        var len=source.buffer.duration;
+        var pos=paused?pausedAt:(ctx.currentTime-startedAt)%len;
+        seek.value=Math.round(pos/len*100);
+
+      }else{seek.value=0;}
+    }
+    function stopRain(){
+      if(rainSource){try{rainSource.stop();rainSource.disconnect();}catch(e){}rainSource=null;}
+      if(rainGain){try{rainGain.disconnect();}catch(e){}rainGain=null;}
+    }
+    function startRain(){
+      if(!rainCheck.checked)return;
+      if(!AudioCtor){rainCheck.checked=false;return;}
+      try{
+        if(!ctx)ctx=new AudioCtor();
+        ctx.resume().catch(function(){});
+        stopRain();
+        var rate=ctx.sampleRate,buffer=ctx.createBuffer(1,rate*2,rate),data=buffer.getChannelData(0);
+        var last=0;
+        for(var i=0;i<data.length;i++){last=(last+(Math.random()*2-1)*.035)*.975;data[i]=last;}
+        rainSource=ctx.createBufferSource();rainSource.buffer=buffer;rainSource.loop=true;
+        rainGain=ctx.createGain();rainGain.gain.value=Number(rainVolume.value)/100*.22;
+        rainSource.connect(rainGain);rainGain.connect(ctx.destination);rainSource.start();
+      }catch(e){stopRain();rainCheck.checked=false;}
+    }
+    rainCheck.addEventListener('change',function(){if(rainCheck.checked)startRain();else stopRain();});
+    rainVolume.addEventListener('input',function(){if(rainGain&&ctx)rainGain.gain.setTargetAtTime(Number(rainVolume.value)/100*.22,ctx.currentTime,.05);});
+    clock=setInterval(updateRadio,350);
     // Three distinctly composed, original soundscapes.
     var melodies={
       piano:{name:'Soft Piano',notes:[72,76,79,76,74,72,69,67,69,72,76,72],chords:[[48,52,55],[45,48,52],[41,45,48],[43,47,50]],wave:'piano'},
@@ -4031,7 +4113,7 @@ mmUpdateChrome();
     function stop(){
       if(source){try{source.stop();}catch(e){}try{source.disconnect();}catch(e){}source=null;}
       if(gain){try{gain.disconnect();}catch(e){}gain=null;}
-      mode='';mark();status.textContent='Music is off. Choose a melody to play.';
+      mode='';paused=false;pausedAt=0;mark();updateRadio();status.textContent='Music is off. Choose a melody to play.';
     }
     function midi(n){return 440*Math.pow(2,(n-69)/12);}
     function build(which){
@@ -4104,15 +4186,31 @@ mmUpdateChrome();
         if(ctx.state==='suspended')ctx.resume().catch(function(){status.textContent='Tap again to enable audio.';});
         source=ctx.createBufferSource();source.buffer=build(which);source.loop=true;
         gain=ctx.createGain();gain.gain.value=Number(slider.value)/100*.45;
-        source.connect(gain);gain.connect(ctx.destination);source.start();
-        mode=which;mark();status.textContent=melodies[which].name+' playing. Tap again or Stop to turn it off.';
+        source.connect(gain);gain.connect(ctx.destination);source.start();startedAt=ctx.currentTime;paused=false;pausedAt=0;
+        mode=which;mark();updateRadio();status.textContent=melodies[which].name+' playing. Tap again or Stop to turn it off.';
       }catch(e){stop();status.textContent='Music could not start in this browser.';}
     }
+    toggle.addEventListener('click',function(){
+      if(!mode){start(sequence[0]);return;}
+      if(!ctx||!source)return;
+      if(!paused){pausedAt=(ctx.currentTime-startedAt)%source.buffer.duration;gain.gain.setTargetAtTime(0,ctx.currentTime,.025);paused=true;status.textContent='Music paused.';}
+      else{ctx.resume().catch(function(){});source.stop();source.disconnect();source=ctx.createBufferSource();source.buffer=build(mode);source.loop=true;source.connect(gain);source.start(0,pausedAt);startedAt=ctx.currentTime-pausedAt;gain.gain.setTargetAtTime(Number(slider.value)/100*.45,ctx.currentTime,.04);paused=false;status.textContent=melodies[mode].name+' playing.';}
+      updateRadio();
+    });
+    function moveTrack(delta){var index=sequence.indexOf(mode);start(sequence[(index<0?0:index+delta+sequence.length)%sequence.length]);}
+    document.getElementById('mm-radio-prev').addEventListener('click',function(){moveTrack(-1);});
+    document.getElementById('mm-radio-next').addEventListener('click',function(){moveTrack(1);});
+    seek.addEventListener('change',function(){
+      if(!mode||!source||!ctx)return;
+      var pos=source.buffer.duration*Number(seek.value)/100;
+      source.stop();source.disconnect();source=ctx.createBufferSource();source.buffer=build(mode);source.loop=true;source.connect(gain);source.start(0,pos);
+      startedAt=ctx.currentTime-pos;paused=false;gain.gain.value=Number(slider.value)/100*.45;updateRadio();
+    });
     buttons.forEach(function(b){b.addEventListener('click',function(){start(b.dataset.ambience);});});
     stopButton.addEventListener('click',stop);
     slider.addEventListener('input',function(){if(gain&&ctx)gain.gain.setTargetAtTime(Number(slider.value)/100*.45,ctx.currentTime,.04);});
     document.addEventListener('visibilitychange',function(){if(document.hidden&&mode)stop();});
-    window.addEventListener('pagehide',stop);
+    window.addEventListener('pagehide',function(){stop();stopRain();clearInterval(clock);});
   })();
   choose('default');
 })();
