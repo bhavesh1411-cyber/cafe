@@ -938,9 +938,6 @@ body[data-cafe-mood="evening"] .mm-mood-tint{opacity:.24;background:linear-gradi
 @media(max-width:640px){.visit-launch{right:14px;bottom:14px}.visit-card{padding:22px}}
 
 
-/* Mist & Mug: targeted UI corrections; quiz intentionally hidden by owner request. */
-#findmycup { display:none !important; }
-a[href="#findmycup"], button[data-target="findmycup"] { display:none !important; }
 .sx-drawer.open { z-index: 1100 !important; }
 #burger { position:relative; z-index:1101 !important; }
 /* Keep item-detail overlays above underlying menu badges. */
@@ -4576,9 +4573,7 @@ mmUpdateChrome();
   }
 })();
 </script>
-<script>document.addEventListener('DOMContentLoaded',function(){
- document.querySelectorAll('a[href="#findmycup"]').forEach(function(a){a.remove();});
-});</script>
+
 
 <div id="admin-login-modal" role="dialog" aria-modal="true" aria-labelledby="admin-login-title" aria-hidden="true">
   <div class="admin-card">
