@@ -1067,6 +1067,16 @@ body.admin-modal-open{overflow:hidden}
 @media(min-width:650px){#admin-login-modal .admin-card{padding:30px 44px}}
 @media(max-width:649px){#admin-login-modal{padding:12px}#admin-login-modal .admin-card{width:100%;max-height:calc(100dvh - 24px);padding:24px 22px}}
 </style>
+<style id="mm-stability-phase-css">
+/* Freebuff audit: keep the existing visual language, improve small-screen access. */
+.sx-welcome .eyebrow{color:#964A33}
+@media(max-width:640px){
+  body.mm-game-active .mm-mood-launch,
+  body.mm-game-active .visit-launch{visibility:hidden;pointer-events:none}
+  #cafe-feedback{padding-bottom:max(104px,env(safe-area-inset-bottom))}
+  #beandrop{padding-bottom:max(80px,env(safe-area-inset-bottom))}
+}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#welcome">Skip to content</a>
@@ -2130,6 +2140,16 @@ document.querySelectorAll('#weather .chip').forEach(btn=>{
   });
 });
 
+/* Accessibility: synchronize existing chip states without altering selection logic. */
+(function(){
+  ['#weather .chip','#filter-row .chip'].forEach(function(selector){
+    var group=document.querySelectorAll(selector);
+    function sync(){group.forEach(function(b){b.setAttribute('aria-pressed',String(b.classList.contains('active')));});}
+    sync();
+    group.forEach(function(b){b.addEventListener('click',sync);});
+  });
+})();
+
 /* ============ MENU RENDER ============ */
 let menuFirstRender = true;
 let activeFilter = 'all';
@@ -2156,7 +2176,7 @@ function matchesSearch(item){
 function renderCatRow(){
   const row = document.getElementById('cat-row');
   const cats = ['ALL', ...CATEGORIES];
-  row.innerHTML = cats.map(c=>`<button class="tab-btn${c===activeCat?' active':''}" data-cat="${c}">${c==='ALL'?'All':CAT_LABELS[c]}</button>`).join('');
+  row.innerHTML = cats.map(c=>`<button class="tab-btn${c===activeCat?' active':''}" type="button" aria-pressed="${c===activeCat}" data-cat="${c}">${c==='ALL'?'All':CAT_LABELS[c]}</button>`).join('');
   row.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{
     activeCat = b.dataset.cat; renderCatRow(); renderMenu();
   }));
@@ -2388,6 +2408,8 @@ const FMC_DEBUG = new URLSearchParams(location.search).get('debug')==='1';
 let fmcLastDebug = null;
 
 async function callAIRecommendation(eligible, a){
+  // Standalone/no-backend edition: avoid an unsupported browser-side API request.
+  return {ok:false, reason:'offline_rule_based'};
   const candidatesForAI = eligible.map(i=>({id:i.id,name:i.name,category:i.category,price:i.price,temp:i.temp,caffeine:i.caffeine,taste:i.taste,mood:i.mood}));
   const systemPrompt = 'You are the recommendation reasoning layer for the fictional MIST & MUG educational café. '+
     'You may recommend ONLY an item ID contained in ELIGIBLE_CANDIDATES. Never invent menu items. '+
@@ -2820,7 +2842,7 @@ function bdCountdown(cb){
 
 function bdStart(){
   bdCountdown(()=>{
-    bdRunning = true; bdScore=0; bdTime=45; beans=[];
+    bdRunning = true; document.body.classList.add('mm-game-active'); bdScore=0; bdTime=45; beans=[];
     document.getElementById('bd-score').textContent='0';
     document.getElementById('bd-time').textContent='45';
     bdOverlay.style.display='none';
@@ -2835,6 +2857,7 @@ function bdStart(){
   });
 }
 function bdEnd(){
+  document.body.classList.remove('mm-game-active');
   bdRunning = false;
   clearInterval(bdInterval); clearInterval(bdSpawnInterval);
   bdArea.querySelectorAll('.bean').forEach(b=>b.remove());
@@ -4604,6 +4627,9 @@ mmUpdateChrome();
   function hide(){modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('admin-modal-open');reset();if(previous&&previous.isConnected)previous.focus();}
   function show(trigger){previous=trigger;reset();modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.classList.add('admin-modal-open');var drawer=document.getElementById('mobile-menu');if(drawer&&drawer.getAttribute('aria-hidden')==='false'){var burger=document.getElementById('burger');if(burger)burger.click();}email.focus();}
   document.querySelectorAll('[data-admin-open]').forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();show(el);});});
+  function openAdminHash(){if(location.hash==='#admin-demo-login'||location.hash==='#admin-login'){if(!modal.classList.contains('is-open'))show(null);}}
+  openAdminHash();
+  window.addEventListener('hashchange',openAdminHash);
   function enterDemo(){
     var mail=email.value.trim(), pass=password.value.trim();
     if(!mail || !pass){error.textContent='Enter an email and password to continue.';return;}
