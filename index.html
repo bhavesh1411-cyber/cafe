@@ -303,8 +303,8 @@ section{padding:clamp(72px,10vw,140px) 0;scroll-margin-top:72px}
 .fmc-box.mood-study{background-image:linear-gradient(rgba(10,20,17,.4),rgba(10,20,17,.4)),repeating-linear-gradient(180deg,rgba(243,232,211,.03) 0 2px,transparent 2px 26px)}
 .fmc-box.mood-rain{position:relative;overflow:hidden}
 .fmc-box.mood-rain::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.25;
-  background-image:repeating-linear-gradient(100deg,rgba(200,220,220,.4) 0 1px,transparent 1px 40px);inset:-65px 0 0;animation:boxrain 1.4s linear infinite}
-@keyframes boxrain{from{transform:translateY(0)}to{transform:translateY(60px)}}
+  background-image:repeating-linear-gradient(100deg,rgba(200,220,220,.4) 0 1px,transparent 1px 40px);animation:boxrain 1.4s linear infinite}
+@keyframes boxrain{from{background-position-y:0}to{background-position-y:60px}}
 .fmc-box.mood-surprise{animation:surprisepulse 1.4s ease}
 @keyframes surprisepulse{0%{transform:scale(1)}30%{transform:scale(1.015)}60%{transform:scale(.99)}100%{transform:scale(1)}}
 /* result screen v2 */
@@ -635,8 +635,7 @@ html.has-sx-cursor [data-cursor]{cursor:none}
 .pp-note{margin-top:16px;font-size:.78rem;opacity:.65}
 
 /* product imagery buttons + gentle tilt */
-[data-tilt]{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--sc,1));transition:transform .5s var(--ease-out)}
-@media (hover:hover) and (pointer:fine){[data-tilt]:hover{will-change:transform}}
+[data-tilt]{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--sc,1));transition:transform .5s var(--ease-out);will-change:transform}
 
 /* ===== coin feedback ===== */
 .coin-fly{position:fixed;left:0;top:0;z-index:350;pointer-events:none}
@@ -644,7 +643,7 @@ html.has-sx-cursor [data-cursor]{cursor:none}
 
 /* ===== passport: ink lands ===== */
 .stamp.thump{animation:thump .45s var(--spring),sxInk 1s ease-out}
-@keyframes sxInk{0%{opacity:.15;transform:scale(.97)}60%{opacity:.95}100%{opacity:1;transform:scale(1)}}
+@keyframes sxInk{0%{filter:blur(3px);opacity:.15}60%{filter:blur(.6px);opacity:.95}100%{filter:none;opacity:1}}
 
 /* ===== choice buttons (variant D) in their contexts ===== */
 #weather .chip,#postcard .chip{--chip-fill:var(--gold);color:var(--cream);border-color:rgba(244,235,221,.5)}
