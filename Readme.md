@@ -1,153 +1,140 @@
 <div align="center">
 
-![Mist & Mug mountain-inspired cover](cover.png)
+![Mist & Mug — Mussoorie-inspired café](cover.png)
 
 # MIST & MUG
 ### *Come in. It's cold outside.*
 
-A Mussoorie-inspired digital café you can explore from anywhere.
-
-[**☕ ENTER THE CAFÉ**](https://mist-and-mug.onrender.com/) &nbsp; · &nbsp; [**📊 EXPLORE THE DASHBOARD**](https://mist-mug-dashboard.onrender.com/)
-
-![Website](https://img.shields.io/badge/WEBSITE-LIVE-15372B?style=flat-square)
-![Prototype](https://img.shields.io/badge/EXPERIENCE-CONCEPT_CAFÉ-DDA966?style=flat-square)
-![Stack](https://img.shields.io/badge/STACK-HTML_%7C_CSS_%7C_JS-98513B?style=flat-square)
-
 **A little altitude. A lot of atmosphere.**
 
+[![Visit the café](https://img.shields.io/badge/ENTER_THE_CAFÉ-LIVE_WEBSITE-15372B?style=for-the-badge)](https://mist-and-mug.onrender.com/)
+[![Dashboard](https://img.shields.io/badge/EXPLORE-DASHBOARD-A87543?style=for-the-badge)](https://mist-mug-dashboard.onrender.com/)
+
+*A Mussoorie-inspired digital café, made for the curious.*
+
 </div>
 
 ---
 
-## Your window seat is waiting.
+## Welcome to your window seat.
 
-A mountain view. Something warm in your hands. A menu made for slow mornings.
+Mist & Mug is more than a menu. It's a place to discover your next cup, build it exactly how you like, explore the hills, and stay for a little music.
 
-Mist & Mug brings that feeling to the browser—through a curated menu, personalized coffee, interactive ordering, and little moments worth staying for.
+![Discover Mist & Mug](discover.png)
 
-![Four ways to explore Mist & Mug](discover.png)
+| **Find your cup** | **Make it yours** | **Stay awhile** |
+|:--|:--|:--|
+| A four-question drink matcher | Custom coffee, cart and demo ordering | Café Radio, Passport, postcards and Bean Drop |
 
-<div align="center">
+## Your journey through the café
 
-### [OPEN THE LIVE EXPERIENCE →](https://mist-and-mug.onrender.com/)
-
-</div>
-
-## Take the scenic route
-
-![Five-stage visitor journey](journey.png)
+![Explore, customize, order, reserve and track](journey.png)
 
 <details>
-<summary><b>01 / Explore the menu</b> — see what's brewing</summary>
+<summary><b>01 — Find My Cup · Your taste, your match</b></summary>
 
-Browse **30 products across five categories** in the tested catalogue. Search, filter by preferences, and open product details for descriptions and dietary information.
+Answer four short preference questions and receive a drink recommendation, a food pairing, and an explanation. The current experience uses **rule-based matching with structured menu information**, not a live LLM connection.
 
 </details>
 
 <details>
-<summary><b>02 / Build your coffee</b> — make it yours</summary>
+<summary><b>02 — Build Your Own Coffee · A cup that's yours</b></summary>
 
-Customize a coffee's base, milk, espresso strength, syrup, and serving temperature. The cart retains the chosen configuration and calculated demo price.
-
-</details>
-
-<details>
-<summary><b>03 / Visit & Order</b> — choose your journey</summary>
-
-Add items to the cart, adjust quantities, choose a reservation, or combine a reservation with a pre-order. The checkout and reservation flows are **prototype experiences**, not transactions sent to a café.
+Choose a coffee base, milk, strength, syrup and serving temperature. Add your personalized drink to the cart with its selected options and calculated demo price.
 
 </details>
 
 <details>
-<summary><b>04 / Track the moment</b> — from received to ready</summary>
+<summary><b>03 — Visit & Order · A smooth customer journey</b></summary>
 
-The 30-second Order Journey animates three stages: **Received → Brewing → Ready**. This timeline is simulated; it does not report real kitchen activity.
+Browse menu categories, search and filter items, view ingredients and dietary information, adjust cart quantities, and place a **simulated order**. Follow the 30-second **Received → Brewing → Ready** journey, or try the table reservation flow.
 
 </details>
 
 <details>
-<summary><b>05 / Discover the extras</b> — there's more around the corner</summary>
+<summary><b>04 — Café Mood & Mist & Mug Radio · Sounds better above the clouds</b></summary>
 
-Try **Café Mood** themes and original instrumental ambience, collect browser-local **Cloud Passport** stamps, explore **Cloud Coins**, play **Bean Drop**, or make a mountain postcard.
+The current Radio experience lives inside **Café Mood** and offers:
+
+- Three original browser-synthesized instrumental melodies.
+- Play, pause/resume, previous and next track.
+- A seekable progress slider and volume controls.
+- Optional synthesized rain ambience with independent volume.
+- A scrollable panel that keeps the existing mood choices accessible.
+
+Playback is opt-in. **The six proposed licensed jazz recordings are not integrated**; the Radio currently uses synthesized audio. Listening quality and all browser behaviors have not been independently verified.
+
+</details>
+
+<details>
+<summary><b>05 — Small discoveries · Passport, postcards and play</b></summary>
+
+Explore Cloud Passport stamps, browser-local Cloud Coins, the Bean Drop mini-game, Winterline, weather-themed visuals and a postcard maker. Some rewards and progress are stored locally in your browser.
 
 </details>
 
 ---
 
-## The little details
-
-| ☕ The personal brew | 🪟 Mountain atmosphere | ✉️ Postcards | 🎮 Bean Drop |
-|:--|:--|:--|:--|
-| Choose what goes into your cup. | Explore the Weather Window and changing moods. | Create a shareable mountain-inspired keepsake. | Take a playful break between coffees. |
-
-> **A note about the experience:** Mist & Mug is a fictional concept café. The cart, reservations, loyalty rewards, and order tracking are demonstrations. No payment is taken and no order is sent to a real café.
-
-## A peek behind the counter
-
-The café website is built as a **standalone HTML, CSS and JavaScript experience**, with photographs embedded in the current safe deployment version. Several interactive states use browser `localStorage`.
-
-The analytics dashboard is a **separate application**, linked from the Admin entry. The demo Admin form is a presentation flow, **not secure authentication**.
+## A look under the hood
 
 ```mermaid
 flowchart LR
-  A["Visitor"] --> B["Mist & Mug Website"]
-  B --> C["Menu & Custom Coffee"]
-  C --> D["Smart Cart"]
-  D --> E["Demo Order Journey"]
-  B --> F["Reservations"]
-  B --> G["Games & Passport"]
-  B --> H["Admin demo entry"]
-  H --> I["Separate Dashboard"]
-  D -. "Browser-local state" .-> J["localStorage"]
-  F -. "Browser-local state" .-> J
-  G -. "Browser-local state" .-> J
+  A["Visitor"] --> B["Mist & Mug"]
+  B --> C["Find My Cup"]
+  B --> D["Menu & Custom Coffee"]
+  D --> E["Smart Cart"]
+  E --> F["Demo Order Journey"]
+  B --> G["Reservations"]
+  B --> H["Café Mood & Radio"]
+  B --> I["Games & Passport"]
+  B --> J["Admin demo entry"]
+  J --> K["Separate dashboard"]
 ```
 
-### What about AI?
+**Built with:** HTML, CSS and JavaScript for the standalone café website; browser `localStorage` for several demo states; Web Audio API for synthesized music and rain. Hosted on Render Static Site. The analytics dashboard is a separate deployed application.
 
-Mist & Mug has explored AI-assisted recommendations, but the standalone browser version does **not** promise a working live LLM connection. Where recommendation logic is available, deterministic rules provide the fallback. The previously used Find My Cup quiz is hidden in the current visitor experience.
+> **Prototype transparency:** Mist & Mug is a fictional educational café. Orders, tracking, reservations and loyalty rewards are demonstrations. No real payment is collected or order transmitted to a café. The Admin form is a demo entry, not secure authentication.
 
-## Quality, measured—not invented
+## Quality, measured
 
-![Lighthouse quality scores: desktop and mobile](quality.png)
+![Latest desktop Lighthouse results](quality.png)
 
-These scores were shared from Lighthouse runs during development, not continuous monitoring. The latest reported scores were **Desktop: 69 performance, 98 accessibility, 96 best practices, 100 SEO** and **Mobile: 47 performance, 97 accessibility, 96 best practices, 100 SEO**. Scores can change with device, network, caching and hosting conditions.
+Three consecutive desktop Lighthouse runs reported:
 
-<details>
-<summary><b>What is being improved?</b></summary>
+| Category | Run 1 | Run 2 | Run 3 |
+|:--|--:|--:|--:|
+| Performance | 76 | 74 | 74 |
+| Accessibility | 98 | 98 | 98 |
+| Best Practices | 96 | 96 | 96 |
+| SEO | 100 | 100 | 100 |
 
-- Desktop and mobile loading performance.
-- Image loading without broken asset paths.
-- Responsive spacing around floating controls.
-- Browser interaction reliability and accessibility.
+**Desktop performance median: 74/100.** These are laboratory estimates from user-run audits, not guaranteed real-user scores. The last reported mobile performance score was **47/100** on an earlier build.
 
-The current safe standalone version keeps photographs embedded to avoid missing assets when deploying only `index.html`. That reliability trade-off can increase initial document size.
-
-</details>
-
-## Want to run the café page yourself?
-
-The standalone website needs no framework build.
-
-```bash
-# Place the standalone website in a folder as index.html
-python3 -m http.server 8000
-# Open http://localhost:8000
-```
-
-The separate dashboard has its own source repository, build tools, and deployment process.
-
-## Explore
+## Explore the live project
 
 <div align="center">
 
-| **The café** | **Behind the counter** |
-|:--:|:--:|
-| [**Visit Mist & Mug →**](https://mist-and-mug.onrender.com/) | [**Open the dashboard →**](https://mist-mug-dashboard.onrender.com/) |
-| Menu · Coffee · Cart · Experiences | Analytics · Catalogue · Insights |
+### [☕ Step inside Mist & Mug](https://mist-and-mug.onrender.com/)
 
-### Made for the mountains. Built for curious people.
+[**See the separate café dashboard**](https://mist-mug-dashboard.onrender.com/)
 
 *We saved you the window seat.*
 
 </div>
+
+---
+
+<details>
+<summary><b>Run the standalone website locally</b></summary>
+
+Save the standalone site as `index.html`, then from its directory:
+
+```bash
+python3 -m http.server 8000
+```
+
+Open `http://localhost:8000`. The current safe standalone version embeds its photography inside the HTML, so it does not require a separate image folder for the café photographs. This README's four PNG graphics are separate files used for GitHub presentation only.
+
+</details>
+
+<sub>Last documentation update: November 2026 · Radio feature described from the latest deployed-version discussion; full live browser verification remains separate.</sub>
